@@ -1,0 +1,55 @@
+<section class="phx-hero">
+  <form phx-submit="add">
+    <table>
+      <tr>
+        <th>Place</th>
+        <th>Player</th>
+        <th>Deck</th>
+        <th>Place</th>
+        <th>Player</th>
+        <th>Deck</th>
+      </tr>
+      <%= for game <- @games do %>
+      <tr>
+        <%= for p <- game.participants do %>
+          <td><%= p.place %></td>
+          <td><%= String.capitalize(p.player_id) %></td>
+          <td><%= String.capitalize(p.deck_id) %></td>
+        <% end %>
+      </tr>
+      <% end %>
+      <tr>
+        <td>
+          <input id="win1" name="winner" type="radio" value=1>
+        </td>
+        <td>
+          <input type="text" name="p1" value="<%= @p1 %>" placeholder="Player 1" list="players" autocomplete="off"/>
+        </td>
+        <td>
+          <input type="text" name="d1" value="<%= @d1 %>" placeholder="Deck 1" list="decks" autocomplete="off"/>
+        </td>
+
+        <td>
+          <input id="win2" name="winner" type="radio" value=2>
+        </td>
+        <td>
+          <input type="text" name="p2" value="<%= @p2 %>" placeholder="Player 2" list="players" autocomplete="off"/>
+        </td>
+        <td>
+          <input type="text" name="d2" value="<%= @d2 %>" placeholder="Deck 2" list="decks" autocomplete="off"/>
+        </td>
+      </tr>
+    </table>
+    <datalist id="players">
+      <%= for name <- @players do %>
+        <option value="<%= name %>"><%= name %></option>
+      <% end %>
+    </datalist>
+    <datalist id="decks">
+      <%= for name <- @decks do %>
+        <option value="<%= name %>"><%= name %></option>
+      <% end %>
+    </datalist>
+    <button type="submit" phx-disable-with="Adding...">Add</button>
+  </form>
+</section>
