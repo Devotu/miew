@@ -14,7 +14,7 @@ defmodule MiewWeb.SheetLive do
 
 
   @impl true
-  def handle_event("add", %{"winner" => winner} = data, socket) do
+  def handle_event("add", %{"winner" => _winner} = data, socket) do
     game = create_game(data)
     {:noreply, assign(socket, games: socket.assigns.games ++ [game])}
   end
@@ -47,7 +47,7 @@ defmodule MiewWeb.SheetLive do
     ]}
   end
 
-  defp place(participant, 0), do: 0
+  defp place(_participant, 0), do: 0
   defp place(participant, winner) do
     case participant == winner do
       true -> 1
