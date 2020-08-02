@@ -5,9 +5,13 @@
         <th>Place</th>
         <th>Player</th>
         <th>Deck</th>
+        <th>Power</th>
+        <th>Fun</th>
         <th>Place</th>
         <th>Player</th>
         <th>Deck</th>
+        <th>Power</th>
+        <th>Fun</th>
       </tr>
       <%= for game <- @games do %>
       <tr>
@@ -15,6 +19,8 @@
           <td><%= p.place %></td>
           <td><%= String.capitalize(p.player_id) %></td>
           <td><%= String.capitalize(p.deck_id) %></td>
+          <td><%= p.power %></td>
+          <td><%= p.fun %></td>
         <% end %>
       </tr>
       <% end %>
@@ -28,6 +34,12 @@
         <td>
           <input type="text" name="d1" value="<%= @d1 %>" placeholder="Deck 1" list="decks" autocomplete="off"/>
         </td>
+        <td>
+          <input type="range" name="pow1" value="<%= @pow1 %>" min="-2" max="2"/>
+        </td>
+        <td>
+          <input type="range" name="fun1" value="<%= @fun1 %>" min="-2" max="2"/>
+        </td>
 
         <td>
           <input id="win2" name="winner" type="radio" value=2>
@@ -37,6 +49,12 @@
         </td>
         <td>
           <input type="text" name="d2" value="<%= @d2 %>" placeholder="Deck 2" list="decks" autocomplete="off"/>
+        </td>
+        <td>
+          <input type="range" name="pow2" value="<%= @pow2 %>" min="-2" max="2"/>
+        </td>
+        <td>
+          <input type="range" name="fun2" value="<%= @fun2 %>" min="-2" max="2"/>
         </td>
       </tr>
     </table>
