@@ -30,7 +30,17 @@ defmodule MiewWeb.SheetLive do
   defp create_game(%{"p1" => p1, "d1" => d1, "p2" => p2, "d2" => d2, "winner" => winner} = data) do
     Kernel.inspect(data) |> IO.puts()
     {win_nr, _} = Integer.parse winner
-    game_id = DateTime.utc_now() |> DateTime.to_unix()
+
+    game_id = Metr.create_game(
+      %{
+        :deck_1 => d1, :deck_2 => d2,
+        :fun_1 => nil, :fun_2 => nil,
+        :player_1 => p1, :player_2 => p2,
+        :power_1 => nil, :power_2 => nil,
+        :winner => win_nr
+      }
+    )
+
     %{game_id: game_id, participants: [
       %{player_id: p1, deck_id: d1, place: place(1, win_nr)},
       %{player_id: p2, deck_id: d2, place: place(2, win_nr)}
