@@ -12,6 +12,7 @@
         <th>Deck</th>
         <th>Power</th>
         <th>Fun</th>
+        <th></th>
       </tr>
       <%= for game <- @games do %>
       <tr>
@@ -22,6 +23,7 @@
           <td><%= p.power %></td>
           <td><%= p.fun %></td>
         <% end %>
+        <td phx-click="delete_game" phx-value-game_id=<%= game.id %>>x</td>
       </tr>
       <% end %>
       <tr>

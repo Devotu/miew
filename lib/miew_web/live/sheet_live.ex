@@ -27,9 +27,16 @@ defmodule MiewWeb.SheetLive do
     {:noreply, assign(socket, games: socket.assigns.games ++ [game])}
   end
 
+  @impl true
+  def handle_event("delete_game", %{"game_id" => game_id}, socket) do
+    Metr.delete_game(game_id)
+    games = Metr.list_games()
+     |> Enum.sort(&(&1.time < &2.time))
+    {:noreply, assign(socket, games: games)}
+  end
+
 
   defp create_game(%{"p1" => p1, "d1" => d1, "pow1" => pow1, "fun1" => fun1, "p2" => p2, "d2" => d2, "pow2" => pow2, "fun2" => fun2, "winner" => winner} = data) do
-    Kernel.inspect(data) |> IO.puts()
     {win_nr, _} = Integer.parse winner
 
     game_id = Metr.create_game(
@@ -42,7 +49,7 @@ defmodule MiewWeb.SheetLive do
       }
     )
 
-    %{game_id: game_id, participants: [
+    %{id: game_id, participants: [
       %{player_id: p1, deck_id: d1, place: place(1, win_nr), fun: fun1, power: pow1},
       %{player_id: p2, deck_id: d2, place: place(2, win_nr), fun: fun2, power: pow2}
     ]}
