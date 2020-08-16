@@ -17,7 +17,6 @@ defmodule MiewWeb.DeckGamesLive do
         fn so, acc -> calculate_rates(so, acc) end
         )
       |> Map.get(:games)
-      |> IO.inspect(label: "deck games live - games")
 
     {:ok, assign(socket, games: games)}
   end
@@ -106,12 +105,6 @@ defmodule MiewWeb.DeckGamesLive do
     Map.update!(acc, :games, fn games -> games ++ [game] end)
   end
 
-
-
-  defp add_winrate({selected, opponent}, %{win_count: _wc} = acc) do
-    acc
-    |> Map.update!(:win_count, fn c -> add_win(c, selected.place) end)
-  end
 
   defp find_selected(participants, deck_id) do
     participants
