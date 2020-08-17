@@ -1,0 +1,64 @@
+<section>
+  <form phx-submit="add">
+    <table>
+      <tr>
+        <th>Owner</th>
+        <th>Name</th>
+        <th>Format</th>
+        <th>Theme</th>
+        <th>Price</th>
+        <th>Black</th>
+        <th>White</th>
+        <th>Red</th>
+        <th>Green</th>
+        <th>Blue</th>
+        <th>Colorless</th>
+      </tr>
+      <tr>
+        <td>
+          <select name="owner" id="owner">
+            <%= for name <- @players do %>
+              <option value="<%= name %>"><%= name %></option>
+            <% end %>
+          </select>
+        </td>
+        <td>
+          <input type="text" name="format" value="<%= @name %>" placeholder="Name"/>
+        </td>
+        <td>
+          <input type="text" name="format" value="<%= @format %>" placeholder="Format"/>
+        </td>
+        <td>
+          <input type="text" name="theme" value="<%= @theme %>" placeholder="Theme"/>
+        </td>
+        <td>
+          <input type="number" name="price" value="<%= @price %>"/>
+        </td>
+        <td>
+          <input id="black" name="black" type="checkbox" value="black">
+        </td>
+        <td>
+          <input id="white" name="white" type="checkbox" value="white">
+        </td>
+        <td>
+          <input id="red" name="red" type="checkbox" value="red">
+        </td>
+        <td>
+          <input id="green" name="green" type="checkbox" value="green">
+        </td>
+        <td>
+          <input id="blue" name="blue" type="checkbox" value="blue">
+        </td>
+        <td>
+          <input id="colorless" name="colorless" type="checkbox" value="colorless">
+        </td>
+      </tr>
+    </table>
+    <datalist id="players">
+      <%= for name <- @players do %>
+        <option value="<%= name %>"><%= name %></option>
+      <% end %>
+    </datalist>
+    <button type="submit" phx-disable-with="Adding...">Add</button>
+  </form>
+</section>
