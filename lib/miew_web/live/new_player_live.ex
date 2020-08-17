@@ -1,11 +1,12 @@
-defmodule MiewWeb.NewPlayer do
+defmodule MiewWeb.NewPlayerLive do
   use MiewWeb, :live_view
 
   def render(assigns) do
     ~L"""
     <section class="phx-hero">
-      <form phx-submit="new">
-        <input type="text" name="name" value="<%= @player_name %>" placeholder="Name"/>
+      <form phx-submit="add">
+        <input type="text" name="name" value="<%= @name %>" placeholder="Name"/>
+        <button type="submit" phx-disable-with="Adding...">Add</button>
       </form>
     </section>
     """
@@ -13,12 +14,13 @@ defmodule MiewWeb.NewPlayer do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    {:ok, assign(socket, name: "")}
   end
 
 
   @impl true
-  def handle_event("new", %{"player_name" => name}, socket) do
+  @spec handle_event(<<_::24>>, map, any) :: {:noreply, any}
+  def handle_event("add", %{"name" => name}, socket) do
     IO.puts(name)
     {:noreply, socket}
   end

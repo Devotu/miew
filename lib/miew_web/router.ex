@@ -19,7 +19,7 @@ defmodule MiewWeb.Router do
 
     live "/sheet", SheetLive
     live "/deck/:id/games", DeckGamesLive
-    # live "/player/new", NewPlayerLive
+    live "/player/new", NewPlayerLive
   end
 
   # Other scopes may use custom stacks.
