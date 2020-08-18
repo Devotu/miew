@@ -3,6 +3,13 @@ defmodule MiewWeb.NewDeckLive do
 
   alias Metr
 
+  @default_deck %{
+    "format" => "", "theme" => "",
+    "black" => "false", "white" => "false", "red" => "false",
+    "green" => "false", "blue" => "false", "colorless" => "false"
+  }
+
+
   @impl true
   def mount(_params, _session, socket) do
     players = Enum.map(Metr.list_players(), fn p -> p.id end)
@@ -13,14 +20,35 @@ defmodule MiewWeb.NewDeckLive do
     price: 0,
     black: false, white: false, red: false,
     green: false, blue: false, colorless: false,
-    players: players
+    players: players,
+    name_added: ""
     )}
   end
 
 
   @impl true
   def handle_event("add", %{} = data, socket) do
-    IO.inspect(data, label: "new deck live - submitted")
-    {:noreply, socket}
+    Map.merge(@default_deck, data)
+    |> to_atom_deck_data()
+    |> Miew.create_deck()
+
+    {:noreply, assign(socket, name_added: "Added: " <> data["name"])}
+  end
+
+
+  defp to_atom_deck_data(m) do
+    %{
+      player_id: m["owner"],
+      name: m["name"], format: m["format"], theme: m["theme"],
+      black: bool(m["black"]), white: bool(m["white"]), red: bool(m["red"]),
+      green: bool(m["green"]), blue: bool(m["blue"]), colorless: bool(m["colorless"])
+    }
+  end
+
+  defp bool(term) when is_bitstring(term) do
+    case term do
+      "true" -> true
+      "false" -> false
+    end
   end
 end

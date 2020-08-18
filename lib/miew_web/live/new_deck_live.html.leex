@@ -1,3 +1,6 @@
+<section class="phx-hero">
+  <p><%= assigns.name_added %>
+</section>
 <section>
   <form phx-submit="add">
     <table>
@@ -23,7 +26,7 @@
           </select>
         </td>
         <td>
-          <input type="text" name="format" value="<%= @name %>" placeholder="Name"/>
+          <input type="text" name="name" value="<%= @name %>" placeholder="Name"/>
         </td>
         <td>
           <input type="text" name="format" value="<%= @format %>" placeholder="Format"/>
@@ -35,22 +38,22 @@
           <input type="number" name="price" value="<%= @price %>"/>
         </td>
         <td>
-          <input id="black" name="black" type="checkbox" value="black">
+          <input id="black" name="black" type="checkbox" value="true">
         </td>
         <td>
-          <input id="white" name="white" type="checkbox" value="white">
+          <input id="white" name="white" type="checkbox" value="true">
         </td>
         <td>
-          <input id="red" name="red" type="checkbox" value="red">
+          <input id="red" name="red" type="checkbox" value="true">
         </td>
         <td>
-          <input id="green" name="green" type="checkbox" value="green">
+          <input id="green" name="green" type="checkbox" value="true">
         </td>
         <td>
-          <input id="blue" name="blue" type="checkbox" value="blue">
+          <input id="blue" name="blue" type="checkbox" value="true">
         </td>
         <td>
-          <input id="colorless" name="colorless" type="checkbox" value="colorless">
+          <input id="colorless" name="colorless" type="checkbox" value="true">
         </td>
       </tr>
     </table>
