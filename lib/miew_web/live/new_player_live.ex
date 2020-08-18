@@ -26,7 +26,7 @@ defmodule MiewWeb.NewPlayerLive do
   @impl true
   @spec handle_event(<<_::24>>, map, any) :: {:noreply, any}
   def handle_event("add", %{"name" => name}, socket) do
-    player_id = Metr.create_player(%{name: name})
+    player_id = Miew.create_player(%{name: name})
     {:noreply, assign(socket, name_added: "Added: " <> name)}
   end
 end
