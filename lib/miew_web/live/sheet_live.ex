@@ -47,7 +47,7 @@ defmodule MiewWeb.SheetLive do
 
     metr_game = %{
       :deck_1 => d["d1"], :deck_2 => d["d2"],
-      :player_1 => d["p2"], :player_2 => d["p2"],
+      :player_1 => d["p1"], :player_2 => d["p2"],
       :winner => win_nr,
       :power_1 => d.power_1, :power_2 => d.power_2,
       :fun_1 => d.fun_1, :fun_2 => d.fun_2
