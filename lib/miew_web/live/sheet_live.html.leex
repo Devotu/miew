@@ -2,13 +2,13 @@
   <form phx-submit="add">
     <table>
       <tr>
-        <th>Place</th>
+        <th>Winner</th>
         <th>Player</th>
         <th>Deck</th>
         <th>Eval</th>
         <th>Power</th>
         <th>Fun</th>
-        <th>Place</th>
+        <th>Winner</th>
         <th>Player</th>
         <th>Deck</th>
         <th>Eval</th>
@@ -22,7 +22,7 @@
           <td><%= p.place %></td>
           <td><%= String.capitalize(p.player_id) %></td>
           <td><%= String.capitalize(p.deck_id) %></td>
-          <td></td>
+          <td><%= if p.power != nil and p.fun != nil, do: "x" %></td>
           <td><%= p.power %></td>
           <td><%= p.fun %></td>
         <% end %>
