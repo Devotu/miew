@@ -2,6 +2,7 @@ defmodule MiewWeb.SheetLive do
   use MiewWeb, :live_view
 
   alias Metr
+  alias Miew.Helpers
 
   @impl true
   def mount(_params, _session, socket) do
@@ -39,21 +40,50 @@ defmodule MiewWeb.SheetLive do
   defp create_game(%{"p1" => p1, "d1" => d1, "pow1" => pow1, "fun1" => fun1, "p2" => p2, "d2" => d2, "pow2" => pow2, "fun2" => fun2, "winner" => winner} = data) do
     {win_nr, _} = Integer.parse winner
 
-    game_id = Metr.create_game(
-      %{
-        :deck_1 => d1, :deck_2 => d2,
-        :fun_1 => fun1, :fun_2 => fun2,
-        :player_1 => p1, :player_2 => p2,
-        :power_1 => pow1, :power_2 => pow2,
-        :winner => win_nr
-      }
-    )
+    d = data
+      |> Map.put_new("eval1", nil)
+      |> add_eval_1()
+      |> Map.put_new("eval2", nil)
+      |> add_eval_2()
+
+    metr_game = %{
+      :deck_1 => d["d1"], :deck_2 => d["d2"],
+      :player_1 => d["p2"], :player_2 => d["p2"],
+      :winner => win_nr,
+      :power_1 => d.power_1, :power_2 => d.power_2,
+      :fun_1 => d.fun_1, :fun_2 => d.fun_2
+    }
+
+    game_id = Metr.create_game(metr_game)
 
     %{id: game_id, participants: [
       %{player_id: p1, deck_id: d1, place: place(1, win_nr), fun: fun1, power: pow1},
       %{player_id: p2, deck_id: d2, place: place(2, win_nr), fun: fun2, power: pow2}
     ]}
   end
+
+  defp add_eval_1(%{"eval1" => nil} = data) do
+    data
+      |> Map.put(:power_1, nil)
+      |> Map.put(:fun_1, nil)
+  end
+  defp add_eval_1(%{"eval1" => "true"} = data) do
+    data
+      |> Map.put(:power_1, data["pow1"])
+      |> Map.put(:fun_1, data["fun1"])
+  end
+
+  defp add_eval_2(%{"eval2" => nil} = data) do
+    data
+      |> Map.put(:power_2, nil)
+      |> Map.put(:fun_2, nil)
+  end
+  defp add_eval_2(%{"eval2" => "true"} = data) do
+    data
+      |> Map.put(:power_2, data["pow2"])
+      |> Map.put(:fun_2, data["fun2"])
+  end
+
 
   defp place(_participant, 0), do: 0
   defp place(participant, winner) do
