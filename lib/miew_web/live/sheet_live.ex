@@ -2,6 +2,7 @@ defmodule MiewWeb.SheetLive do
   use MiewWeb, :live_view
 
   alias Metr
+  alias Miew.Helpers
 
   @impl true
   def mount(_params, _session, socket) do
@@ -36,7 +37,7 @@ defmodule MiewWeb.SheetLive do
   end
 
 
-  defp create_game(%{"p1" => p1, "d1" => d1, "p2" => p2, "d2" => d2, "winner" => winner} = data) do
+  defp create_game(%{"p1" => p1, "d1" => d1, "p2" => p2, "d2" => d2, "winner" => winner, "rank" => rank} = data) do
     {win_nr, _} = Integer.parse winner
 
     d = data
@@ -50,7 +51,8 @@ defmodule MiewWeb.SheetLive do
       :player_1 => d["p1"], :player_2 => d["p2"],
       :winner => win_nr,
       :power_1 => d.power_1, :power_2 => d.power_2,
-      :fun_1 => d.fun_1, :fun_2 => d.fun_2
+      :fun_1 => d.fun_1, :fun_2 => d.fun_2,
+      :rank => Helpers.text_to_bool(rank)
     }
 
     game_id = Metr.create_game(metr_game)
