@@ -18,9 +18,11 @@ defmodule MiewWeb.Router do
     pipe_through :browser
 
     live "/sheet", SheetLive
-    live "/deck/:id/games", DeckGamesLive
-    live "/player/new", NewPlayerLive
+
     live "/deck/new", NewDeckLive
+    live "/deck/:id/games", DeckGamesLive
+
+    live "/player/new", NewPlayerLive
   end
 
   # Other scopes may use custom stacks.
