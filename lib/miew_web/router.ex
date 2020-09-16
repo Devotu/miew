@@ -23,6 +23,8 @@ defmodule MiewWeb.Router do
     live "/deck/:id/games", DeckGamesLive
 
     live "/player/new", NewPlayerLive
+
+    live "/:type/:id/log", LogLive
   end
 
   # Other scopes may use custom stacks.
