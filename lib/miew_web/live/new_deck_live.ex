@@ -13,6 +13,7 @@ defmodule MiewWeb.NewDeckLive do
   @impl true
   def mount(_params, _session, socket) do
     players = Enum.map(Metr.list_players(), fn p -> p.id end)
+    formats = Metr.list_formats()
 
     {:ok, assign(socket,
     owner: "",
@@ -21,6 +22,7 @@ defmodule MiewWeb.NewDeckLive do
     black: false, white: false, red: false,
     green: false, blue: false, colorless: false,
     players: players,
+    formats: formats,
     name_added: ""
     )}
   end

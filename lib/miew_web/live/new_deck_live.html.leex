@@ -29,7 +29,11 @@
           <input type="text" name="name" value="<%= @name %>" placeholder="Name"/>
         </td>
         <td>
-          <input type="text" name="format" value="<%= @format %>" placeholder="Format"/>
+          <select name="format" id="format">
+            <%= for format <- @formats do %>
+              <option value="<%= format %>"><%= format %></option>
+            <% end %>
+          </select>
         </td>
         <td>
           <input type="text" name="theme" value="<%= @theme %>" placeholder="Theme"/>
