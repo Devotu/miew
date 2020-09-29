@@ -1,0 +1,24 @@
+[Unit]
+Description=miew service
+After=local-fs.target network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/root
+ExecStart=/root/miew/bin/miew start
+ExecStop=/root/miew/bin/miew stop
+Environment=LANG=en_US.utf8
+Environment=MIX_ENV=prod
+
+
+Environment=PORT=4000
+LimitNOFILE=65535
+UMask=0027
+SyslogIdentifier=miew
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
