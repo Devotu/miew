@@ -6,7 +6,8 @@ defmodule MiewWeb.NewDeckLive do
   @default_deck %{
     "format" => "", "theme" => "",
     "black" => "false", "white" => "false", "red" => "false",
-    "green" => "false", "blue" => "false", "colorless" => "false"
+    "green" => "false", "blue" => "false", "colorless" => "false",
+    "rank" => 0, "advantage" => 0
   }
 
 
@@ -23,6 +24,8 @@ defmodule MiewWeb.NewDeckLive do
     green: false, blue: false, colorless: false,
     players: players,
     formats: formats,
+    rank: 0,
+    advantage: 0,
     name_added: ""
     )}
   end
