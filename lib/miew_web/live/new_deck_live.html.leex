@@ -16,6 +16,8 @@
         <th>Green</th>
         <th>Blue</th>
         <th>Colorless</th>
+        <th>Rank</th>
+        <th>Advantage</th>
       </tr>
       <tr>
         <td>
@@ -58,6 +60,12 @@
         </td>
         <td>
           <input id="colorless" name="colorless" type="checkbox" value="true">
+        </td>
+        <td>
+          <input type="number" name="rank" value="0"/>
+        </td>
+        <td>
+          <input type="number" name="advantage" value="<%= @advantage %>"/>
         </td>
       </tr>
     </table>

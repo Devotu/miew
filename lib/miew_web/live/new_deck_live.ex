@@ -46,7 +46,8 @@ defmodule MiewWeb.NewDeckLive do
       player_id: m["owner"],
       name: m["name"], format: m["format"], theme: m["theme"],
       black: bool(m["black"]), white: bool(m["white"]), red: bool(m["red"]),
-      green: bool(m["green"]), blue: bool(m["blue"]), colorless: bool(m["colorless"])
+      green: bool(m["green"]), blue: bool(m["blue"]), colorless: bool(m["colorless"]),
+      rank: m["rank"], advantage: m["advantage"]
     }
   end
 
