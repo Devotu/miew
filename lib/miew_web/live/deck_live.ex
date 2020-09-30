@@ -18,6 +18,8 @@ defmodule MiewWeb.DeckLive do
           <th>Green</td>
           <th>Blue</td>
           <th>Colorless</td>
+          <th>Rank</td>
+          <th>Advantage</td>
         </tr>
         <tr>
           <td><%= @deck.name %></td>
@@ -29,6 +31,8 @@ defmodule MiewWeb.DeckLive do
           <td><%= @deck.green %></td>
           <td><%= @deck.blue %></td>
           <td><%= @deck.colorless %></td>
+          <td><%= @deck.rank %></td>
+          <td><%= @deck.advantage %></td>
         </tr>
       </table>
     </section>
@@ -40,6 +44,21 @@ defmodule MiewWeb.DeckLive do
     id = params["id"]
     deck = Metr.read_deck(id)
     IO.inspect(deck, label: "deck")
-    {:ok, assign(socket, deck: deck)}
+    deck_with_rank = apply_split_rank(deck)
+    IO.inspect(deck_with_rank, label: "deck")
+    {:ok, assign(socket, deck: deck_with_rank)}
+  end
+
+  defp apply_split_rank(%{rank: nil} = deck) do
+    deck
+    |> Map.put(:rank, 0)
+    |> Map.put(:advantage, 0)
+  end
+
+  defp apply_split_rank(deck) do
+    {rank, advantage} = deck.rank
+    deck
+    |> Map.put(:rank, rank)
+    |> Map.put(:advantage, advantage)
   end
 end
