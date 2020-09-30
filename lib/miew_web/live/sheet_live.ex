@@ -55,12 +55,19 @@ defmodule MiewWeb.SheetLive do
       :rank => Helpers.text_to_bool(rank)
     }
 
-    game_id = Metr.create_game(metr_game)
-
-    %{id: game_id, participants: [
-      %{player_id: p1, deck_id: d1, place: place(1, win_nr), fun: d.fun_1, power: d.power_1},
-      %{player_id: p2, deck_id: d2, place: place(2, win_nr), fun: d.fun_2, power: d.power_2}
-    ]}
+    case Metr.create_game(metr_game) do
+      {:error, msg} ->
+        {:error, msg}
+        %{id: "Error - #{msg}", participants: [
+          %{player_id: p1, deck_id: d1, place: place(1, win_nr), fun: d.fun_1, power: d.power_1},
+          %{player_id: p2, deck_id: d2, place: place(2, win_nr), fun: d.fun_2, power: d.power_2}
+        ]}
+      game_id ->
+        %{id: game_id, participants: [
+          %{player_id: p1, deck_id: d1, place: place(1, win_nr), fun: d.fun_1, power: d.power_1},
+          %{player_id: p2, deck_id: d2, place: place(2, win_nr), fun: d.fun_2, power: d.power_2}
+        ]}
+    end
   end
 
   defp add_eval_1(%{"eval1" => nil} = data) do

@@ -18,6 +18,7 @@
       </tr>
       <%= for game <- @games do %>
       <tr>
+        <td><%= game.id %></td>
         <%= for p <- game.participants do %>
           <td><%= p.place %></td>
           <td><%= String.capitalize(p.player_id) %></td>
