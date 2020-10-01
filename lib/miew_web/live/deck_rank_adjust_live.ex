@@ -2,6 +2,7 @@ defmodule MiewWeb.DeckRankAdjustLive do
   use MiewWeb, :live_view
 
   alias Metr
+  alias MiewWeb.DeckHelper
 
   @impl true
   def render(assigns) do
@@ -38,7 +39,7 @@ defmodule MiewWeb.DeckRankAdjustLive do
   def mount(params, _session, socket) do
     id = params["id"]
     deck = Metr.read_deck(id)
-    deck_with_rank = apply_split_rank(deck)
+    deck_with_rank = DeckHelper.apply_split_rank(deck)
     {:ok, assign(socket, deck: deck_with_rank)}
   end
 
@@ -47,18 +48,5 @@ defmodule MiewWeb.DeckRankAdjustLive do
   def handle_event("adjust", %{} = data, socket) do
     IO.puts(Kernel.inspect(data))
     {:noreply, socket}
-  end
-
-  defp apply_split_rank(%{rank: nil} = deck) do
-    deck
-    |> Map.put(:rank, 0)
-    |> Map.put(:advantage, 0)
-  end
-
-  defp apply_split_rank(deck) do
-    {rank, advantage} = deck.rank
-    deck
-    |> Map.put(:rank, rank)
-    |> Map.put(:advantage, advantage)
   end
 end
