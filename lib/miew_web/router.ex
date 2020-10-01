@@ -20,6 +20,7 @@ defmodule MiewWeb.Router do
     live "/sheet", SheetLive
 
     live "/deck/new", NewDeckLive
+    live "/deck/list", DeckListLive
     live "/deck/:id", DeckLive
     live "/deck/:id/games", DeckGamesLive
 

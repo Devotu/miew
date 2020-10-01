@@ -41,9 +41,7 @@ defmodule MiewWeb.DeckLive do
   def mount(params, _session, socket) do
     id = params["id"]
     deck = Metr.read_deck(id)
-    IO.inspect(deck, label: "deck")
     deck_with_rank = apply_split_rank(deck)
-    IO.inspect(deck_with_rank, label: "deck")
     {:ok, assign(socket, deck: deck_with_rank)}
   end
 
