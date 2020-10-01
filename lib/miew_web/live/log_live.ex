@@ -3,6 +3,7 @@ defmodule MiewWeb.LogLive do
 
   alias Metr
 
+  @impl true
   def render(assigns) do
     ~L"""
     <section class="phx-hero">
