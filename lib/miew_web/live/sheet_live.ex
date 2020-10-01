@@ -6,7 +6,7 @@ defmodule MiewWeb.SheetLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    games = Metr.list_games()
+    games = Metr.list_games(10)
      |> Enum.sort(&(&1.time < &2.time))
     players = Enum.map(Metr.list_players(), fn p -> p.id end)
     decks = Enum.map(Metr.list_decks(), fn d -> d.id end)
