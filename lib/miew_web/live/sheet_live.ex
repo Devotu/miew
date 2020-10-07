@@ -69,6 +69,9 @@ defmodule MiewWeb.SheetLive do
         ]}
     end
   end
+  defp create_game(%{"p1" => p1, "d1" => d1, "p2" => p2, "d2" => d2, "winner" => winner} = data) do
+    create_game(Map.put(data, "rank", "false"))
+  end
 
   defp add_eval_1(%{"eval1" => nil} = data) do
     data
