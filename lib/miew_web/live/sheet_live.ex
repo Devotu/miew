@@ -30,7 +30,7 @@ defmodule MiewWeb.SheetLive do
 
   @impl true
   def handle_event("delete_game", %{"game_id" => game_id}, socket) do
-    Metr.delete_game(game_id)
+    # Metr.delete_game(game_id)
     games = Metr.list_games()
      |> Enum.sort(&(&1.time < &2.time))
     {:noreply, assign(socket, games: games)}
