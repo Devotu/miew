@@ -1,0 +1,56 @@
+<section>
+  <form phx-submit="create">
+    <table>
+      <tr>
+        <th>Player 1</th>
+        <th>Player 2</th>
+      </tr>
+      <tr>
+        <td>
+          <select name="player_1" id="player_1">
+            <%= for name <- @players do %>
+              <option value="<%= name %>"><%= name %></option>
+            <% end %>
+          </select>
+        </td>
+        <td>
+          <select name="player_2" id="player_2">
+            <%= for name <- @players do %>
+              <option value="<%= name %>"><%= name %></option>
+            <% end %>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <select name="deck_1" id="deck_1">
+            <%= for name <- @decks do %>
+              <option value="<%= name %>"><%= name %></option>
+            <% end %>
+          </select>
+        </td>
+        <td>
+          <select name="deck_2" id="deck_2">
+            <%= for name <- @decks do %>
+              <option value="<%= name %>"><%= name %></option>
+            <% end %>
+          </select>
+        </td>
+      </tr>
+    </table>
+    <datalist id="players">
+      <%= for name <- @players do %>
+        <option value="<%= name %>"><%= name %></option>
+      <% end %>
+    </datalist>
+    <datalist id="decks">
+      <%= for name <- @decks do %>
+        <option value="<%= name %>"><%= name %></option>
+      <% end %>
+    </datalist>
+    <td>
+      <input name="ranking" type="checkbox" value="true">
+    </td>
+    <button type="submit" phx-disable-with="Creating...">Start</button>
+  </form>
+</section>
