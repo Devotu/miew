@@ -10,13 +10,21 @@ defmodule MiewWeb.MatchListLive do
       <table>
         <tr>
           <th>Id</td>
+          <th>Status</td>
           <th>Rank</td>
+          <th>Player 1</td>
+          <th>Player 2</td>
+          <th>Games</td>
           <th></td>
         </tr>
         <%= for match <- @matches do %>
           <tr>
             <td><%= match.id %></td>
+            <td><%= Kernel.inspect(match.status) %></td>
             <td><%= Kernel.inspect(match.ranking) %></td>
+            <td><%= match.player_one %>/<%= match.deck_one %></td>
+            <td><%= match.player_two %>/<%= match.deck_two %></td>
+            <td><%= Kernel.inspect(match.games) %></td>
             <td><%= button("->", method: :get, to: "/match/#{match.id}")%></td>
           </tr>
         <% end %>
