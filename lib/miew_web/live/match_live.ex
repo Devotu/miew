@@ -16,28 +16,22 @@ defmodule MiewWeb.MatchLive do
 
   @impl true
   def handle_event("add", %{"winner" => _winner} = data, socket) do
-    game = create_game(data)
+    game = create_game(socket.assigns.match, data)
     {:noreply, assign(socket, games: socket.assigns.games ++ [game])}
   end
 
   @impl true
   def handle_event("add", %{} = data, socket) do
     data_with_winner = Map.put(data, "winner", "0")
-    game =  create_game(data_with_winner)
+    game =  create_game(socket.assigns.match, data_with_winner)
     {:noreply, assign(socket, games: socket.assigns.games ++ [game])}
   end
 
-  @impl true
-  def handle_event("delete_game", %{"game_id" => game_id}, socket) do
-    # Metr.delete_game(game_id)
-    games = Metr.list_games()
-     |> Enum.sort(&(&1.time < &2.time))
-    {:noreply, assign(socket, games: games)}
-  end
 
-
-  defp create_game(%{"p1" => p1, "d1" => d1, "p2" => p2, "d2" => d2, "winner" => winner, "rank" => rank} = data) do
+  defp create_game(match, %{"winner" => winner} = data) do
     {win_nr, _} = Integer.parse winner
+
+    IO.puts(Kernel.inspect(match))
 
     d = data
       |> Map.put_new("eval1", nil)
@@ -46,30 +40,25 @@ defmodule MiewWeb.MatchLive do
       |> add_eval_2()
 
     metr_game = %{
-      :deck_1 => d["d1"], :deck_2 => d["d2"],
-      :player_1 => d["p1"], :player_2 => d["p2"],
+      :deck_1 => match.deck_one, :deck_2 => match.deck_two,
+      :player_1 => match.player_one, :player_2 => match.player_two,
       :winner => win_nr,
       :power_1 => d.power_1, :power_2 => d.power_2,
-      :fun_1 => d.fun_1, :fun_2 => d.fun_2,
-      :rank => Helpers.text_to_bool(rank)
+      :fun_1 => d.fun_1, :fun_2 => d.fun_2
     }
 
     case Metr.create_game(metr_game) do
       {:error, msg} ->
         {:error, msg}
-        %{id: "Error - #{msg}", participants: [
-          %{player_id: p1, deck_id: d1, place: place(1, win_nr), fun: d.fun_1, power: d.power_1},
-          %{player_id: p2, deck_id: d2, place: place(2, win_nr), fun: d.fun_2, power: d.power_2}
-        ]}
+        %{id: "Error - #{msg}", 
+        match: match,
+        data: data}
       game_id ->
         %{id: game_id, participants: [
-          %{player_id: p1, deck_id: d1, place: place(1, win_nr), fun: d.fun_1, power: d.power_1},
-          %{player_id: p2, deck_id: d2, place: place(2, win_nr), fun: d.fun_2, power: d.power_2}
+          %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, win_nr), fun: d.fun_1, power: d.power_1},
+          %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, win_nr), fun: d.fun_2, power: d.power_2}
         ]}
     end
-  end
-  defp create_game(%{"p1" => p1, "d1" => d1, "p2" => p2, "d2" => d2, "winner" => winner} = data) do
-    create_game(Map.put(data, "rank", "false"))
   end
 
   defp add_eval_1(%{"eval1" => nil} = data) do
