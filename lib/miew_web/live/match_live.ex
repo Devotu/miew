@@ -40,6 +40,7 @@ defmodule MiewWeb.MatchLive do
       |> add_eval_2()
 
     metr_game = %{
+      :match => match.id,
       :deck_1 => match.deck_one, :deck_2 => match.deck_two,
       :player_1 => match.player_one, :player_2 => match.player_two,
       :winner => win_nr,
