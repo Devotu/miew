@@ -24,7 +24,7 @@ defmodule MiewWeb.MatchListLive do
             <td><%= Kernel.inspect(match.ranking) %></td>
             <td><%= match.player_one %>/<%= match.deck_one %></td>
             <td><%= match.player_two %>/<%= match.deck_two %></td>
-            <td><%= Kernel.inspect(match.games) %></td>
+            <td><%= Kernel.inspect(Enum.count(match.games)) %></td>
             <td><%= button("->", method: :get, to: "/match/#{match.id}")%></td>
           </tr>
         <% end %>
