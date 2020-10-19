@@ -16,9 +16,11 @@
     </tr>
   </table>
 </section>
+
 <section>
   ---
 </section>
+
 <section>
   <table>
     <tr>
@@ -51,9 +53,11 @@
     <% end %>
   </table>
 </section>
+
 <section>
   ---
 </section>
+
 <section>
   <form phx-submit="add">
     <table>
@@ -107,3 +111,23 @@
     <button type="submit" phx-disable-with="Adding...">Add</button>
   </form>
 </section>
+
+<%= if @match.status != :closed do %></td>
+<section>
+  ---
+</section>
+
+<section>
+  <%= if @sure == false do %></td>
+  <button phx-click="switch_sure">End</button>
+  <% end %>
+  <%= if @sure == true do %></td>
+  <button color="red" phx-click="switch_sure">Do not end</button>
+  <% end %>
+  <%= if @sure == true do %></td>
+  ---
+  <button phx-click="end">Confirm End</button>
+  <% end %>
+  <p class="alert alert-warning"><%= live_flash(@flash, :end_feedback) %></p>
+</section>
+<% end %>

@@ -10,7 +10,7 @@ defmodule MiewWeb.MatchLive do
     match = Miew.read_match(id)
     games = Miew.list_games(match.games)
 
-    {:ok, assign(socket, match: match, games: games, pow1: 0, fun1: 0, pow2: 0, fun2: 0, winner: 0)}
+    {:ok, assign(socket, match: match, games: games, pow1: 0, fun1: 0, pow2: 0, fun2: 0, winner: 0, sure: false)}
   end
 
 
@@ -28,10 +28,33 @@ defmodule MiewWeb.MatchLive do
   end
 
 
+  @impl true
+  def handle_event("switch_sure", _data, socket) do
+    case socket.assigns.sure do
+      true ->
+        {:noreply, assign(socket, sure: !socket.assigns.sure)}
+      false ->
+        {:noreply, assign(socket, sure: !socket.assigns.sure)}
+    end
+  end
+
+
+  @impl true
+  def handle_event("end", _data, socket) do
+    case Miew.end_match(socket.assigns.match.id) do
+      :ok ->
+        match = Miew.read_match(socket.assigns.match.id)
+        {:noreply, assign(socket, match: match)}
+      {:error, msg} ->
+        {:noreply, put_flash(socket, :end_feedback, msg)}
+      _ ->
+        {:noreply, put_flash(socket, :end_feedback, "Unknown error")}
+    end
+  end
+
+
   defp create_game(match, %{"winner" => winner} = data) do
     {win_nr, _} = Integer.parse winner
-
-    IO.puts(Kernel.inspect(match))
 
     d = data
       |> Map.put_new("eval1", nil)
@@ -51,7 +74,7 @@ defmodule MiewWeb.MatchLive do
     case Metr.create_game(metr_game) do
       {:error, msg} ->
         {:error, msg}
-        %{id: "Error - #{msg}", 
+        %{id: "Error - #{msg}",
         match: match,
         data: data}
       game_id ->

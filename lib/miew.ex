@@ -21,6 +21,10 @@ defmodule Miew do
     Metr.read_match(id)
   end
 
+  def end_match(id) do
+    Metr.end_match(id)
+  end
+
 
   def list_games(game_ids) when is_list(game_ids) do
     Metr.list_games(game_ids)
