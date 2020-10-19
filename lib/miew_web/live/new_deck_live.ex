@@ -16,8 +16,6 @@ defmodule MiewWeb.NewDeckLive do
     players = Enum.map(Metr.list_players(), fn p -> p.id end)
     formats = Metr.list_formats()
 
-    IO.puts(Kernel.inspect(players))
-
     {:ok, assign(socket,
     owner: "",
     name: "", format: "", theme: "",
