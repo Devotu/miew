@@ -2,7 +2,6 @@ defmodule MiewWeb.MatchLive do
   use MiewWeb, :live_view
 
   alias Metr
-  alias Miew.Helpers
 
   @impl true
   def mount(params, _session, socket) do

@@ -30,7 +30,11 @@ defmodule MiewWeb.LogLive do
   @impl true
   @spec handle_event(<<_::24>>, map, any) :: {:noreply, any}
   def handle_event("add", %{"name" => name}, socket) do
-    player_id = Miew.create_player(%{name: name})
-    {:noreply, assign(socket, name_added: "Added: " <> name)}
+    case Miew.create_player(%{name: name}) do
+      {:error, msg} ->
+        {:noreply, assign(socket, name_added: "Error: " <> msg)}
+      _ ->
+        {:noreply, assign(socket, name_added: "Added: " <> name)}
+    end
   end
 end

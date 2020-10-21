@@ -16,11 +16,11 @@ defmodule MiewWeb.NewMatchLive do
     decks = Enum.map(Metr.list_decks(), fn d -> d.id end)
 
     {:ok, assign(socket,
-    player_1: "", player_2: "",
-    deck_1: "", deck_2: "",
-    players: players,
-    decks: decks,
-    ranking: :false,
+      player_1: "", player_2: "",
+      deck_1: "", deck_2: "",
+      players: players,
+      decks: decks,
+      ranking: :false
     )}
   end
 
@@ -46,7 +46,6 @@ defmodule MiewWeb.NewMatchLive do
   defp bool(term) do
     case term do
       true -> true
-      :true -> true
       "true" -> true
       _ -> false
     end

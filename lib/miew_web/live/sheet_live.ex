@@ -29,7 +29,7 @@ defmodule MiewWeb.SheetLive do
   end
 
   @impl true
-  def handle_event("delete_game", %{"game_id" => game_id}, socket) do
+  def handle_event("delete_game", %{"game_id" => _game_id}, socket) do
     # Metr.delete_game(game_id)
     games = Metr.list_games()
      |> Enum.sort(&(&1.time < &2.time))
@@ -69,7 +69,7 @@ defmodule MiewWeb.SheetLive do
         ]}
     end
   end
-  defp create_game(%{"p1" => p1, "d1" => d1, "p2" => p2, "d2" => d2, "winner" => winner} = data) do
+  defp create_game(%{"p1" => _p1, "d1" => _d1, "p2" => _p2, "d2" => _d2, "winner" => _winner} = data) do
     create_game(Map.put(data, "rank", "false"))
   end
 
