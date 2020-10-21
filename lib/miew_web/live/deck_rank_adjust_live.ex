@@ -46,7 +46,6 @@ defmodule MiewWeb.DeckRankAdjustLive do
 
   @impl true
   def handle_event("adjust", %{} = data, socket) do
-    IO.puts(Kernel.inspect(data))
     {:noreply, socket}
   end
 end

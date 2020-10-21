@@ -1,0 +1,133 @@
+<section>
+  <table>
+    <tr>
+      <th>Id</td>
+      <th>Status</td>
+      <th>Rank</td>
+      <th>Player 1</td>
+      <th>Player 2</td>
+    </tr>
+    <tr>
+      <td><%= @match.id %></td>
+      <td><%= Kernel.inspect(@match.status) %></td>
+      <td><%= Kernel.inspect(@match.ranking) %></td>
+      <td><%= @match.player_one %>/<%= @match.deck_one %></td>
+      <td><%= @match.player_two %>/<%= @match.deck_two %></td>
+    </tr>
+  </table>
+</section>
+
+<section>
+  ---
+</section>
+
+<section>
+  <table>
+    <tr>
+      <th></th>
+      <th><%= @match.player_one %></th>
+      <th></th>
+      <th></th>
+      <th><%= @match.player_two %></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <th>Id</th>
+      <th>Place</th>
+      <th>Power</th>
+      <th>Fun</th>
+      <th>Place</th>
+      <th>Power</th>
+      <th>Fun</th>
+    </tr>
+    <%= for game <- @games do %>
+    <tr>
+      <td><%= game.id %></td>
+      <%= for p <- game.participants do %>
+        <td><%= p.place %></td>
+        <td><%= p.power %></td>
+        <td><%= p.fun %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </table>
+</section>
+
+<%= if @match.status != :closed do %></td>
+<section>
+  ---
+</section>
+
+<section>
+  <form phx-submit="add">
+    <table>
+      <tr>
+        <th><%= @match.player_one %></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th><%= @match.player_two %></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th>Winner</th>
+        <th>Eval</th>
+        <th>Power</th>
+        <th>Fun</th>
+        <th>Winner</th>
+        <th>Eval</th>
+        <th>Power</th>
+        <th>Fun</th>
+      </tr>
+      <tr>
+        <td>
+          <input id="win1" name="winner" type="radio" value=1>
+        </td>
+        <td>
+          <input name="eval1" type="checkbox" value="true">
+        </td>
+        <td>
+          <input type="range" name="pow1" value="<%= @pow1 %>" min="-2" max="2"/>
+        </td>
+        <td>
+          <input type="range" name="fun1" value="<%= @fun1 %>" min="-2" max="2"/>
+        </td>
+        <td>
+          <input id="win2" name="winner" type="radio" value=2>
+        </td>
+        <td>
+          <input name="eval2" type="checkbox" value="true">
+        </td>
+        <td>
+          <input type="range" name="pow2" value="<%= @pow2 %>" min="-2" max="2"/>
+        </td>
+        <td>
+          <input type="range" name="fun2" value="<%= @fun2 %>" min="-2" max="2"/>
+        </td>
+      </tr>
+    </table>
+    <button type="submit" phx-disable-with="Adding...">Add</button>
+  </form>
+</section>
+
+<section>
+  ---
+</section>
+
+<section>
+  <%= if @sure == false do %></td>
+  <button phx-click="switch_sure">End</button>
+  <% end %>
+  <%= if @sure == true do %></td>
+  <button color="red" phx-click="switch_sure">Do not end</button>
+  <% end %>
+  <%= if @sure == true do %></td>
+  ---
+  <button phx-click="end">Confirm End</button>
+  <% end %>
+  <p class="alert alert-warning"><%= live_flash(@flash, :end_feedback) %></p>
+</section>
+<% end %>
