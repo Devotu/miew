@@ -2,6 +2,7 @@ defmodule MiewWeb.MatchLive do
   use MiewWeb, :live_view
 
   alias Metr
+  alias Miew.Helpers
 
   @impl true
   def mount(params, _session, socket) do
@@ -9,7 +10,7 @@ defmodule MiewWeb.MatchLive do
     match = Miew.read_match(id)
     games = Miew.list_games(match.games)
 
-    {:ok, assign(socket, match: match, games: games, pow1: 0, fun1: 0, pow2: 0, fun2: 0, winner: 0, sure: false)}
+    {:ok, assign(socket, match: match, games: games, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0)}
   end
 
 
@@ -52,58 +53,73 @@ defmodule MiewWeb.MatchLive do
   end
 
 
-  defp create_game(match, %{"winner" => winner} = data) do
-    {win_nr, _} = Integer.parse winner
+  defp create_game(match, %{"winner" => winner} = input_data) do
 
-    d = data
-      |> Map.put_new("eval1", nil)
-      |> add_eval_1()
-      |> Map.put_new("eval2", nil)
-      |> add_eval_2()
+    game_data = match
+      |> to_atom_game_data()
+      |> add_winner(winner)
+      |> add_eval_1(input_data)
+      |> add_eval_2(input_data)
 
-    metr_game = %{
-      :match => match.id,
-      :deck_1 => match.deck_one, :deck_2 => match.deck_two,
-      :player_1 => match.player_one, :player_2 => match.player_two,
-      :winner => win_nr,
-      :power_1 => d.power_1, :power_2 => d.power_2,
-      :fun_1 => d.fun_1, :fun_2 => d.fun_2
-    }
-
-    case Metr.create_game(metr_game) do
+    case Metr.create_game(game_data) do
       {:error, msg} ->
         {:error, msg}
         %{id: "Error - #{msg}",
         match: match,
-        data: data}
+        data: input_data}
       game_id ->
-        %{id: game_id, participants: [
-          %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, win_nr), fun: d.fun_1, power: d.power_1},
-          %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, win_nr), fun: d.fun_2, power: d.power_2}
+        %{id: game_id, balance: "", participants: [
+          %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, game_data.winner), fun: game_data.fun_1, power: game_data.power_1},
+          %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, game_data.winner), fun: game_data.fun_2, power: game_data.power_2}
         ]}
     end
   end
 
-  defp add_eval_1(%{"eval1" => nil} = data) do
-    data
-      |> Map.put(:power_1, nil)
-      |> Map.put(:fun_1, nil)
-  end
-  defp add_eval_1(%{"eval1" => "true"} = data) do
-    data
-      |> Map.put(:power_1, data["pow1"])
-      |> Map.put(:fun_1, data["fun1"])
+
+  defp to_atom_game_data(match) do
+    %{
+      match: match.id,
+      deck_1: match.deck_one, deck_2: match.deck_two,
+      player_1: match.player_one, player_2: match.player_two,
+      winner: 0, balance: nil,
+      power_1: nil, power_2: nil,
+      fun_1: nil, fun_2: nil,
+      eval_1: nil, eval_2: nil
+    }
   end
 
-  defp add_eval_2(%{"eval2" => nil} = data) do
-    data
-      |> Map.put(:power_2, nil)
-      |> Map.put(:fun_2, nil)
+
+  defp add_winner(match, winner) do
+    case Integer.parse winner do
+      {win_nr, _} ->
+        Map.put(match, :winner, win_nr)
+      _ ->
+        {:error, "invalid winner value"}
+    end
   end
-  defp add_eval_2(%{"eval2" => "true"} = data) do
-    data
-      |> Map.put(:power_2, data["pow2"])
-      |> Map.put(:fun_2, data["fun2"])
+
+
+  defp add_eval_1(match, input_data) do
+    case Helpers.text_to_bool(input_data["eval1"]) do
+      true ->
+        match
+        |> Map.put(:power_1, input_data["pow1"])
+        |> Map.put(:fun_1, input_data["fun1"])
+      _ ->
+        match
+    end
+  end
+
+
+  defp add_eval_2(match, input_data) do
+    case Helpers.text_to_bool(input_data["eval2"]) do
+      true ->
+        match
+        |> Map.put(:power_2, input_data["pow2"])
+        |> Map.put(:fun_2, input_data["fun2"])
+      _ ->
+        match
+    end
   end
 
 
