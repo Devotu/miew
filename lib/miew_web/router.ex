@@ -32,6 +32,7 @@ defmodule MiewWeb.Router do
     live "/match/:id", MatchLive
 
     live "/:type/:id/log", LogLive
+    live "/:type/:id/state", StateLive
   end
 
   # Other scopes may use custom stacks.

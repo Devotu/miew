@@ -125,7 +125,7 @@ defmodule MiewWeb.MatchLive do
   defp add_balance(match, input_data) do
     case Integer.parse input_data["balance"] do
       {balance, _} ->
-        Map.put(match, :balance, balance)
+        Map.put(match, :balance, parse_balance(balance))
       _ ->
         {:error, "invalid balance value"}
     end
@@ -139,4 +139,11 @@ defmodule MiewWeb.MatchLive do
       false -> 2
     end
   end
+
+
+  defp parse_balance(-2), do: {1,2}
+  defp parse_balance(-1), do: {1,1}
+  defp parse_balance(0), do: {0,0}
+  defp parse_balance(1), do: {2,1}
+  defp parse_balance(2), do: {2,2}
 end
