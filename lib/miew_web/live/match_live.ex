@@ -53,13 +53,14 @@ defmodule MiewWeb.MatchLive do
   end
 
 
-  defp create_game(match, %{"winner" => winner} = input_data) do
+  defp create_game(match, input_data) do
 
     game_data = match
       |> to_atom_game_data()
-      |> add_winner(winner)
+      |> add_winner(input_data)
       |> add_eval_1(input_data)
       |> add_eval_2(input_data)
+      |> add_balance(input_data)
 
     case Metr.create_game(game_data) do
       {:error, msg} ->
@@ -89,8 +90,8 @@ defmodule MiewWeb.MatchLive do
   end
 
 
-  defp add_winner(match, winner) do
-    case Integer.parse winner do
+  defp add_winner(match, input_data) do
+    case Integer.parse input_data["winner"] do
       {win_nr, _} ->
         Map.put(match, :winner, win_nr)
       _ ->
@@ -119,6 +120,16 @@ defmodule MiewWeb.MatchLive do
         |> Map.put(:fun_2, input_data["fun2"])
       _ ->
         match
+    end
+  end
+
+
+  defp add_balance(match, input_data) do
+    case Integer.parse input_data["balance"] do
+      {balance, _} ->
+        Map.put(match, :balance, balance)
+      _ ->
+        {:error, "invalid balance value"}
     end
   end
 
