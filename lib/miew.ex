@@ -8,6 +8,10 @@ defmodule Miew do
     Metr.create_deck(data)
   end
 
+  def create_game(%{deck_1: _d1, deck_2: _d2, player_1: _p1, player_2: _p2, winner: _w} = data) do
+    Metr.create_game(data)
+  end
+
 
   def create_match(%{deck_1_id: _, player_1_id: _, deck_2_id: _, player_2_id: _, ranking: _ranking} = data) do
     Metr.create_match(data)

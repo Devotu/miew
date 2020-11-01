@@ -62,12 +62,10 @@ defmodule MiewWeb.MatchLive do
       |> add_eval_2(input_data)
       |> add_balance(input_data)
 
-    case Metr.create_game(game_data) do
+    case Miew.create_game(game_data) do
       {:error, msg} ->
         {:error, msg}
-        %{id: "Error - #{msg}",
-        match: match,
-        data: input_data}
+        %{error: "Error", msg: msg}
       game_id ->
         %{id: game_id, balance: "", participants: [
           %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, game_data.winner), fun: game_data.fun_1, power: game_data.power_1},

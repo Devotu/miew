@@ -40,14 +40,21 @@
       <th>Fun</th>
     </tr>
     <%= for game <- @games do %>
-    <tr>
-      <td><%= game.id %></td>
-      <td><%= game.balance %></td>
-      <%= for p <- game.participants do %>
-        <td><%= p.place %></td>
-        <td><%= p.fun %></td>
+      <%= if Map.has_key? game, :error do %>
+        <tr>
+          <td><%= game.error %></td>
+          <td colspan="5"><%= game.msg %></td>
+        </tr>
+      <%= else %>
+        <tr>
+          <td><%= game.id %></td>
+          <td><%= game.balance %></td>
+          <%= for p <- game.participants do %>
+            <td><%= p.place %></td>
+            <td><%= p.fun %></td>
+          <% end %>
+        </tr>
       <% end %>
-    </tr>
     <% end %>
   </table>
 </section>
