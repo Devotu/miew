@@ -62,14 +62,18 @@ defmodule MiewWeb.MatchLive do
       |> add_eval_2(input_data)
       |> add_balance(input_data)
 
+    IO.inspect(game_data.balance, label: "game data balance")
+    IO.inspect(power(game_data.balance, 1), label: "game data power 1")
+    IO.inspect(power(game_data.balance, 2), label: "game data power 2")
+
     case Miew.create_game(game_data) do
       {:error, msg} ->
         {:error, msg}
         %{error: "Error", msg: msg}
       game_id ->
-        %{id: game_id, balance: "", participants: [
-          %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, game_data.winner), fun: game_data.fun_1, power: game_data.power_1},
-          %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, game_data.winner), fun: game_data.fun_2, power: game_data.power_2}
+        %{id: game_id, participants: [
+          %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, game_data.winner), fun: game_data.fun_1, power: power(game_data.balance, 1)},
+          %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, game_data.winner), fun: game_data.fun_2, power: power(game_data.balance, 2)}
         ]}
     end
   end
@@ -146,4 +150,24 @@ defmodule MiewWeb.MatchLive do
   defp parse_balance(0), do: {0,0}
   defp parse_balance(1), do: {2,1}
   defp parse_balance(2), do: {2,2}
+
+
+  # defp power(balance, number) do
+  #   IO.inspect(balance, label: "power balance")
+  # end
+
+  defp power({0,0}, _), do: 0
+  defp power({x,1}, x), do: 1
+  defp power({x,2}, x), do: 2
+  defp power({_x,1}, _y), do: -1
+  defp power({_x,2}, _y), do: -2
+
+  defp power({1,1}, 1), do: 1
+  defp power({1,2}, 1), do: 2
+  defp power({1,1}, 2), do: -1
+  defp power({1,2}, 2), do: -2
+  defp power({2,1}, 1), do: -1
+  defp power({2,2}, 1), do: -2
+  defp power({2,1}, 2), do: 1
+  defp power({2,2}, 2), do: 2
 end

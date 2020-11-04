@@ -28,15 +28,18 @@
       <th></th>
       <th><%= @match.player_one %></th>
       <th></th>
+      <th></th>
       <th><%= @match.player_two %></th>
+      <th></th>
       <th></th>
     </tr>
     <tr>
       <th>Id</th>
-      <th>Balance</th>
       <th>Place</th>
+      <th>Power</th>
       <th>Fun</th>
       <th>Place</th>
+      <th>Power</th>
       <th>Fun</th>
     </tr>
     <%= for game <- @games do %>
@@ -45,12 +48,12 @@
           <td><%= game.error %></td>
           <td colspan="5"><%= game.msg %></td>
         </tr>
-      <%= else %>
+      <% else %>
         <tr>
           <td><%= game.id %></td>
-          <td><%= Kernel.inspect(game.balance) %></td>
           <%= for p <- game.participants do %>
             <td><%= p.place %></td>
+            <td><%= p.power %></td>
             <td><%= p.fun %></td>
           <% end %>
         </tr>
@@ -73,7 +76,6 @@
         <th></th>
         <th></th>
         <th><%= @match.player_two %></th>
-        <th></th>
         <th></th>
         <th></th>
       </tr>
