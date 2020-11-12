@@ -19,10 +19,14 @@ defmodule MiewWeb.LogLive do
   end
 
   @impl true
-  def mount(params, _session, socket) do
-    type = params["type"] |> Metr.type_from_string()
-    id = params["id"]
+  def mount(%{"id" => id, "type" => type_input}, _session, socket) do
+    type = Metr.type_from_string(type_input)
     log = Metr.read_entity_log(type, id)
     {:ok, assign(socket, events: log)}
+  end
+
+  def mount(%{"limit" => limit_input}, _session, socket) do
+    {limit, ""} = Integer.parse(limit_input)
+    {:ok, assign(socket, events: Metr.read_global_log(limit))}
   end
 end

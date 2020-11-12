@@ -32,6 +32,8 @@ defmodule MiewWeb.Router do
     live "/match/:id", MatchLive
 
     live "/:type/:id/log", LogLive
+    live "/log/:limit", LogLive
+
     live "/:type/:id/state", StateLive
   end
 
