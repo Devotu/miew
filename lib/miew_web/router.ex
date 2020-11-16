@@ -35,6 +35,8 @@ defmodule MiewWeb.Router do
     live "/log/:limit", LogLive
 
     live "/:type/:id/state", StateLive
+
+    live "/load/parse/decks", ParseDecksLive
   end
 
   # Other scopes may use custom stacks.
