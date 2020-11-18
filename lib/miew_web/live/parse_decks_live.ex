@@ -14,7 +14,7 @@ defmodule MiewWeb.ParseDecksLive do
     parsed = data
       |> String.split(",")
       |> Enum.map(&(String.split(&1, ";")))
-      |> Enum.map(&pick_apart/1)
+      |> Enum.map(fn x -> pick_apart(x, Miew.list_formats()) end)
 
     {:noreply, assign(socket, decks: parsed)}
   end
@@ -28,10 +28,11 @@ defmodule MiewWeb.ParseDecksLive do
   end
 
 
-  defp pick_apart([price, format, name, creator, red, green, white, black, blue]) do
+  defp pick_apart([price, format, name, creator, red, green, white, black, blue], known_formats) do
+    IO.inspect(known_formats, label: "parse - known formats")
     %{
       name: name,
-      format: format,
+      format: parse_format(format, known_formats),
       theme: "",
       creator: creator,
       black: Helpers.text_to_bool(black),
@@ -42,5 +43,19 @@ defmodule MiewWeb.ParseDecksLive do
       colorless: false,
       price: Helpers.text_to_number(price)
     }
+  end
+
+
+  defp parse_format(input_text, known_formats) do
+    input_text
+      |> String.downcase()
+      |> by_known_format(known_formats)
+  end
+
+  defp by_known_format(text, known_formats) do
+    case Enum.member?(known_formats, text) do
+      true -> text
+      false -> "Unknown format #{text}"
+    end
   end
 end
