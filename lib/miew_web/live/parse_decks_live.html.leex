@@ -3,7 +3,7 @@
 </section>
 <section>
   <form phx-submit="parse">
-    <input type="textarea" name="data" rows="10" cols="100" placeholder="data [Price;Set;Name;Creator;Red;Green;White;Black;Blue;Colorless]"/>
+    <input type="textarea" name="data" rows="10" cols="100"/>
     <button type="submit" phx-disable-with="Parsing..">Parse</button>
   </form>
 </section>
@@ -11,27 +11,53 @@
   <form phx-submit="apply">
     <table>
       <tr>
+        <th>Creator</td>
         <th>Name</td>
         <th>Format</td>
+        <th>Theme</td>
+        <th>Price</td>
         <th>Black</td>
         <th>White</td>
         <th>Red</td>
         <th>Green</td>
         <th>Blue</td>
         <th>Colorless</td>
-        <th>Cost</td>
       </tr>
       <%= for deck <- @decks do %>
         <tr>
-          <td><%= deck.name %></td>
-          <td><%= deck.format %></td>
-          <td><%= deck.black %></td>
-          <td><%= deck.white %></td>
-          <td><%= deck.red %></td>
-          <td><%= deck.green %></td>
-          <td><%= deck.blue %></td>
-          <td><%= deck.colorless %></td>
-          <td><%= deck.cost %></td>
+          <td>
+            <input type="text" name="owner" value="<%= deck.creator %>"/>
+          </td>
+          <td>
+            <input type="text" name="name" value="<%= deck.name %>"/>
+          </td>
+          <td>
+            <input type="text" name="format" value="<%= deck.format %>"/>
+          </td>
+          <td>
+            <input type="text" name="theme" value="<%= deck.theme %>"/>
+          </td>
+          <td>
+            <input type="number" name="price" value="<%= deck.price %>"/>
+          </td>
+          <td>
+            <input id="black" name="black" type="checkbox" <%= if deck.black do "checked=true" end %> value="true">
+          </td>
+          <td>
+            <input id="white" name="white" type="checkbox" <%= if deck.white do "checked=true" end %> value="true">
+          </td>
+          <td>
+            <input id="red" name="red" type="checkbox" <%= if deck.red do "checked=true" end %> value="true">
+          </td>
+          <td>
+            <input id="green" name="green" type="checkbox" <%= if deck.green do "checked=true" end %> value="true">
+          </td>
+          <td>
+            <input id="blue" name="blue" type="checkbox" <%= if deck.blue do "checked=true" end %> value="true">
+          </td>
+          <td>
+            <input id="colorless" name="colorless" type="checkbox" <%= if deck.colorless do "checked=true" end %> value="true">
+          </td>
         </tr>
       <% end %>
     </table>

@@ -3,13 +3,6 @@ defmodule MiewWeb.ParseDecksLive do
 
   alias Miew.Helpers
 
-  @default_deck %{
-    name: "name", format: "format", theme: "tema",
-    black: false, white: false, red: false,
-    green: false, blue: false, colorless: false
-  }
-
-
   @impl true
   def mount(_params, _session, socket) do
     {:ok, assign(socket, decks: [], msg: "")}
@@ -29,15 +22,17 @@ defmodule MiewWeb.ParseDecksLive do
 
   @impl true
   def handle_event("apply", %{} = data, socket) do
+    IO.inspect(data, label: "apply data")
     msg = "Här kommer output att vara"
     {:noreply, assign(socket, msg: msg)}
   end
 
 
-  defp pick_apart([cost, format, name, creator, red, green, white, black, blue]) do
+  defp pick_apart([price, format, name, creator, red, green, white, black, blue]) do
     %{
       name: name,
-      format: String.downcase(format),
+      format: format,
+      theme: "",
       creator: creator,
       black: Helpers.text_to_bool(black),
       white: Helpers.text_to_bool(white),
@@ -45,7 +40,7 @@ defmodule MiewWeb.ParseDecksLive do
       green: Helpers.text_to_bool(green),
       blue: Helpers.text_to_bool(blue),
       colorless: false,
-      cost: Helpers.text_to_number(cost)
+      price: Helpers.text_to_number(price)
     }
   end
 end
