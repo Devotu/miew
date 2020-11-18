@@ -45,7 +45,7 @@ defmodule MiewWeb.ParseDecksLive do
       green: Helpers.text_to_bool(green),
       blue: Helpers.text_to_bool(blue),
       colorless: false,
-      cost: cost
+      cost: Helpers.text_to_number(cost)
     }
   end
 end

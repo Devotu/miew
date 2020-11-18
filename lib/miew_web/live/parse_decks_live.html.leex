@@ -19,6 +19,7 @@
         <th>Green</td>
         <th>Blue</td>
         <th>Colorless</td>
+        <th>Cost</td>
       </tr>
       <%= for deck <- @decks do %>
         <tr>
@@ -30,6 +31,7 @@
           <td><%= deck.green %></td>
           <td><%= deck.blue %></td>
           <td><%= deck.colorless %></td>
+          <td><%= deck.cost %></td>
         </tr>
       <% end %>
     </table>
