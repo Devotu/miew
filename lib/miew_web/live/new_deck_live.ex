@@ -2,6 +2,7 @@ defmodule MiewWeb.NewDeckLive do
   use MiewWeb, :live_view
 
   alias Metr
+  alias Miew.Helpers
 
   @default_deck %{
     "format" => "", "theme" => "",
@@ -51,10 +52,7 @@ defmodule MiewWeb.NewDeckLive do
     }
   end
 
-  defp bool(term) when is_bitstring(term) do
-    case term do
-      "true" -> true
-      "false" -> false
-    end
+  defp bool(term) do
+    Helpers.text_to_bool(term)
   end
 end

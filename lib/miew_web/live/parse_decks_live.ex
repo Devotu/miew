@@ -22,19 +22,20 @@ defmodule MiewWeb.ParseDecksLive do
 
   @impl true
   def handle_event("apply", %{} = data, socket) do
-    IO.inspect(data, label: "apply data")
-    msg = "Här kommer output att vara"
+    IO.inspect(data, label: "applying data")
+    msg = data
+      |> to_atom_deck_data()
+      |> Miew.create_deck()
     {:noreply, assign(socket, msg: msg)}
   end
 
 
   defp pick_apart([price, format, name, creator, red, green, white, black, blue], known_formats) do
-    IO.inspect(known_formats, label: "parse - known formats")
     %{
       name: name,
       format: parse_format(format, known_formats),
       theme: "",
-      creator: creator,
+      owner: String.downcase(creator),
       black: Helpers.text_to_bool(black),
       white: Helpers.text_to_bool(white),
       red: Helpers.text_to_bool(red),
@@ -57,5 +58,20 @@ defmodule MiewWeb.ParseDecksLive do
       true -> text
       false -> "Unknown format #{text}"
     end
+  end
+
+
+  defp to_atom_deck_data(m) do
+    %{
+      player_id: m["owner"],
+      name: m["name"], format: m["format"], theme: m["theme"],
+      black: bool(m["black"]), white: bool(m["white"]), red: bool(m["red"]),
+      green: bool(m["green"]), blue: bool(m["blue"]), colorless: bool(m["colorless"]),
+      rank: 0, advantage: 0
+    }
+  end
+
+  defp bool(term) do
+    Helpers.text_to_bool(term)
   end
 end
