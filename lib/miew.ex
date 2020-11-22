@@ -33,4 +33,9 @@ defmodule Miew do
   def list_games(game_ids) when is_list(game_ids) do
     Metr.list_games(game_ids)
   end
+
+
+  def list_formats() do
+    Metr.list_formats()
+  end
 end
