@@ -12,6 +12,7 @@ defmodule MiewWeb.DeckLive do
         <tr>
           <th>Name</td>
           <th>Format</td>
+          <th>Price</td>
           <th>Black</td>
           <th>White</td>
           <th>Red</td>
@@ -24,6 +25,7 @@ defmodule MiewWeb.DeckLive do
         <tr>
           <td><%= @deck.name %></td>
           <td><%= @deck.format %></td>
+          <td><%= @deck.price %></td>
           <td><%= @deck.black %></td>
           <td><%= @deck.white %></td>
           <td><%= @deck.red %></td>

@@ -67,7 +67,7 @@ defmodule MiewWeb.ParseDecksLive do
       name: m["name"], format: m["format"], theme: m["theme"],
       black: bool(m["black"]), white: bool(m["white"]), red: bool(m["red"]),
       green: bool(m["green"]), blue: bool(m["blue"]), colorless: bool(m["colorless"]),
-      rank: 0, advantage: 0
+      rank: 0, advantage: 0, price: m["price"]
     }
   end
 
