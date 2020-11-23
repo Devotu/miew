@@ -8,9 +8,13 @@ defmodule MiewWeb.MatchLive do
   def mount(params, _session, socket) do
     id = params["id"]
     match = Miew.read_match(id)
-    games = Miew.list_games(match.games)
+    IO.inspect(match, label: "match - match")
+    results = match.games
+      |> Miew.list(:game)
+      |> Enum.map(fn g -> %{id: g.id, results: Miew.list(:result, g.results)} end)
+      |> IO.inspect(label: "match - results")
 
-    {:ok, assign(socket, match: match, games: games, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0)}
+    {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0)}
   end
 
 
@@ -62,16 +66,12 @@ defmodule MiewWeb.MatchLive do
       |> add_eval_2(input_data)
       |> add_balance(input_data)
 
-    IO.inspect(game_data.balance, label: "game data balance")
-    IO.inspect(power(game_data.balance, 1), label: "game data power 1")
-    IO.inspect(power(game_data.balance, 2), label: "game data power 2")
-
     case Miew.create_game(game_data) do
       {:error, msg} ->
         {:error, msg}
         %{error: "Error", msg: msg}
       game_id ->
-        %{id: game_id, participants: [
+        %{id: game_id, results: [
           %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, game_data.winner), fun: game_data.fun_1, power: power(game_data.balance, 1)},
           %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, game_data.winner), fun: game_data.fun_2, power: power(game_data.balance, 2)}
         ]}
