@@ -51,7 +51,7 @@
       <% else %>
         <tr>
           <td><%= game.id %></td>
-          <%= for p <- game.participants do %>
+          <%= for p <- game.results do %>
             <td><%= p.place %></td>
             <td><%= p.power %></td>
             <td><%= p.fun %></td>

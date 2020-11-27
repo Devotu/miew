@@ -22,7 +22,6 @@ defmodule MiewWeb.ParseDecksLive do
 
   @impl true
   def handle_event("apply", %{} = data, socket) do
-    IO.inspect(data, label: "applying data")
     msg = data
       |> to_atom_deck_data()
       |> Miew.create_deck()

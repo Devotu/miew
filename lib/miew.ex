@@ -35,6 +35,15 @@ defmodule Miew do
   end
 
 
+  def list(type, ids) when is_atom(type) and is_list(ids) do
+    Metr.list_states(type, ids)
+  end
+
+  def list(ids, type) when is_atom(type) and is_list(ids) do
+    Metr.list_states(type, ids)
+  end
+
+
   def list_formats() do
     Metr.list_formats()
   end
