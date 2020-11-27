@@ -1,0 +1,68 @@
+<section class="phx-hero">
+  <p><%= assigns.msg %>
+</section>
+<section>
+  <form phx-submit="parse">
+    <input type="textarea" name="data" rows="10" cols="100"/>
+    <button type="submit" phx-disable-with="Parsing..">Parse</button>
+  </form>
+</section>
+<section>
+  <form phx-submit="apply">
+    <label>Input</label>
+    <table>
+      <tr>
+        <th>Attacker</td>
+        <th>Wins</td>
+        <th>Wins</td>
+        <th>Defender</td>
+      </tr>
+      <%= for result <- @parsed do %>
+        <tr>
+          <td>
+            <%= result.attacker.name %>
+          </td>
+          <td>
+            <%= result.attacker.wins %>
+          </td>
+          <td>
+            <%= result.defender.wins %>
+          </td>
+          <td>
+            <%= result.defender.name %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <label>Useful</label>
+    <table>
+      <tr>
+        <th>Attacker</td>
+        <th>Wins</td>
+        <th>Wins</td>
+        <th>Defender</td>
+      </tr>
+      <%= for result <- @results do %>
+        <tr>
+          <td>
+            <%= result.attacker.name %>
+          </td>
+          <td>
+            <%= result.attacker.wins %>
+          </td>
+          <td>
+            <%= result.defender.wins %>
+          </td>
+          <td>
+            <%= result.defender.name %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    <div>
+      <label>Data</label>
+      <%= @applicable_data |> Kernel.inspect %>
+    </div>
+    <button type="submit" phx-disable-with="Applying..">Apply</button>
+  </form>
+</section>
