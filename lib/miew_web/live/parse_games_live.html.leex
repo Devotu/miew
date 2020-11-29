@@ -61,7 +61,7 @@
     </table>
     <div>
       <label>Data</label>
-      <%= @applicable_data |> Kernel.inspect %>
+      <input type="text" name="input_data" value="<%= @input_data |> Kernel.inspect %>"/>
     </div>
     <button type="submit" phx-disable-with="Applying..">Apply</button>
   </form>

@@ -1,35 +1,41 @@
 defmodule MiewWeb.ParseGamesLive do
   use MiewWeb, :live_view
 
-  alias Miew.Helpers
-
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, parsed: [], results: [], applicable_data: %{}, msg: "")}
+    {:ok, assign(socket, parsed: [], results: [], input_data: "", msg: "")}
   end
 
 
   @impl true
   def handle_event("parse", %{"data" => data}, socket) do
-    parsed = data
-      |> split_entries()
-      |> divide_attacker_defender()
-      |> extract_results()
-      |> IO.inspect(label: "parsed")
+    parsed = parse_input(data)
 
     results = parsed
       |> filter_with_games()
 
-    {:noreply, assign(socket, parsed: parsed, results: results, applicable_data: results)}
+    {:noreply, assign(socket, parsed: parsed, results: results, input_data: data)}
   end
 
 
   @impl true
-  def handle_event("apply", %{} = data, socket) do
+  def handle_event("apply", %{"input_data" => data}, socket) do
     msg = data
-      |> to_atom_deck_data()
-      |> Miew.create_deck()
-    {:noreply, assign(socket, msg: msg)}
+      |> String.replace("\"", "")
+      |> parse_input()
+      |> to_atom_game_data()
+      # |> Miew.create_game()
+      # |> IO.inspect(label: "apply - result")
+    {:noreply, assign(socket, msg: Kernel.inspect(msg))}
+  end
+
+
+  defp parse_input(data) do
+    data
+    |> split_entries()
+    |> divide_attacker_defender()
+    |> extract_results()
+    |> IO.inspect(label: "parsed")
   end
 
 
@@ -63,51 +69,58 @@ defmodule MiewWeb.ParseGamesLive do
   defp has_games?(_), do: true
 
 
+  defp to_atom_game_data(input_data) do
+    parts = input_data
+      |> build_parts()
+    IO.inspect(parts, label: "parts")
+    # attack_wins = count_wins input_data, :attacker
+    # defend_wins = count_wins input_data, :defender
 
-
-
-  defp pick_apart([price, format, name, creator, red, green, white, black, blue], known_formats) do
-    %{
-      name: name,
-      format: parse_format(format, known_formats),
-      theme: "",
-      owner: String.downcase(creator),
-      black: Helpers.text_to_bool(black),
-      white: Helpers.text_to_bool(white),
-      red: Helpers.text_to_bool(red),
-      green: Helpers.text_to_bool(green),
-      blue: Helpers.text_to_bool(blue),
-      colorless: false,
-      price: Helpers.text_to_number(price)
-    }
+    # %{
+    #   match: nil,
+    #   deck_1: attacker.deck_id, deck_2: defender.deck_id,
+    #   player_1: attacker.player_id, player_2: defender.player_id,
+    #   winner: 0, balance: nil,
+    #   power_1: nil, power_2: nil,
+    #   fun_1: nil, fun_2: nil,
+    #   eval_1: nil, eval_2: nil
+    # }
   end
 
 
-  defp parse_format(input_text, known_formats) do
-    input_text
-      |> String.downcase()
-      |> by_known_format(known_formats)
-  end
-
-  defp by_known_format(text, known_formats) do
-    case Enum.member?(known_formats, text) do
-      true -> text
-      false -> "Unknown format #{text}"
-    end
+  defp build_parts(input_data) do
+    input_data
+    |> Enum.filter(&contain_games?/1)
+    |> Enum.map(&to_part_tuple/1)
   end
 
 
-  defp to_atom_deck_data(m) do
-    %{
-      player_id: m["owner"],
-      name: m["name"], format: m["format"], theme: m["theme"],
-      black: bool(m["black"]), white: bool(m["white"]), red: bool(m["red"]),
-      green: bool(m["green"]), blue: bool(m["blue"]), colorless: bool(m["colorless"]),
-      rank: 0, advantage: 0, price: m["price"]
-    }
+  defp contain_games?(%{attacker: %{wins: "0"}, defender: %{wins: "0"}}), do: false
+  defp contain_games?(_non_zero_wins), do: true
+
+
+  defp to_part_tuple(%{attacker: attacker, defender: defender}) do
+    %{attacker: build_part(attacker), defender: build_part(defender)}
   end
 
-  defp bool(term) do
-    Helpers.text_to_bool(term)
+  defp build_part(data) do
+    deck = get_deck(data)
+    %{deck: deck, player: get_player(deck), wins: get_win_count(data.wins)}
+  end
+
+  defp get_deck(%{name: deck_name}) do
+    deck_name
+    |> Metr.Id.hrid()
+    |> Miew.get("Deck")
+  end
+
+  defp get_player(%{id: deck_id}) do
+    Miew.list("Player")
+    |> Enum.find({:error, "No owner found"}, fn p -> Enum.any?(p.decks, fn did -> did == deck_id end) end)
+  end
+
+  defp get_win_count(wins) do
+    {count, _} = Integer.parse(wins)
+    count
   end
 end
