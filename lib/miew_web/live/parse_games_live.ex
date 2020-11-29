@@ -70,28 +70,18 @@ defmodule MiewWeb.ParseGamesLive do
 
 
   defp to_atom_game_data(input_data) do
-    parts = input_data
-      |> build_parts()
-    IO.inspect(parts, label: "parts")
-    # attack_wins = count_wins input_data, :attacker
-    # defend_wins = count_wins input_data, :defender
-
-    # %{
-    #   match: nil,
-    #   deck_1: attacker.deck_id, deck_2: defender.deck_id,
-    #   player_1: attacker.player_id, player_2: defender.player_id,
-    #   winner: 0, balance: nil,
-    #   power_1: nil, power_2: nil,
-    #   fun_1: nil, fun_2: nil,
-    #   eval_1: nil, eval_2: nil
-    # }
+    input_data
+    |> Enum.filter(&contain_games?/1)
+    |> build_full_rows()
+    |> Enum.map(&row_game_data_list/1)
+    |> Enum.concat()
+    |> IO.inspect(label: "rows game data")
   end
 
 
-  defp build_parts(input_data) do
+  defp build_full_rows(input_data) do
     input_data
-    |> Enum.filter(&contain_games?/1)
-    |> Enum.map(&to_part_tuple/1)
+    |> Enum.map(&fill_row_map/1)
   end
 
 
@@ -99,7 +89,7 @@ defmodule MiewWeb.ParseGamesLive do
   defp contain_games?(_non_zero_wins), do: true
 
 
-  defp to_part_tuple(%{attacker: attacker, defender: defender}) do
+  defp fill_row_map(%{attacker: attacker, defender: defender}) do
     %{attacker: build_part(attacker), defender: build_part(defender)}
   end
 
@@ -122,5 +112,28 @@ defmodule MiewWeb.ParseGamesLive do
   defp get_win_count(wins) do
     {count, _} = Integer.parse(wins)
     count
+  end
+
+  defp row_game_data_list(row) do
+    attacker_wins = fill_wins(row.attacker, row.attacker, row.defender)
+    defender_wins = fill_wins(row.defender, row.defender, row.attacker)
+    attacker_wins ++ defender_wins
+  end
+
+  defp fill_wins(%{wins: 0}, _winner, _looser), do: []
+  defp fill_wins(%{wins: wins}, winner, looser) do
+    Enum.map(0..wins - 1, fn _w -> new_game_data(winner, looser) end)
+  end
+
+  defp new_game_data(winner, looser) do
+    %{
+      match: nil,
+      deck_1: winner.deck.id, deck_2: looser.deck.id,
+      player_1: winner.player.id, player_2: looser.player.id,
+      winner: 1, balance: nil,
+      power_1: nil, power_2: nil,
+      fun_1: nil, fun_2: nil,
+      eval_1: nil, eval_2: nil
+    }
   end
 end
