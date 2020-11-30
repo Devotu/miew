@@ -24,8 +24,7 @@ defmodule MiewWeb.ParseGamesLive do
       |> String.replace("\"", "")
       |> parse_input()
       |> to_atom_game_data()
-      # |> Miew.create_game()
-      # |> IO.inspect(label: "apply - result")
+      |> Enum.map(&Miew.create_game/1)
     {:noreply, assign(socket, msg: Kernel.inspect(msg))}
   end
 
@@ -35,7 +34,6 @@ defmodule MiewWeb.ParseGamesLive do
     |> split_entries()
     |> divide_attacker_defender()
     |> extract_results()
-    |> IO.inspect(label: "parsed")
   end
 
 
@@ -75,7 +73,6 @@ defmodule MiewWeb.ParseGamesLive do
     |> build_full_rows()
     |> Enum.map(&row_game_data_list/1)
     |> Enum.concat()
-    |> IO.inspect(label: "rows game data")
   end
 
 
