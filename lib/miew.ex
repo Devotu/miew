@@ -43,8 +43,15 @@ defmodule Miew do
     Metr.list_states(type, ids)
   end
 
+  def list(type) when is_bitstring(type) do
+    Metr.list_states(type)
+  end
 
   def list_formats() do
     Metr.list_formats()
+  end
+
+  def get(id, type) when is_bitstring(id) and is_bitstring(type) do
+    Metr.read_state(type, id)
   end
 end
