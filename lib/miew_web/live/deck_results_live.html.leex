@@ -1,0 +1,20 @@
+<section>
+  <table>
+    <tr>
+      <th>Id</th>
+      <th>Player</th>
+      <th>Place</th>
+      <th>Power</th>
+      <th>Fun</th>
+    </tr>
+    <%= for r <- @results do %>
+    <tr>
+      <td><%= r.id %></td>
+      <td><%= r.player_id %></td>
+      <td><%= r.place %></td>
+      <td><%= r.power %></td>
+      <td><%= r.fun %></td>
+    </tr>
+    <% end %>
+  </table>
+</section>
