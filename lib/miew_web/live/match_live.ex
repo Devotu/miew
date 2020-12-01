@@ -8,11 +8,9 @@ defmodule MiewWeb.MatchLive do
   def mount(params, _session, socket) do
     id = params["id"]
     match = Miew.read_match(id)
-    IO.inspect(match, label: "match - match")
     results = match.games
       |> Miew.list(:game)
       |> Enum.map(fn g -> %{id: g.id, results: Miew.list(:result, g.results)} end)
-      |> IO.inspect(label: "match - results")
 
     {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0)}
   end
