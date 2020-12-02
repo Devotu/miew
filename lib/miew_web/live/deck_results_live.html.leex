@@ -5,15 +5,19 @@
       <th>Player</th>
       <th>Place</th>
       <th>Power</th>
+      <th>Z Power</th>
       <th>Fun</th>
+      <th>Z Fun</th>
     </tr>
     <%= for r <- @results do %>
     <tr>
-      <td><%= r.id %></td>
-      <td><%= r.player_id %></td>
-      <td><%= r.place %></td>
-      <td><%= r.power %></td>
-      <td><%= r.fun %></td>
+      <td><%= r.result.id %></td>
+      <td><%= r.result.player_id %></td>
+      <td><%= r.result.place %></td>
+      <td><%= r.result.power %></td>
+      <td><%= r.z_power %></td>
+      <td><%= r.result.fun %></td>
+      <td><%= r.z_fun %></td>
     </tr>
     <% end %>
   </table>

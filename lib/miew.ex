@@ -36,11 +36,11 @@ defmodule Miew do
 
 
   def list(type, ids) when is_atom(type) and is_list(ids) do
-    Metr.list_states(type, ids)
+    Metr.list_states(ids, type)
   end
 
   def list(ids, type) when is_atom(type) and is_list(ids) do
-    Metr.list_states(type, ids)
+    Metr.list_states(ids, type)
   end
 
   def list(type) when is_bitstring(type) do

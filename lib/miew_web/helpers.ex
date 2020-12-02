@@ -16,4 +16,14 @@ defmodule Miew.Helpers do
       :error -> {:error, "#{term} is not a number"}
     end
   end
+
+  def text_to_integer(nil), do: 0
+  def text_to_integer(""), do: 0
+  def text_to_integer(term) when is_number(term), do: term
+  def text_to_integer(term) do
+    case Integer.parse(term) do
+      {x, ""} -> x
+      :error -> {:error, "#{term} is not a number"}
+    end
+  end
 end

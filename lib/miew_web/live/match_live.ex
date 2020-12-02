@@ -104,8 +104,8 @@ defmodule MiewWeb.MatchLive do
     case Helpers.text_to_bool(input_data["eval1"]) do
       true ->
         match
-        |> Map.put(:power_1, input_data["pow1"])
-        |> Map.put(:fun_1, input_data["fun1"])
+        |> Map.put(:power_1, input_data["pow1"] |> Helpers.text_to_integer())
+        |> Map.put(:fun_1, input_data["fun1"] |> Helpers.text_to_integer())
       _ ->
         match
     end
@@ -116,8 +116,8 @@ defmodule MiewWeb.MatchLive do
     case Helpers.text_to_bool(input_data["eval2"]) do
       true ->
         match
-        |> Map.put(:power_2, input_data["pow2"])
-        |> Map.put(:fun_2, input_data["fun2"])
+        |> Map.put(:power_2, input_data["pow2"] |> Helpers.text_to_integer())
+        |> Map.put(:fun_2, input_data["fun2"] |> Helpers.text_to_integer())
       _ ->
         match
     end
@@ -149,23 +149,9 @@ defmodule MiewWeb.MatchLive do
   defp parse_balance(1), do: {2,1}
   defp parse_balance(2), do: {2,2}
 
-
-  # defp power(balance, number) do
-  #   IO.inspect(balance, label: "power balance")
-  # end
-
   defp power({0,0}, _), do: 0
   defp power({x,1}, x), do: 1
   defp power({x,2}, x), do: 2
   defp power({_x,1}, _y), do: -1
   defp power({_x,2}, _y), do: -2
-
-  defp power({1,1}, 1), do: 1
-  defp power({1,2}, 1), do: 2
-  defp power({1,1}, 2), do: -1
-  defp power({1,2}, 2), do: -2
-  defp power({2,1}, 1), do: -1
-  defp power({2,2}, 1), do: -2
-  defp power({2,1}, 2), do: 1
-  defp power({2,2}, 2), do: 2
 end
