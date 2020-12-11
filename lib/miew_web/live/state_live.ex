@@ -21,7 +21,16 @@ defmodule MiewWeb.StateLive do
   def mount(params, _session, socket) do
     type = params["type"] |> Metr.type_from_string()
     id = params["id"]
-    player_state = Metr.read_state(type, id)
-    {:ok, assign(socket, state: player_state)}
+    state = Metr.read_state(type, id)
+    {:ok, assign(socket, state: state, type: type)}
+  end
+
+  @impl true
+  def handle_event("rerun", %{"id" => id, "type" => type}, socket) do
+    case Metr.rerun(type, id) do
+      :ok -> {:noreply, put_flash(socket, :rerun_ok, "Ok!")}
+      {:error, e} -> {:noreply, put_flash(socket, :rerun_error, Kernel.inspect(e))}
+      x -> {:noreply, put_flash(socket, :rerun_error, "Unkown error #{Kernel.inspect(x)}")}
+    end
   end
 end
