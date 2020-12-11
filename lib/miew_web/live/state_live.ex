@@ -9,6 +9,11 @@ defmodule MiewWeb.StateLive do
     <section class="phx-hero">
       <%= Kernel.inspect(@state) %>
     </section>
+    <section>
+      <button phx-click="rerun" phx-value-id="<%=@state.id%>" phx-value-type="<%=@type%>">Rerun</button>
+      <p class="alert alert-warning"><%= live_flash(@flash, :rerun_error) %></p>
+      <p class="alert alert-success"><%= live_flash(@flash, :rerun_ok) %></p>
+    </section>
     """
   end
 
