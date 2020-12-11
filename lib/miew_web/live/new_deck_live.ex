@@ -14,7 +14,7 @@ defmodule MiewWeb.NewDeckLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    players = Enum.map(Metr.list_players(), fn p -> p.id end)
+    players = Enum.map(Miew.list("player"), fn p -> p.id end)
     formats = Miew.list_formats()
 
     {:ok, assign(socket,
