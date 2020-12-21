@@ -12,7 +12,6 @@ defmodule MiewWeb.DeckResultsLive do
     deck = Miew.get(deck_id, "deck")
 
     {tally, tallied_results} = Miew.list(:result, deck.results)
-    |> IO.inspect(label: "raw results")
       |> Enum.sort(&(&1.time < &2.time))
       |> Enum.reduce({%DeckResultsLive{}, []}, fn r, acc -> append_sums(r, acc) end)
 
@@ -25,7 +24,6 @@ defmodule MiewWeb.DeckResultsLive do
     |> increment_games()
     |> sum_power()
     |> sum_fun()
-    |> IO.inspect(label: "tally done")
 
     {new_tally, list ++ [new_tally]}
   end
@@ -43,7 +41,6 @@ defmodule MiewWeb.DeckResultsLive do
   end
 
   defp sum_fun(tally) do
-    IO.inspect(tally, label: "tally at sum fun")
     Map.put tally, :z_fun, add(tally.z_fun, tally.result.fun)
   end
 
