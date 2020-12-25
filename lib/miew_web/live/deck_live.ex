@@ -35,6 +35,9 @@ defmodule MiewWeb.DeckLive do
           <td><%= @deck.rank %></td>
           <td><%= @deck.advantage %></td>
         </tr>
+        <tr>
+          <td><%= button("Results", method: :get, to: "/deck/#{@deck.id}/results")%></td>
+        </tr>
       </table>
     </section>
     """
