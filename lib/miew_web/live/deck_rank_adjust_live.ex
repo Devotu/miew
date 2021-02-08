@@ -8,29 +8,26 @@ defmodule MiewWeb.DeckRankAdjustLive do
   def render(assigns) do
     ~L"""
     <section class="phx-hero">
-      <form phx-submit="adjust">
-        <table>
-          <tr>
-            <th>Name</td>
-            <th>Rank</td>
-            <th>+/-</td>
-            <th>Advantage</td>
-            <th>+/-</td>
-          </tr>
-          <tr>
-            <td><%= @deck.name %></td>
-            <td><%= @deck.rank %></td>
-            <td>
-              <input type="range" name="rank" value="0" min="-1" max="1"/>
-            </td>
-            <td><%= @deck.advantage %></td>
-            <td>
-              <input type="range" name="advantage" value="0" min="-1" max="1"/>
-            </td>
-          </tr>
-        </table>
-        <button type="submit" phx-disable-with="Adjusting...">Adjust</button>
-      </form>
+      <table>
+        <tr>
+          <th>Name</td>
+          <th>Rank</td>
+          <th>Advantage</td>
+          <th>+</td>
+          <th>-</td>
+        </tr>
+        <tr>
+          <td><%= @deck.name %></td>
+          <td><%= @deck.rank %></td>
+          <td><%= @deck.advantage %></td>
+          <td>
+            <button phx-click="up" phx-value-deck_id=<%= @deck.id %>>+</button>
+          </td>
+          <td>
+            <button phx-click="down" phx-value-deck_id=<%= @deck.id %>>-</button>
+          </td>
+        </tr>
+      </table>
     </section>
     """
   end
@@ -38,14 +35,21 @@ defmodule MiewWeb.DeckRankAdjustLive do
   @impl true
   def mount(params, _session, socket) do
     id = params["id"]
-    deck = Metr.read_deck(id)
+    deck = Miew.get(id, "deck")
     deck_with_rank = DeckHelper.apply_split_rank(deck)
     {:ok, assign(socket, deck: deck_with_rank)}
   end
 
 
   @impl true
-  def handle_event("adjust", %{} = data, socket) do
+  def handle_event("up", data, socket) do
+    Miew.bump_rank(data["deck_id"], :up)
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event("down", data, socket) do
+    Miew.bump_rank(data["deck_id"], :down)
     {:noreply, socket}
   end
 end

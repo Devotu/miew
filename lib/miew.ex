@@ -54,4 +54,7 @@ defmodule Miew do
   def get(id, type) when is_bitstring(id) and is_bitstring(type) do
     Metr.read_state(type, id)
   end
+
+  def bump_rank(deck_id, :up) when is_bitstring(deck_id), do: Metr.alter_rank(deck_id, :up)
+  def bump_rank(deck_id, :down) when is_bitstring(deck_id), do: Metr.alter_rank(deck_id, :down)
 end
