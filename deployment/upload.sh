@@ -34,10 +34,16 @@ echo ">>>> package"
 tar -zcf miew_$version.tar.gz _build/prod/rel/miew/
 echo "<<<< package done"
 
-echo "release $version built and packaged"
 
-#läs in ip
-#läs in pwd
-#scp till server
+#File containing actual address and credentials
+#in format USER="xxx"
+#must always be in .gitignore
+echo ">>>> secrets"
+source deployment/server.info
+echo "<<<< secrets done"
 
-echo "done"
+echo ">>>> upload"
+sshpass -p "$PASSWORD" scp miew_*.tar.gz $USER@$IP:.
+echo "<<<< upload done"
+
+echo "release $version built, packaged and uploaded"
