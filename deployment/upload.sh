@@ -31,7 +31,10 @@ echo "- release built"
 echo "<<<< release done"
 
 echo ">>>> package"
-tar -zcf miew_$version.tar.gz _build/prod/rel/miew/
+cd _build/prod/rel
+tar -zcf miew_$version.tar.gz miew/
+cd ../../..
+mv _build/prod/rel/miew_$version.tar.gz .
 echo "<<<< package done"
 
 
