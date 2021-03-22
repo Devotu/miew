@@ -36,3 +36,4 @@ npm-debug.log
 data/state/*
 data/event/*
 config/prod.secret.exs
+deployment/server.info
