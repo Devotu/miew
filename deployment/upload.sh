@@ -39,7 +39,10 @@ echo "<<<< package done"
 
 
 #File containing actual address and credentials
-#in format USER="xxx"
+#in format 
+# IP="xxx.xxx.xx.xxx"
+# USER="yyy"
+# PASSWORD="zzzz"
 #must always be in .gitignore
 echo ">>>> secrets"
 source deployment/server.info
