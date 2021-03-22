@@ -3,37 +3,38 @@
 echo -e "version"
 read version
 
-echo "---- application ----"
-echo "---- fetching dependancies"
+echo ">>>> application"
+echo "- fetching dependancies"
 mix deps.get --only prod
-echo "---- dependancies done"
+echo "- dependancies done"
 
-echo "---- compiling application"
+echo "-- compiling application"
 MIX_ENV=prod mix compile
-echo "---- application compiled"
-echo "---- application done --"
+echo "-- application compiled"
+echo "<<<< application done"
 
-echo "---- assets ----"
-echo "---- updating js depencancies"
+echo ">>>> assets"
+echo "- updating js depencancies"
 npm install --prefix ./assets
-echo "---- update done"
+echo "- update done"
 
-echo "---- compiling assets"
+echo "-- compiling assets"
 npm run deploy --prefix ./assets
-echo "---- assets compiled"
+echo "-- assets compiled"
 mix phx.digest
-echo "---- assets done --"
+echo "<<<< assets done"
 
-echo "---- release ----"
-echo "---- building release"
+echo ">>>> release"
+echo "- building release"
 MIX_ENV=prod mix release
-echo "---- release built"
-echo "---- release done"
+echo "- release built"
+echo "<<<< release done"
 
+echo ">>>> package"
+tar -zcf miew_$version.tar.gz _build/prod/rel/miew/
+echo "<<<< package done"
 
-#zippa med version i namn
-
-echo "release $version built and zipped"
+echo "release $version built and packaged"
 
 #läs in ip
 #läs in pwd
