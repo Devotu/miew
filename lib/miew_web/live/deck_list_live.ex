@@ -30,6 +30,7 @@ defmodule MiewWeb.DeckListLive do
   @impl true
   def mount(_params, _session, socket) do
     decks = Metr.list_decks()
+      |> Enum.sort(fn a, b -> a.name < b.name end)
     {:ok, assign(socket, decks: decks)}
   end
 end
