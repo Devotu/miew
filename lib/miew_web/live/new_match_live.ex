@@ -27,11 +27,19 @@ defmodule MiewWeb.NewMatchLive do
 
   @impl true
   def handle_event("create", %{} = data, socket) do
-    Map.merge(@default_match, data)
+    response = Map.merge(@default_match, data)
     |> to_atom_match_data()
     |> Miew.create_match()
 
-    {:noreply, socket}
+    case response do
+      :ok ->
+        match = Miew.read_match(socket.assigns.match.id)
+        {:noreply, assign(socket, match: match)}
+      {:error, msg} ->
+        {:noreply, put_flash(socket, :create_feedback, msg)}
+      _ ->
+        {:noreply, put_flash(socket, :create_feedback, "Unknown error")}
+    end
   end
 
 
