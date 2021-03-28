@@ -49,7 +49,7 @@ source deployment/server.info
 echo "<<<< secrets done"
 
 echo ">> upload"
-sshpass -p "$PASSWORD" scp miew_$version.tar.gz $USER@$IP:.
+scp miew_$version.tar.gz $USER@$IP:.
 echo "<<<< upload done"
 
 echo "release $version built, packaged and uploaded"
