@@ -20,7 +20,7 @@ erl_crash.dump
 *.ez
 
 # Ignore package tarball (built via "mix hex.build").
-miew-*.tar
+miew_*.tar.gz
 
 # If NPM crashes, it generates a log, let's ignore it too.
 npm-debug.log
@@ -35,5 +35,5 @@ npm-debug.log
 
 data/state/*
 data/event/*
-config/prod.exs
-upload.sh
+config/prod.secret.exs
+deployment/server.info
