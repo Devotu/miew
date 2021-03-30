@@ -48,7 +48,8 @@ defmodule MiewWeb.NewDeckLive do
       name: m["name"], format: m["format"], theme: m["theme"],
       black: bool(m["black"]), white: bool(m["white"]), red: bool(m["red"]),
       green: bool(m["green"]), blue: bool(m["blue"]), colorless: bool(m["colorless"]),
-      rank: m["rank"], advantage: m["advantage"]
+      rank: m["rank"], advantage: m["advantage"],
+      price: m["price"]
     }
   end
 
