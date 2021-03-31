@@ -39,12 +39,9 @@ defmodule MiewWeb.DeckResultsLive do
   defp inc(x), do: x + 1
 
   defp count_wins(%{result: %{place: 1}} = tally) do
-    IO.inspect(tally, label: "pre")
     Map.put tally, :z_wins, inc(tally.z_wins)
-    |> IO.inspect(label: "post")
   end
   defp count_wins(tally) do
-    IO.inspect(tally, label: "tally no")
     tally
   end
 
