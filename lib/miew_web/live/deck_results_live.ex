@@ -19,7 +19,6 @@ defmodule MiewWeb.DeckResultsLive do
   end
 
   defp append_sums(result, {%DeckResultsLive{} = tally, list}) do
-    IO.puts("new game")
     new_tally = tally
     |> Map.put(:result, result)
     |> increment_games()
