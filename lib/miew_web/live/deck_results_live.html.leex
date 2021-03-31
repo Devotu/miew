@@ -1,6 +1,20 @@
 <section>
   <table>
     <tr>
+      <th>games</th>
+      <th>wins</th>
+      <th>losses</th>
+      <th>wirate</th>
+    </tr>
+    <tr>
+      <td><%= @summary.z_games %></td>
+      <td><%= @summary.z_wins %></td>
+      <td><%= @summary.z_games - @summary.z_wins %></td>
+      <td><%= @summary.z_winrate %></td>
+    </tr>
+  </table>
+  <table>
+    <tr>
       <th>Id</th>
       <th>Player</th>
       <th>Place</th>
