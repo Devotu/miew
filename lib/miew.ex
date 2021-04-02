@@ -43,6 +43,11 @@ defmodule Miew do
     Metr.list_states(ids, type)
   end
 
+  def list("deck", sort: "name") do
+    Metr.list_states("deck")
+    |> Enum.sort(fn a, b -> a.name < b.name end)
+  end
+
   def list(type) when is_bitstring(type) do
     Metr.list_states(type)
   end
