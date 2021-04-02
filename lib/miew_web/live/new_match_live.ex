@@ -32,13 +32,10 @@ defmodule MiewWeb.NewMatchLive do
     |> Miew.create_match()
 
     case response do
-      :ok ->
-        match = Miew.read_match(socket.assigns.match.id)
-        {:noreply, assign(socket, match: match)}
       {:error, msg} ->
         {:noreply, put_flash(socket, :create_feedback, msg)}
-      _ ->
-        {:noreply, put_flash(socket, :create_feedback, "Unknown error")}
+      id ->
+        {:noreply, redirect(socket, to: "/match/#{id}")}
     end
   end
 
