@@ -19,7 +19,6 @@ defmodule MiewWeb.Router do
 
     live "/", DashboardLive
     live "/dash", DashboardLive
-    live "/dashboard", DashboardLive
 
     live "/sheet", SheetLive
 
