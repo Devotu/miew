@@ -19,7 +19,7 @@ defmodule MiewWeb.StateLive do
 
   @impl true
   def mount(params, _session, socket) do
-    type = params["type"] |> Metr.type_from_string()
+    type = params["type"] |> Miew.type_from_string()
     id = params["id"]
     state = Metr.read_state(type, id)
     {:ok, assign(socket, state: state, type: type)}

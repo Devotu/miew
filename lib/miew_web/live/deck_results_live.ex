@@ -1,7 +1,7 @@
 defmodule MiewWeb.DeckResultsLive do
   use MiewWeb, :live_view
 
-  defstruct result: nil, z_games: 0, z_winrate: 50, z_power: 0, z_fun: 0
+  defstruct result: nil, z_games: 0, z_winrate: 50, z_power: 0, z_fun: 0, z_wins: 0
 
   alias MiewWeb.DeckResultsLive
 
@@ -15,7 +15,7 @@ defmodule MiewWeb.DeckResultsLive do
       |> Enum.sort(&(&1.time < &2.time))
       |> Enum.reduce({%DeckResultsLive{}, []}, fn r, acc -> append_sums(r, acc) end)
 
-    {:ok, assign(socket, results: tallied_results)}
+    {:ok, assign(socket, results: tallied_results, summary: tally)}
   end
 
   defp append_sums(result, {%DeckResultsLive{} = tally, list}) do
@@ -24,6 +24,8 @@ defmodule MiewWeb.DeckResultsLive do
     |> increment_games()
     |> sum_power()
     |> sum_fun()
+    |> count_wins()
+    |> adjust_winrate()
 
     {new_tally, list ++ [new_tally]}
   end
@@ -35,6 +37,16 @@ defmodule MiewWeb.DeckResultsLive do
   defp inc(nil), do: 1
   defp inc(x), do: x + 1
 
+  defp count_wins(%{result: %{place: 1}} = tally) do
+    Map.put tally, :z_wins, inc(tally.z_wins)
+  end
+  defp count_wins(tally) do
+    tally
+  end
+
+  defp adjust_winrate(tally) do
+    Map.put tally, :z_winrate, tally.z_wins/tally.z_games |> Float.round(2)
+  end
 
   defp sum_power(tally) do
     Map.put tally, :z_power, add(tally.z_power, tally.result.power)

@@ -52,5 +52,6 @@
       <input name="ranking" type="checkbox" value="true">
     </td>
     <button type="submit" phx-disable-with="Creating...">Start</button>
+    <p class="alert alert-warning"><%= live_flash(@flash, :create_feedback) %></p>
   </form>
 </section>

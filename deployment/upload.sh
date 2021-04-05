@@ -26,7 +26,7 @@ echo "<<<< assets done"
 
 echo ">> release"
 echo "- building release"
-MIX_ENV=prod mix release
+yes | MIX_ENV=prod mix release
 echo "- release built"
 echo "<<<< release done"
 

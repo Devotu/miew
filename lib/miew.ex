@@ -43,6 +43,11 @@ defmodule Miew do
     Metr.list_states(ids, type)
   end
 
+  def list("deck", sort: "name") do
+    Metr.list_states("deck")
+    |> Enum.sort(fn a, b -> a.name < b.name end)
+  end
+
   def list(type) when is_bitstring(type) do
     Metr.list_states(type)
   end
@@ -55,6 +60,22 @@ defmodule Miew do
     Metr.read_state(type, id)
   end
 
+  @spec bump_rank(bitstring, :down | :up) :: any
   def bump_rank(deck_id, :up) when is_bitstring(deck_id), do: Metr.alter_rank(deck_id, :up)
   def bump_rank(deck_id, :down) when is_bitstring(deck_id), do: Metr.alter_rank(deck_id, :down)
+
+  def type_from_string(type_string) do
+    case type_string do
+      "player" ->
+        :player
+      "deck" ->
+        :deck
+      "match" ->
+        :match
+      "game" ->
+        :game
+      "result" ->
+        :result
+    end
+  end
 end

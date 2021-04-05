@@ -29,7 +29,7 @@ defmodule MiewWeb.DeckListLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    decks = Metr.list_decks()
+    decks = Miew.list("deck", sort: "name")
     {:ok, assign(socket, decks: decks)}
   end
 end

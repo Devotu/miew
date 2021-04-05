@@ -20,7 +20,7 @@ defmodule MiewWeb.LogLive do
 
   @impl true
   def mount(%{"id" => id, "type" => type_input}, _session, socket) do
-    type = Metr.type_from_string(type_input)
+    type = Miew.type_from_string(type_input)
     log = Metr.read_entity_log(type, id)
     {:ok, assign(socket, events: log)}
   end

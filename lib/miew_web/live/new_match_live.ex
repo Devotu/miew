@@ -13,7 +13,7 @@ defmodule MiewWeb.NewMatchLive do
   @impl true
   def mount(_params, _session, socket) do
     players = Enum.map(Metr.list_players(), fn p -> p.id end)
-    decks = Enum.map(Metr.list_decks(), fn d -> d.id end)
+    decks = Enum.map(Miew.list("deck", sort: "name"), fn d -> d.id end)
 
     {:ok, assign(socket,
       player_1: "", player_2: "",
@@ -27,11 +27,16 @@ defmodule MiewWeb.NewMatchLive do
 
   @impl true
   def handle_event("create", %{} = data, socket) do
-    Map.merge(@default_match, data)
+    response = Map.merge(@default_match, data)
     |> to_atom_match_data()
     |> Miew.create_match()
 
-    {:noreply, socket}
+    case response do
+      {:error, msg} ->
+        {:noreply, put_flash(socket, :create_feedback, msg)}
+      id ->
+        {:noreply, redirect(socket, to: "/match/#{id}")}
+    end
   end
 
 

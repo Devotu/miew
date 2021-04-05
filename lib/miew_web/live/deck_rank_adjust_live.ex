@@ -34,22 +34,30 @@ defmodule MiewWeb.DeckRankAdjustLive do
 
   @impl true
   def mount(params, _session, socket) do
-    id = params["id"]
-    deck = Miew.get(id, "deck")
-    deck_with_rank = DeckHelper.apply_split_rank(deck)
-    {:ok, assign(socket, deck: deck_with_rank)}
+    deck = params["id"]
+      |> load_deck
+    {:ok, assign(socket, deck: deck)}
   end
 
 
   @impl true
   def handle_event("up", data, socket) do
-    Miew.bump_rank(data["deck_id"], :up)
-    {:noreply, socket}
+    id = data["deck_id"]
+    Miew.bump_rank(id, :up)
+    deck = load_deck(id)
+    {:noreply, assign(socket, deck: deck)}
   end
 
   @impl true
   def handle_event("down", data, socket) do
-    Miew.bump_rank(data["deck_id"], :down)
-    {:noreply, socket}
+    id = data["deck_id"]
+    Miew.bump_rank(id, :down)
+    deck = load_deck(id)
+    {:noreply, assign(socket, deck: deck)}
+  end
+
+  def load_deck(id) do
+    Miew.get(id, "deck")
+    |> DeckHelper.apply_split_rank()
   end
 end

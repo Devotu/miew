@@ -37,6 +37,9 @@ defmodule MiewWeb.DeckLive do
         </tr>
         <tr>
           <td><%= button("Results", method: :get, to: "/deck/#{@deck.id}/results")%></td>
+          <td><%= button("Modify rank", method: :get, to: "/deck/#{@deck.id}/rank/adjust")%></td>
+          <td><%= button("State", method: :get, to: "/deck/#{@deck.id}/state")%></td>
+          <td><%= button("Log", method: :get, to: "/deck/#{@deck.id}/log")%></td>
         </tr>
       </table>
     </section>

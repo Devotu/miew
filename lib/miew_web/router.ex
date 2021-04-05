@@ -17,6 +17,9 @@ defmodule MiewWeb.Router do
   scope "/", MiewWeb do
     pipe_through :browser
 
+    live "/", DashboardLive
+    live "/dash", DashboardLive
+
     live "/sheet", SheetLive
 
     live "/deck/new", NewDeckLive
