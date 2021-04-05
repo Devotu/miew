@@ -19,7 +19,6 @@ defmodule MiewWeb.ParseDecksLive do
     {:noreply, assign(socket, decks: parsed)}
   end
 
-
   @impl true
   def handle_event("apply", %{} = data, socket) do
     msg = data
@@ -41,7 +40,7 @@ defmodule MiewWeb.ParseDecksLive do
       green: Helpers.text_to_bool(green),
       blue: Helpers.text_to_bool(blue),
       colorless: false,
-      price: Helpers.text_to_number(price)
+      price: price |> String.trim() |> Helpers.text_to_number()
     }
   end
 
