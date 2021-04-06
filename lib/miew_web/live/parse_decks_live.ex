@@ -11,36 +11,32 @@ defmodule MiewWeb.ParseDecksLive do
 
   @impl true
   def handle_event("parse", %{"data" => data}, socket) do
-    parsed = data
-      |> String.split(",")
-      |> Enum.map(&(String.split(&1, ";")))
-      |> Enum.map(fn x -> pick_apart(x, Miew.list_formats()) end)
-
-    {:noreply, assign(socket, decks: parsed)}
+    {:noreply, assign(socket, decks: parse(data))}
   end
 
   @impl true
-  def handle_event("apply", %{} = data, socket) do
-    msg = data
-      |> to_atom_deck_data()
-      |> Miew.create_deck()
-    {:noreply, assign(socket, msg: msg)}
+  def handle_event("apply", %{"input" => input}, socket) do
+    result = input
+      |> parse()
+      |> Enum.map(fn d -> Miew.create_deck(d) end)
+    {:noreply, assign(socket, msg: Kernel.inspect(result))}
   end
 
 
-  defp pick_apart([price, format, name, creator, red, green, white, black, blue], known_formats) do
+  defp pick_apart([price, format, name, creator, theme, red, green, white, black, blue], known_formats) do
     %{
       name: name,
       format: parse_format(format, known_formats),
       theme: "",
-      owner: String.downcase(creator),
+      player_id: String.downcase(creator),
       black: Helpers.text_to_bool(black),
       white: Helpers.text_to_bool(white),
       red: Helpers.text_to_bool(red),
       green: Helpers.text_to_bool(green),
       blue: Helpers.text_to_bool(blue),
       colorless: false,
-      price: price |> String.trim() |> Helpers.text_to_number()
+      price: price |> String.trim() |> Helpers.text_to_number(),
+      theme: theme
     }
   end
 
@@ -58,18 +54,17 @@ defmodule MiewWeb.ParseDecksLive do
     end
   end
 
-
-  defp to_atom_deck_data(m) do
-    %{
-      player_id: m["owner"],
-      name: m["name"], format: m["format"], theme: m["theme"],
-      black: bool(m["black"]), white: bool(m["white"]), red: bool(m["red"]),
-      green: bool(m["green"]), blue: bool(m["blue"]), colorless: bool(m["colorless"]),
-      rank: 0, advantage: 0, price: m["price"]
-    }
+  defp parse(input) do
+    input
+    |> String.split(",")
+    |> Enum.map(&(String.split(&1, ";")))
+    |> Enum.map(fn x -> pick_apart(x, Miew.list_formats()) end)
   end
 
-  defp bool(term) do
-    Helpers.text_to_bool(term)
+  defp maybe(map, key) when is_map(map) do
+    case Map.has_key?(map, key) do
+      true -> Map[key]
+      false -> ""
+    end
   end
 end

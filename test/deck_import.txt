@@ -1,0 +1,6 @@
+10;standard;Blacky;otto;Död;0;0;0;1;0,
+9;standard;White;otto;;0;0;1;0;0,
+7.5;standard;Reddy;otto;Hastighet;1;0;0;0;0,
+8.25;threecard;GREEN;otto;Enorm styrka;0;1;0;0;0,
+120.45;standard;Feeling Blue;topias;Krångel;0;0;0;0;1,
+0;standard;2 colors;topias;"";1;0;0;0;1
