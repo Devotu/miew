@@ -42,7 +42,8 @@ defmodule MiewWeb.ParseGamesLive do
   end
 
   defp divide_attacker_defender(list) do
-    list |> Enum.map(&String.split(&1, "-"))
+    list
+    |> Enum.map(&String.split(&1, "-"))
   end
 
   defp extract_results(results) do
@@ -56,6 +57,7 @@ defmodule MiewWeb.ParseGamesLive do
   defp split_result(result) do
     result
       |> String.split(":")
+      |> Enum.map(&String.trim/1)
       |> (fn [name, wins] -> %{name: name, wins: wins} end).()
   end
 
@@ -97,6 +99,7 @@ defmodule MiewWeb.ParseGamesLive do
 
   defp get_deck(%{name: deck_name}) do
     deck_name
+    |> String.trim()
     |> Metr.Id.hrid()
     |> Miew.get("Deck")
   end

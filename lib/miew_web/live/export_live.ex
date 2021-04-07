@@ -44,6 +44,11 @@ defmodule MiewWeb.ExportLive do
       |> convert_decks()
     {:noreply, assign(socket, output: output)}
   end
+  def handle_event("games", _data, socket) do
+    output = Miew.list("result")
+      |> convert_games()
+    {:noreply, assign(socket, output: output)}
+  end
 
   defp convert_decks(decks) when is_list(decks) do
     players = Miew.list("player")
@@ -65,5 +70,64 @@ defmodule MiewWeb.ExportLive do
   defp merge_owner(deck, players) do
     owner = Enum.find(players, nil, fn p -> Enum.member?(p.decks, deck.id) end)
     Map.put(deck, :player_id, owner.id)
+  end
+
+  defp convert_games(results) when is_list(results) do
+    results
+    |> Enum.group_by(fn r -> r.game_id end)
+    |> Enum.to_list()
+    |> Enum.map(&convert_game/1)
+    |> Enum.group_by(fn m -> m.combo_key end)
+    |> Enum.to_list()
+    |> Enum.map(&sum_result/1)
+    |> Enum.join(",")
+  end
+
+  defp convert_game({_game_id, results}) do
+    results
+    |> Enum.sort(&(&1.place < &2.place))
+    |> Enum.map(fn r -> %{deck_id: r.deck_id, place: r.place} end)
+    |> Enum.sort(&(&1.deck_id < &2.deck_id))
+    |> merge_set()
+  end
+
+  defp merge_set([x, y]) do
+    %{combo_key: "#{x.deck_id}-#{y.deck_id}", w1: add_win(x.place), w2: add_win(y.place)}
+  end
+  defp merge_set(x) do
+    {:error, "Invalid merge set input #{Kernel.inspect x} must be [x, y]"}
+  end
+
+  defp add_win(0), do: 0
+  defp add_win(1), do: 1
+  defp add_win(2), do: 0
+  defp add_win(_), do: 0
+
+  defp sum_result({combo_key, results}) do
+    sums = results
+    |> sum_wins()
+    |> Tuple.to_list()
+
+    keys = combo_key
+    |> split_key()
+    |> Tuple.to_list()
+
+    Enum.zip(keys, sums)
+    |> build_row()
+  end
+
+  defp split_key(key) do
+    key
+    |> String.split("-")
+    |> List.to_tuple()
+  end
+
+  defp sum_wins(results) do
+    results
+    |> Enum.reduce({0,0}, fn %{w1: w1, w2: w2}, {x, y} -> {x + w1, y + w2} end)
+  end
+
+  defp build_row([{x_name, x_wins}, {y_name, y_wins}]) do
+    "#{x_name}:#{x_wins}-#{y_name}:#{y_wins}"
   end
 end
