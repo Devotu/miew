@@ -78,4 +78,8 @@ defmodule Miew do
         :result
     end
   end
+
+  def read_entity_history(id, type) do
+    Metr.read_entity_history(id, type)
+  end
 end
