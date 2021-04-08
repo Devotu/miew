@@ -30,7 +30,6 @@ defmodule MiewWeb.HistoryLive do
   @impl true
   def mount(%{"id" => id, "type" => type_input}, _session, socket) do
     {history, count} = Miew.read_entity_history(id, type_input)
-      |> IO.inspect(label: "history")
       |> Enum.reduce({[], 1}, fn l, {acc, at} -> {acc ++ [Map.put(l, :nr, at)], at + 1} end)
     {:ok, assign(socket, history: history, count: count)}
   end
