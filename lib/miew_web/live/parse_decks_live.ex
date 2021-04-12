@@ -27,7 +27,6 @@ defmodule MiewWeb.ParseDecksLive do
     %{
       name: name,
       format: parse_format(format, known_formats),
-      theme: "",
       player_id: String.downcase(creator),
       black: Helpers.text_to_bool(black),
       white: Helpers.text_to_bool(white),
