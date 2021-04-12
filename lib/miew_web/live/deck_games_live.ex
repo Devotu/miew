@@ -11,10 +11,10 @@ defmodule MiewWeb.DeckGamesLive do
 
     games = Metr.list_games(:deck, deck_id)
       |> Enum.sort(&(&1.time < &2.time))
-      |> Enum.map(fn g -> {find_selected(g.participants, deck_id), find_opponent(g.participants, deck_id)} end)
+      |> Enum.map(fn g -> {find_selected(g.results, deck_id), find_opponent(g.results, deck_id)} end)
       |> Enum.reduce(
         %{games: [], game_count: 0, win_count: 0, winrate: 0, z_power: 0, powerrate: 0, z_fun: 0, funrate: 0},
-        fn so, acc -> calculate_rates(so, acc) end
+        fn self_opponent, acc -> calculate_rates(self_opponent, acc) end
         )
       |> Map.get(:games)
 
@@ -40,7 +40,7 @@ defmodule MiewWeb.DeckGamesLive do
 
 
   defp calculate_rates(
-    {selected, _opponent} = so,
+    {selected, _opponent} = self_opponent,
     %{games: _games, game_count: _gc, win_count: _wc, winrate: _wr, z_power: _p, powerrate: _pr, z_fun: _f, funrate: _fr} = acc)
   do
     acc
@@ -51,7 +51,7 @@ defmodule MiewWeb.DeckGamesLive do
     |> calc_winrate()
     |> calc_powerrate()
     |> calc_funrate()
-    |> convert_to_game(so)
+    |> convert_to_game(self_opponent)
   end
 
 
@@ -106,14 +106,14 @@ defmodule MiewWeb.DeckGamesLive do
   end
 
 
-  defp find_selected(participants, deck_id) do
-    participants
+  defp find_selected(results, deck_id) do
+    results
     |> Enum.filter(fn p -> p.deck_id == deck_id end)
     |> List.first()
   end
 
-  defp find_opponent(participants, deck_id) do
-    participants
+  defp find_opponent(results, deck_id) do
+    results
     |> Enum.filter(fn p -> p.deck_id != deck_id end)
     |> List.first()
   end

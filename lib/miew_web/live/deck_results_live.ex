@@ -1,7 +1,7 @@
 defmodule MiewWeb.DeckResultsLive do
   use MiewWeb, :live_view
 
-  defstruct result: nil, z_games: 0, z_winrate: 50, z_power: 0, z_fun: 0, z_wins: 0
+  defstruct result: nil, z_games: 0, z_winrate: 50, z_power: 0, z_fun: 0, z_wins: 0, opponent: nil
 
   alias MiewWeb.DeckResultsLive
 
@@ -26,6 +26,7 @@ defmodule MiewWeb.DeckResultsLive do
     |> sum_fun()
     |> count_wins()
     |> adjust_winrate()
+    |> add_opponent()
 
     {new_tally, list ++ [new_tally]}
   end
@@ -60,4 +61,24 @@ defmodule MiewWeb.DeckResultsLive do
   defp add(nil, x) when is_number(x), do: x
   defp add(x, nil) when is_number(x), do: x
   defp add(x, y) when is_number(x) and is_number(y), do: x + y
+
+  defp add_opponent(tally) do
+    opponent_result = tally.result.game_id
+      |> Miew.get("game")
+      |> identify_opponent(tally.result.id)
+      |> Miew.get("result")
+      |> IO.inspect(label: "opponent result")
+
+    updated_result = tally.result
+      |> Map.put(:opponent, opponent_result.player_id)
+      |> Map.put(:opponent_deck, opponent_result.deck_id)
+
+    Map.put tally, :result, updated_result
+  end
+
+  defp identify_opponent(game, selected_result_id) do
+    game.results
+    |> IO.inspect(label: "results")
+    |> Enum.find(&(&1 != selected_result_id))
+  end
 end
