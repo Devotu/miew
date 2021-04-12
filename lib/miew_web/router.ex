@@ -35,13 +35,15 @@ defmodule MiewWeb.Router do
     live "/match/list", MatchListLive
     live "/match/:id", MatchLive
 
+    live "/:type/:id/state", StateLive
+    live "/:type/:id/history", HistoryLive
     live "/:type/:id/log", LogLive
+
     live "/log/:limit", LogLive
 
-    live "/:type/:id/state", StateLive
-
-    live "/load/parse/decks", ParseDecksLive
-    live "/load/parse/games", ParseGamesLive
+    live "/load/decks", ParseDecksLive
+    live "/load/games", ParseGamesLive
+    live "/export", ExportLive
   end
 
   # Other scopes may use custom stacks.
