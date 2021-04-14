@@ -1,0 +1,27 @@
+html {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.h-list li {
+    display: inline;
+    margin: 5px;
+    background-color: slategray;
+    padding: 7px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+//table
+th {
+    border: 2px solid rgb(98, 98, 98);
+    padding: 2px;
+}
+td {
+    border: 1px solid darkgray;
+    padding: 2px;
+}

@@ -1,5 +1,5 @@
 /* This file is for your main application css. */
-@import "./phoenix.css";
+@import "./miew.scss";
 @import "../node_modules/nprogress/nprogress.css";
 
 /* LiveView specific classes for your customizations */
@@ -88,17 +88,4 @@
 }
 .alert:empty {
   display: none;
-}
-
-
-
-
-//Miew
-th {
-  border: 2px solid rgb(98, 98, 98);
-  padding: 2px;
-}
-td {
-  border: 1px solid darkgray;
-  padding: 2px;
 }
