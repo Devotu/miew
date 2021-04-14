@@ -6,24 +6,26 @@ defmodule MiewWeb.DeckListLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
-      <table>
-        <tr>
-          <th>Name</td>
-          <th>Id</td>
-          <th>Rank</td>
-          <th></td>
-        </tr>
+    <section>
+      <ul class="v-list">
+        <li class="decklist header">
+          <span class="v-list-item">Name</span>
+          <span class="v-list-item">Games</span>
+          <span class="v-list-item">Rank</span>
+        </li>
+      </ul>
+      <ul class="v-list">
         <%= for deck <- @decks do %>
-          <tr>
-            <td><%= deck.name %></td>
-            <td><%= deck.id %></td>
-            <td><%= Kernel.inspect(deck.rank) %></td>
-            <td><%= button("->", method: :get, to: "/deck/#{deck.id}")%></td>
-          </tr>
+          <li class="decklist">
+            <%= link(deck.name, method: :get, to: "/deck/#{deck.id}", class: "v-list-item")%>
+            <span class="v-list-item"><%= Kernel.inspect(Enum.count(deck.results)) %></span>
+            <span class="v-list-item"><%= Kernel.inspect(deck.rank) %></span>
+          </li>
         <% end %>
-      </table>
+      </ul>
     </section>
+    <footer>
+    </footer>
     """
   end
 

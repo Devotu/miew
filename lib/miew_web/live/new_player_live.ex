@@ -6,10 +6,10 @@ defmodule MiewWeb.NewPlayerLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
+    <section>
       <p><%= assigns.name_added %>
     </section>
-    <section class="phx-hero">
+    <section>
       <form phx-submit="add">
         <input type="text" name="name" value="<%= @name %>" placeholder="Name"/>
         <button type="submit" phx-disable-with="Adding...">Add</button>

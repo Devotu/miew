@@ -6,7 +6,7 @@ defmodule MiewWeb.StateLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
+    <section>
       <%= Kernel.inspect(@state) %>
     </section>
     <section>

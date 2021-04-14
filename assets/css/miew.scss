@@ -1,18 +1,58 @@
 html {
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
+    min-width: 500px;
+    max-width: 1000px;
 }
 
-.h-list li {
-    display: inline;
-    margin: 5px;
-    background-color: slategray;
-    padding: 7px;
+* {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 a {
     text-decoration: none;
+    display: block;
     color: black;
+}
+
+ul {
+    list-style-type: none;
+    margin: 4px;
+}
+
+.decklist {
+    grid-template-columns: 76% 8% 15%;
+}
+
+.v-list li {
+    background-color: whitesmoke;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 5px;
+}
+
+.v-list-item {
+    margin: 6px 2px;
+}
+
+.v-list .header {
+    color: black;
+    background-color: goldenrod;
+    margin-bottom: 7px;
+}
+
+.h-list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 5px;
+}
+
+.h-list li {
+    background-color: slategray;
+    padding: 7px;
 }
 
 

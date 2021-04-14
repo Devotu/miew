@@ -7,7 +7,7 @@ defmodule MiewWeb.DeckRankAdjustLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
+    <section>
       <table>
         <tr>
           <th>Name</td>

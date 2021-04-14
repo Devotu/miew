@@ -6,7 +6,7 @@ defmodule MiewWeb.LogLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
+    <section>
       <table>
         <%= for event <- @events do %>
         <tr>
