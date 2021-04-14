@@ -71,12 +71,12 @@
   <form phx-submit="add">
     <table>
       <tr>
+        <th></th>
         <th><%= @match.player_one %></th>
+        <th><%= @match.deck_one %></th>
         <th></th>
-        <th></th>
-        <th></th>
+        <th><%= @match.deck_two %></th>
         <th><%= @match.player_two %></th>
-        <th></th>
         <th></th>
       </tr>
       <tr>
@@ -85,8 +85,8 @@
         <th>Winner</th>
         <th>Balance</th>
         <th>Winner</th>
-        <th>Eval</th>
         <th>Fun</th>
+        <th>Eval</th>
       </tr>
       <tr>
         <td>
@@ -105,10 +105,10 @@
           <input id="win2" name="winner" type="radio" value=2>
         </td>
         <td>
-          <input name="eval2" type="checkbox" value="true">
+          <input type="range" name="fun2" value="<%= @fun2 %>" min="-2" max="2"/>
         </td>
         <td>
-          <input type="range" name="fun2" value="<%= @fun2 %>" min="-2" max="2"/>
+          <input name="eval2" type="checkbox" value="true">
         </td>
       </tr>
     </table>
