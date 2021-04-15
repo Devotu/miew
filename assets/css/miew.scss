@@ -23,15 +23,12 @@ ul {
     margin: 4px;
 }
 
-.decklist {
-    grid-template-columns: 76% 8% 15%;
-}
-
 .v-list li {
     background-color: whitesmoke;
     display: grid;
     grid-auto-flow: column;
     grid-gap: 5px;
+    margin-bottom: 2px;
 }
 
 .v-list-item {
@@ -48,11 +45,51 @@ ul {
     display: grid;
     grid-auto-flow: column;
     grid-gap: 5px;
+    padding-right: 7px;
+
+    &.footer {
+        margin-top: 10px;
+    }
 }
 
 .h-list li {
     background-color: slategray;
     padding: 7px;
+}
+
+.dot {
+    &.black {
+        color: black;
+    }
+    &.white {
+        color: white;
+    }
+    &.red {
+        color: tomato;
+    }
+    &.green {
+        color: olivedrab;
+    }
+    &.blue {
+        color: skyblue;
+    }
+    &.colorless {
+        color: dimgray;
+    }
+}
+
+.plaque {
+    background-color:whitesmoke;
+    border: solid 2px black;
+    padding: 2px;
+}
+
+.header {
+    margin-top: 12px;
+}
+
+.header .sub{
+    margin-top: 5px;
 }
 
 
