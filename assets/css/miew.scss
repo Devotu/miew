@@ -1,3 +1,6 @@
+$box-size: 80px;
+$box-fill: 66px;
+
 html {
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
@@ -10,6 +13,7 @@ html {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    border-radius: 0;
 }
 
 a {
@@ -21,6 +25,19 @@ a {
 ul {
     list-style-type: none;
     margin: 4px;
+}
+
+button {
+    background-color: white;
+    font-size: large;
+}
+
+select {
+    background-color: white;
+}
+
+input[type=checkbox] {
+    visibility: hidden;
 }
 
 .v-list li {
@@ -37,8 +54,12 @@ ul {
 
 .v-list .header {
     color: black;
-    background-color: goldenrod;
     margin-bottom: 7px;
+    border-bottom: solid 2px;
+}
+
+.v-space {
+    margin-top: 5px;
 }
 
 .h-list {
@@ -81,17 +102,22 @@ ul {
 .plaque {
     background-color:whitesmoke;
     border: solid 2px black;
+    box-sizing: border-box;
     padding: 2px;
 }
 
-.header {
-    margin-top: 12px;
-}
-
-.header .sub{
+.header .sub {
     margin-top: 5px;
 }
 
+.right {
+    float: right;
+}
+
+.box-fill {
+    height: $box-fill;
+    width: $box-fill;
+}
 
 //table
 th {
