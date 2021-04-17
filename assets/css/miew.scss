@@ -25,6 +25,7 @@ a {
     text-decoration: none;
     display: block;
     color: $color-high-contrast;
+    background-color: $color-main;
 }
 
 ul {
@@ -47,41 +48,11 @@ input[type=checkbox] {
     visibility: hidden;
 }
 
-.v-list li {
-    background-color: $color-main;
-    display: grid;
-    grid-auto-flow: column;
-    grid-gap: 5px;
-    margin-bottom: 2px;
-}
-
-.v-list-item {
-    margin: 6px 2px;
-}
-
-.v-list .header {
-    color: $color-high-contrast;
-    margin-bottom: 7px;
-    border-bottom: solid 2px;
+li {
 }
 
 .v-space {
     margin-top: 5px;
-}
-
-.h-list {
-    display: grid;
-    grid-auto-flow: column;
-    grid-gap: 5px;
-    padding-right: 7px;
-
-    &.footer {
-        margin-top: 10px;
-    }
-}
-
-.h-list li {
-    padding: 7px;
 }
 
 .dot {
