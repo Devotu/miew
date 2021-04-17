@@ -1,10 +1,8 @@
-
-
-
+$height-clickable: 50px;
 
 @media screen and (max-width: 700px){
     .clickable{
-        height: 50px;
+        height: $height-clickable;
     }
 
     select {
@@ -13,9 +11,15 @@
 
     option {
         font-weight: bold;
+        height: $height-clickable;
     }
 
     button {
         font-weight: bold;
+    }
+
+    .v-list li{
+        height: $height-clickable;
+        padding: 15px;
     }
 }

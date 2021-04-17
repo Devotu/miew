@@ -1,9 +1,14 @@
 $box-size: 80px;
 $box-fill: 66px;
 $color-main: white;
-$color-backdrop: whitesmoke;
-$color-input: lemonchiffon;
+$color-backdrop: tan;
+$color-input: lightyellow;
 $color-high-contrast: black;
+$dist-large: 7px;
+$dist-main: 4px;
+$dist-small: 2px;
+$border-normal: solid $color-high-contrast 2px;
+$border-thin: solid $color-high-contrast 1px;
 
 
 html {
@@ -28,11 +33,6 @@ a {
     background-color: $color-main;
 }
 
-ul {
-    list-style-type: none;
-    margin: 4px;
-}
-
 button {
     background-color: $color-main;
     font-size: large;
@@ -40,52 +40,36 @@ button {
 
 select {
     background-color:$color-input;
-    border: solid 1px $color-high-contrast;
-    padding-left: 5px;
+    border: $border-normal;
+    padding-left: $dist-main;
 }
 
 input[type=checkbox] {
     visibility: hidden;
 }
 
-li {
+.container {
+    padding: $dist-main;
 }
 
 .v-space {
-    margin-top: 5px;
+    margin-top: 3px;
+    margin-bottom: 2px;
 }
 
-.dot {
-    &.black {
-        color: black;
-    }
-    &.white {
-        color: white;
-        background-color: black;
-    }
-    &.red {
-        color: tomato;
-    }
-    &.green {
-        color: olivedrab;
-    }
-    &.blue {
-        color: skyblue;
-    }
-    &.colorless {
-        color: dimgray;
-    }
+.v-space-t {
+    margin-top: $dist-main;
+}
+
+.v-space-b {
+    margin-top: $dist-main;
 }
 
 .plaque {
     background-color: $color-main;
-    border: solid 2px $color-high-contrast;
+    border: $border-normal;
     box-sizing: border-box;
-    padding: 2px;
-}
-
-.v-space {
-    margin-top: 5px;
+    padding: $dist-small;
 }
 
 .right {
@@ -97,26 +81,20 @@ li {
     width: $box-fill;
 }
 
-.label {
-    font-weight: bold;
-}
-
 .header {
-    font-weight: bold;
-    margin-top: 7px;
+    margin-bottom: $dist-main;
 }
 
-.value {
-    font-weight: normal;
-    margin-left: 4px;
+.footer {
+    margin-top: $dist-main;
 }
 
 //table
 th {
-    border: 2px solid rgb(98, 98, 98);
-    padding: 2px;
+    border: $border-normal;
+    padding: $dist-small;
 }
 td {
-    border: 1px solid darkgray;
-    padding: 2px;
+    border: $border-thin;
+    padding: $dist-small;
 }

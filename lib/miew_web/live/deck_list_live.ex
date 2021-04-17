@@ -7,8 +7,8 @@ defmodule MiewWeb.DeckListLive do
   def render(assigns) do
     ~L"""
     <section>
-      <ul class="v-list">
-        <li class="decklist header">
+      <ul class="v-list header">
+        <li class="decklist label">
           <span class="v-list-item">Name</span>
           <span class="v-list-item">Games</span>
           <span class="v-list-item">Rank</span>

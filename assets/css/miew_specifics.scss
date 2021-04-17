@@ -36,3 +36,25 @@
 .main-links {
     background-color: lightslategray;
 }
+
+.dot {
+    &.black {
+        color: black;
+    }
+    &.white {
+        color: white;
+        background-color: black;
+    }
+    &.red {
+        color: tomato;
+    }
+    &.green {
+        color: olivedrab;
+    }
+    &.blue {
+        color: skyblue;
+    }
+    &.colorless {
+        color: dimgray;
+    }
+}

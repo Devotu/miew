@@ -1,20 +1,21 @@
+
+ul {
+    list-style-type: none;
+}
+
 //horizontal
 .h-list {
     display: grid;
     grid-auto-flow: column;
-    grid-gap: 5px;
+    grid-gap: $dist-main;
     background-color: $color-backdrop;
     margin-left: 0;
-
-    &.footer {
-        margin-top: 10px;
-    }
 }
 
 .h-list li {
-    padding: 7px;
+    padding: $dist-large;
     background-color: $color-main;
-    border: solid black 2px;
+    border: $border-normal;
 }
 
 //vertical
@@ -22,16 +23,16 @@
     background-color: $color-main;
     display: grid;
     grid-auto-flow: column;
-    grid-gap: 5px;
-    margin-bottom: 2px;
+    grid-gap: $dist-main;
+    margin-bottom: $dist-small;
 }
 
 .v-list-item {
-    margin: 6px 2px;
+    margin: $dist-main $dist-small;
 }
 
-.v-list .header {
+.v-list .head {
     color: $color-high-contrast;
-    margin-bottom: 7px;
-    border-bottom: solid 2px;
+    margin-bottom: $dist-large;
+    border-bottom: $border-normal;
 }
