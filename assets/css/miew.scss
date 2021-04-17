@@ -8,7 +8,6 @@ $color-high-contrast: black;
 
 html {
     font-family: 'Courier New', Courier, monospace;
-    font-weight: bold;
     min-width: 500px;
     max-width: 1000px;
     background-color: $color-backdrop;
@@ -91,6 +90,7 @@ input[type=checkbox] {
     }
     &.white {
         color: white;
+        background-color: black;
     }
     &.red {
         color: tomato;
@@ -113,7 +113,7 @@ input[type=checkbox] {
     padding: 2px;
 }
 
-.header .sub {
+.v-space {
     margin-top: 5px;
 }
 
@@ -124,6 +124,20 @@ input[type=checkbox] {
 .box-fill {
     height: $box-fill;
     width: $box-fill;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.header {
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+.value {
+    font-weight: normal;
+    margin-left: 4px;
 }
 
 //table

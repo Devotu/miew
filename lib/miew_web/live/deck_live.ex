@@ -10,7 +10,7 @@ defmodule MiewWeb.DeckLive do
     <section class="plaque">
       <h1 class="header"><%= @deck.name %> (<%= @deck.rank %>)</h1>
 
-      <p class="header sub">Colors: </p>
+      <p class="label header v-space">Colors: </p>
       <%= if @deck.black do %><span class="dot black">B</span><% end %>
       <%= if @deck.white do %><span class="dot white">W</span><% end %>
       <%= if @deck.red do %><span class="dot red">R</span><% end %>
@@ -18,11 +18,9 @@ defmodule MiewWeb.DeckLive do
       <%= if @deck.blue do %><span class="dot blue">B</span><% end %>
       <%= if @deck.colorless do %><span class="dot colorless">X</span><% end %></p>
 
-      <p class="header sub">Rank: <%= @deck.rank %></p>
-      <p>Advantage: <%= @deck.advantage %></p>
-
-      <p class="header sub">Format: <%= @deck.format %></p>
-      <p>Price: <%= @deck.price %></p>
+      <p class="label v-space">Rank:<span class="value"><%= @deck.rank %> / <%= @deck.advantage %></span></p>
+      <p class="label v-space">Format:<span class="value"><%= @deck.format %></span></p>
+      <p class="label v-space">Price:<span class="value"><%= @deck.price %></span></p>
 
     </section>
     <section class="footer">
