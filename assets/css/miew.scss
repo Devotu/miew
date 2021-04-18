@@ -4,6 +4,12 @@ $color-main: white;
 $color-backdrop: tan;
 $color-input: lightyellow;
 $color-high-contrast: black;
+$color-positive: olivedrab;
+$color-positive-discrete: rgba(106, 142, 35, 0.5);
+$color-neutral: lightyellow;
+$color-neutral-discrete: rgba(255, 255, 224, 0.5);
+$color-negative: tomato;
+$color-negative-discrete: rgba(255, 99, 71, 0.5);
 $dist-large: 7px;
 $dist-main: 4px;
 $dist-small: 2px;
@@ -89,11 +95,36 @@ input[type=checkbox] {
     margin-top: $dist-main;
 }
 
+.positive-t {
+    color: $color-positive;
+}
+
+.neutral-t {
+    color: $color-neutral;
+}
+
+.negative-t {
+    color: $color-negative;
+}
+
+.positive-b {
+    border: $color-positive 1px solid;
+}
+
+.neutral-b {
+    color: $color-neutral 1px solid;
+}
+
+.negative-b {
+    color: $color-negative 1px solid;
+}
+
 //table
 th {
     border: $border-normal;
     padding: $dist-small;
 }
+
 td {
     border: $border-thin;
     padding: $dist-small;

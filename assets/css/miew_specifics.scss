@@ -2,6 +2,22 @@
     grid-template-columns: 76% 8% 16%;
 }
 
+.playergamelist {
+    grid-template-columns: 36% 32% 32%;
+}
+
+#playergamelist {
+    height: 20px;
+}
+
+.gamelist {
+    grid-template-columns: 36% 16% 16% 16% 16%;
+}
+
+.resultlist {
+    grid-template-columns: 76% 8% 16%;
+}
+
 .rankrow {
     grid-template-columns: $box-size auto;
 }
@@ -17,7 +33,7 @@
 
 .h-checkbox input[type=checkbox]:checked + label {
     left: 14px;
-    background:yellowgreen;
+    background: $color-positive;
 }
 
 .h-checkbox label {
@@ -30,7 +46,34 @@
     position: absolute;
     top: -1px;
     left: -3px;
-    background: tomato;
+    background: $color-negative;
+}
+
+.h-checkbox-s {
+    width: 24px;
+    height: 10px;
+    background: #555;
+    margin: 5px 7px;
+    position: relative;
+    border-radius: 0px;
+}
+
+.h-checkbox-s input[type=checkbox]:checked + label {
+    left: 14px;
+    background: $color-positive;
+}
+
+.h-checkbox-s label {
+    display: block;
+    width: 12px;
+    height: 12px;
+    border-radius: 0%;
+    transition: all .5s ease;
+    cursor: pointer;
+    position: absolute;
+    top: -1px;
+    left: -3px;
+    background: $color-negative;
 }
 
 .main-links {

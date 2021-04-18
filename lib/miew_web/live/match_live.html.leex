@@ -1,135 +1,118 @@
-<section>
-  <table>
-    <tr>
-      <th>Id</td>
-      <th>Status</td>
-      <th>Rank</td>
-      <th>Player 1</td>
-      <th>Player 2</td>
-    </tr>
-    <tr>
-      <td><%= @match.id %></td>
-      <td><%= Kernel.inspect(@match.status) %></td>
-      <td><%= Kernel.inspect(@match.ranking) %></td>
-      <td><%= @match.player_one %>/<%= @match.deck_one %></td>
-      <td><%= @match.player_two %>/<%= @match.deck_two %></td>
-    </tr>
-  </table>
+
+<section class="plaque">
+  <h1 class="header">Match <%= @match.id %></h1>
+
+  <p class="label v-space">P1:<span class="value"><%= @match.player_one |> String.capitalize %> - <%= @match.deck_one %></span></p>
+  <p class="label v-space">P2:<span class="value"><%= @match.player_two |> String.capitalize %> - <%= @match.deck_two %></span></p>
+  <p class="label v-space">Status:<span class="value"><%= Kernel.inspect(@match.status) |> String.trim_leading(":") %></span></p>
+  <p class="label v-space">Rank:<span class="value"><%= Kernel.inspect(@match.ranking) %></span></p>
 </section>
 
-<section>
-  ---
-</section>
-
-<section>
-  <table>
-    <tr>
-      <th></th>
-      <th></th>
-      <th><%= @match.player_one %></th>
-      <th></th>
-      <th></th>
-      <th><%= @match.player_two %></th>
-      <th></th>
-      <th></th>
-    </tr>
-    <tr>
-      <th>Id</th>
-      <th>Place</th>
-      <th>Power</th>
-      <th>Fun</th>
-      <th>Place</th>
-      <th>Power</th>
-      <th>Fun</th>
-    </tr>
+<section class="plaque v-space-t">
+  <ul class="v-list header">
+    <li class="playergamelist label" id="playergamelist">
+      <span class="v-list-item"></span>
+      <span class="v-list-item center"><%= @match.deck_one %></span>
+      <span class="v-list-item center"><%= @match.deck_two %></span>
+    </li>
+  </ul>
+  <ul class="v-list header">
+    <li class="gamelist label">
+      <span class="v-list-item">Game</span>
+      <span class="v-list-item">power</span>
+      <span class="v-list-item">fun</span>
+      <span class="v-list-item">power</span>
+      <span class="v-list-item">fun</span>
+    </li>
+  </ul>
+  <ul class="v-list">
     <%= for game <- @games do %>
-      <%= if Map.has_key? game, :error do %>
-        <tr>
-          <td><%= game.error %></td>
-          <td colspan="5"><%= game.msg %></td>
-        </tr>
-      <% else %>
-        <tr>
-          <td><%= game.id %></td>
-          <%= for p <- game.results do %>
-            <td><%= p.place %></td>
-            <td><%= p.power %></td>
-            <td><%= p.fun %></td>
-          <% end %>
-        </tr>
+    <li class="gamelist">
+      <span class="v-list-item"><%= game.id %></span>
+      <%= for r <- game.results do %>
+        <%= case r.place do %>
+          <% 1 -> %>
+            <span class="v-list-item positive-t short"><%= r.power %></span>
+            <span class="v-list-item positive-t short"><%= r.fun %></span>
+          <% 0 -> %>
+            <span class="v-list-item neutral-t short"><%= r.power %></span>
+            <span class="v-list-item neutral-t short"><%= r.fun %></span>
+          <% 2 -> %>
+            <span class="v-list-item negative-t short"><%= r.power %></span>
+            <span class="v-list-item negative-t short"><%= r.fun %></span>
+        <% end %>
       <% end %>
+    </li>
     <% end %>
-  </table>
+  </ul>
 </section>
 
 <%= if @match.status != :closed do %></td>
-<section>
-  ---
-</section>
 
-<section>
+<section class="plaque v-space-t">
   <form phx-submit="add">
-    <table>
-      <tr>
-        <th></th>
-        <th><%= @match.player_one %></th>
-        <th><%= @match.deck_one %></th>
-        <th></th>
-        <th><%= @match.deck_two %></th>
-        <th><%= @match.player_two %></th>
-        <th></th>
-      </tr>
-      <tr>
-        <th>Eval</th>
-        <th>Fun</th>
-        <th>Winner</th>
-        <th>Balance</th>
-        <th>Winner</th>
-        <th>Fun</th>
-        <th>Eval</th>
-      </tr>
-      <tr>
-        <td>
-          <input name="eval1" type="checkbox" value="true">
-        </td>
-        <td>
+    <ul class="v-list">
+      <li>
+        <span class="v-list-item label"><%= @match.player_one %>/<%= @match.deck_one %></span>
+        <span class="wide"></span>
+        <span class="v-list-item label"><%= @match.deck_two %>/<%= @match.player_two %></span>
+      </li>
+      <li>
+        <span class="short">Eval</span>
+        <span class="wide">Fun</span>
+        <span class="short">Winner</span>
+        <span class="wide">Balance</span>
+        <span class="short right-side">Winner</span>
+        <span class="wide right-side">Fun</span>
+        <span class="short right-side">Eval</span>
+      </li>
+      <li>
+        <span class="short">
+          <div class="h-checkbox-s">
+            <input class="h-checkbox-s" name="eval1" type="checkbox" value="true" id="ch_rank1">
+            <label for="ch_rank1"></label>
+          </div>
+        </span>
+        <span class="wide">
           <input type="range" name="fun1" value="<%= @fun1 %>" min="-2" max="2"/>
-        </td>
-        <td>
+        </span>
+        <span class="short">
           <input id="win1" name="winner" type="radio" value=1>
-        </td>
-        <td>
+        </span>
+        <span class="wide">
           <input type="range" name="balance" value="<%= @balance %>" min="-2" max="2"/>
-        </td>
-        <td>
+        </span>
+        <span class="short right-side">
           <input id="win2" name="winner" type="radio" value=2>
-        </td>
-        <td>
+        </span>
+        <span class="wide right-side">
           <input type="range" name="fun2" value="<%= @fun2 %>" min="-2" max="2"/>
-        </td>
-        <td>
-          <input name="eval2" type="checkbox" value="true">
-        </td>
-      </tr>
-    </table>
-    <button type="submit" phx-disable-with="Adding...">Add</button>
+        </span>
+        <span class="short right-side">
+          <div class="h-checkbox-s">
+            <input class="h-checkbox-s" name="eval2" type="checkbox" value="true" id="ch_rank2">
+            <label for="ch_rank2"></label>
+          </div>
+        </span>
+      </li>
+    </ul>
+    <button class="clickable" type="submit" phx-disable-with="Adding...">Add</button>
   </form>
 </section>
 
-<section>
-  ---
-</section>
-
-<section>
-  <%= if @sure == false do %></td>
-  <button phx-click="switch_sure">End</button>
+<section class="v-space-t footer">
+  <%= if @sure == false do %>
+  <button class="clickable" phx-click="switch_sure">End</button>
   <% end %>
-  <%= if @sure == true do %></td>
-  <button color="red" phx-click="switch_sure">Do not end</button>
-  <% end %>
-  <%= if @sure == true do %></td>
-  ---
-  <button phx-click="end">Confirm End</button>
+  <%= if @sure == true do %>
+  <ul class="h-list v-space-t">
+    <li>
+      <button class="clickable" color="red" phx-click="switch_sure">Do not end</button>
+    </li>
+    <li>
+      <button class="clickable" phx-click="end">Confirm End</button>
+    </li>
+  </ul>
   <% end %>
   <p class="alert alert-warning"><%= live_flash(@flash, :end_feedback) %></p>
 </section>

@@ -36,3 +36,19 @@ ul {
     margin-bottom: $dist-large;
     border-bottom: $border-normal;
 }
+
+.short {
+    min-width: 60px;
+    max-width: 12%;
+    padding-left: $dist-main;
+}
+
+.wide {
+    min-width: 60px;
+    max-width: 24%;
+    padding-left: $dist-main;
+}
+
+.right-side {
+    text-align: right;
+}
