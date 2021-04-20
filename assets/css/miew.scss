@@ -10,16 +10,19 @@ $color-neutral: lightyellow;
 $color-neutral-discrete: rgba(255, 255, 224, 0.5);
 $color-negative: tomato;
 $color-negative-discrete: rgba(255, 99, 71, 0.5);
+$color-input-backdrop: #555;
 $dist-large: 7px;
 $dist-main: 4px;
 $dist-small: 2px;
 $border-normal: solid $color-high-contrast 2px;
 $border-thin: solid $color-high-contrast 1px;
+$height-row: 30px;
+$size-row-content: 23px;
 
 
 html {
     font-family: 'Courier New', Courier, monospace;
-    min-width: 500px;
+    min-width: 400px;
     max-width: 1000px;
     background-color: $color-backdrop;
 }
@@ -59,8 +62,8 @@ input[type=checkbox] {
 }
 
 .v-space {
-    margin-top: 3px;
-    margin-bottom: 2px;
+    margin-top: $dist-main;
+    margin-bottom: $dist-small;
 }
 
 .v-space-t {
@@ -69,6 +72,19 @@ input[type=checkbox] {
 
 .v-space-b {
     margin-top: $dist-main;
+}
+
+.v-space-tl {
+    margin-top: $dist-large;
+}
+
+.h-space {
+    margin-left: $dist-main;
+    margin-right: $dist-small;
+}
+
+.h-space-ll {
+    margin-left: $dist-large;
 }
 
 .plaque {

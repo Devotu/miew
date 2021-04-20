@@ -51,56 +51,50 @@
 
 <section class="plaque v-space-t">
   <form phx-submit="add">
-    <ul class="v-list">
-      <li>
-        <span class="v-list-item label"><%= @match.player_one %>/<%= @match.deck_one %></span>
-        <span class="wide"></span>
-        <span class="v-list-item label"><%= @match.deck_two %>/<%= @match.player_two %></span>
-      </li>
-      <li>
-        <span class="short">Eval</span>
-        <span class="wide">Fun</span>
-        <span class="short">Winner</span>
-        <span class="wide">Balance</span>
-        <span class="short right-side">Winner</span>
-        <span class="wide right-side">Fun</span>
-        <span class="short right-side">Eval</span>
-      </li>
-      <li>
-        <span class="short">
-          <div class="h-checkbox-s">
-            <input class="h-checkbox-s" name="eval1" type="checkbox" value="true" id="ch_rank1">
-            <label for="ch_rank1"></label>
+    <input type="range" name="balance" id="balance-slider" value="<%= @balance %>" min="-2" max="2"/>
+    <button class="right box-fill" type="submit" phx-disable-with="Adding...">+</button>
+    <div id="match-player-input">
+      <div class="column vertical">
+        <div class="v-list-item label header"><%= @match.deck_one %>/<%= @match.player_one %></div>
+        <div class="flex row clickable">
+          <label class="flexi compact" for="win1">Win:</label>
+          <label class="cb-container h-space-ll flexi compact">
+            <input type=radio id="win1" name="winner" value=1>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="flex row clickable">
+          <label class="flexi compact" for="fun1">Fun: </label>
+          <div class="flexi compact h-space-ll">
+            <div class="v-checkbox-s">
+              <input class="v-checkbox-s" name="eval1" type="checkbox" value="true" id="ch_rank1">
+              <label for="ch_rank1"></label>
+            </div>
           </div>
-        </span>
-        <span class="wide">
           <input type="range" name="fun1" value="<%= @fun1 %>" min="-2" max="2"/>
-        </span>
-        <span class="short">
-          <input id="win1" name="winner" type="radio" value=1>
-        </span>
-        <span class="wide">
-          <input type="range" name="balance" value="<%= @balance %>" min="-2" max="2"/>
-        </span>
-        <span class="short right-side">
-          <input id="win2" name="winner" type="radio" value=2>
-        </span>
-        <span class="wide right-side">
-          <input type="range" name="fun2" value="<%= @fun2 %>" min="-2" max="2"/>
-        </span>
-        <span class="short right-side">
+        </div>
+      </div>
+      <div class="column">
+        <div class="label"><%= @match.deck_two %>/<%= @match.player_two %></div>
+        <div class="flex row">
+          <label class="flexi compact" for="win2">Win: </label>
+          <input class="flexi compact h-space-ll" id="win2" name="winner" type="radio" value=2>
+        </div>
+        <div class="flex row">
+          <label for="eval2">Eval</label>
           <div class="h-checkbox-s">
             <input class="h-checkbox-s" name="eval2" type="checkbox" value="true" id="ch_rank2">
             <label for="ch_rank2"></label>
           </div>
-        </span>
-      </li>
-    </ul>
-    <button class="clickable" type="submit" phx-disable-with="Adding...">Add</button>
+        </div>
+        <div class="flex row"><label for="fun2">Fun</label><input type="range" name="fun2" value="<%= @fun2 %>" min="-2" max="2"/></div>
+      </div>
+      </div>
+    </div>
   </form>
 </section>
 
-<section class="v-space-t footer">
+<section class="v-space-tl footer">
   <%= if @sure == false do %>
   <button class="clickable" phx-click="switch_sure">End</button>
   <% end %>
