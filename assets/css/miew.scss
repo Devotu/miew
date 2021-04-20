@@ -3,7 +3,8 @@ $box-fill: 66px;
 $color-main: white;
 $color-backdrop: tan;
 $color-input: lightyellow;
-$color-high-contrast: black;
+$color-high-contrast-dark: black;
+$color-high-contrast-light: white;
 $color-positive: olivedrab;
 $color-positive-discrete: rgba(106, 142, 35, 0.5);
 $color-neutral: lightyellow;
@@ -14,10 +15,11 @@ $color-input-backdrop: #555;
 $dist-large: 7px;
 $dist-main: 4px;
 $dist-small: 2px;
-$border-normal: solid $color-high-contrast 2px;
-$border-thin: solid $color-high-contrast 1px;
+$border-normal: solid $color-high-contrast-dark 2px;
+$border-thin: solid $color-high-contrast-dark 1px;
 $height-row: 30px;
 $size-row-content: 23px;
+$size-input-line: 10px;
 
 
 html {
@@ -38,7 +40,7 @@ html {
 a {
     text-decoration: none;
     display: block;
-    color: $color-high-contrast;
+    color: $color-high-contrast-dark;
     background-color: $color-main;
 }
 
@@ -81,6 +83,11 @@ input[type=checkbox] {
 .h-space {
     margin-left: $dist-main;
     margin-right: $dist-small;
+}
+
+.h-space-l {
+    margin-left: $dist-large;
+    margin-right: $dist-large;
 }
 
 .h-space-ll {

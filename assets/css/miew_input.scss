@@ -54,7 +54,7 @@
 }
 
 .v-checkbox-s {
-    width: 10px;
+    width: $size-input-line;
     height: $size-row-content;
     background: $color-input-backdrop;
     margin: 7px 5px;
@@ -113,7 +113,8 @@
   }
 
 .cb-container:hover input ~ .checkmark {
-    background-color: $color-positive-discrete;
+    background-color: $color-high-contrast-dark;
+    border: 1px solid $color-backdrop;
 }
 
 .cb-container.input:checked ~ .checkmark {
@@ -133,7 +134,7 @@
 .cb-container .checkmark:after {
     left: 10px;
     top: 0;
-    width: 4p0x;
+    width: 0;
     height: $size-row-content;
     border: solid white;
     border-width: 0 3px 0 0;
@@ -142,5 +143,48 @@
     transform: rotate(45deg);
  }
 
+//Slider
+.slide-container {
+    width: 100%;
+    padding-top: 11px;
+}
 
- 
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%;
+    height: $size-input-line;
+    background: linear-gradient(to right, $color-high-contrast-dark, $color-input-backdrop, $color-high-contrast-light);
+    outline: none;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1;
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: $size-row-content; /* Set a specific slider handle width */
+    height: $size-row-content; /* Slider handle height */
+    background: $color-high-contrast-dark;
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-webkit-slider-thumb:hover {
+    border: 1px solid tan;
+}
+
+.slider::-moz-range-thumb {
+    width: $size-row-content; /* Set a specific slider handle width */
+    height: $size-row-content; /* Slider handle height */
+    background: $color-high-contrast-dark; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+#balance-slider {
+    background: linear-gradient(to right, $color-high-contrast-light, $color-high-contrast-dark, $color-high-contrast-light);
+}
