@@ -142,6 +142,29 @@ input[type=checkbox] {
     color: $color-negative 1px solid;
 }
 
+.tick {
+    left: 9px;
+    top: -1px;
+    width: 0;
+    height: $size-row-content;
+    border: solid $color-high-contrast-dark;
+    border-width: 0 3px 0 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: relative;
+}
+
+.tickbox {
+    border: $border-thin;
+    height: $size-row-content;
+    width: $size-row-content;
+}
+
+.cut {
+    overflow-x: hidden;
+}
+
 //table
 th {
     border: $border-normal;

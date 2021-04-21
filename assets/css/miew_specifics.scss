@@ -1,9 +1,13 @@
 .decklist {
-    grid-template-columns: 76% 8% 16%;
+    grid-template-columns: 70% 10% 20%;
 }
 
 .playergamelist {
     grid-template-columns: 36% 32% 32%;
+}
+
+.matchlist {
+    grid-template-columns: 22% 8% 8% 27% 27% 8%;
 }
 
 #playergamelist {
