@@ -63,3 +63,7 @@
 #match-player-input {
     display: flex;
 }
+
+#balance-slider {
+    background: linear-gradient(to right, $color-high-contrast-light, $color-high-contrast-dark, $color-high-contrast-light);
+}

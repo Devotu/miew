@@ -51,10 +51,14 @@
 
 <section class="plaque v-space-t">
   <form phx-submit="add">
-    <input class="slider v-space-tl" type="range" name="balance" id="balance-slider" value="<%= @balance %>" min="-2" max="2"/>
+    <div class="clickable">
+      <input class="slider v-space-tl" type="range" name="balance" id="balance-slider" value="<%= @balance %>" min="-2" max="2"/>
+    </div>
     <div id="match-player-input">
       <div class="column vertical">
-        <div class="v-list-item label header"><%= @match.deck_one %>/<%= @match.player_one %></div>
+        <div class="v-list-item label header">
+          <%= @match.player_one %> / <%= @match.deck_one %>
+        </div>
         <div class="flex row clickable">
           <label class="flexi compact" for="win1">Win:</label>
           <label class="cb-container h-space-ll flexi compact">
@@ -74,7 +78,9 @@
         </div>
       </div>
       <div class="column vertical">
-        <div class="v-list-item label header"><%= @match.deck_two %>/<%= @match.player_two %></div>
+        <div class="v-list-item label header">
+          <%= @match.player_two %> / <%= @match.deck_two %>
+        </div>
         <div class="flex row clickable">
           <label class="flexi compact" for="win2">Win:</label>
           <label class="cb-container h-space-ll flexi compact">
