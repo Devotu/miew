@@ -65,12 +65,10 @@
         </div>
         <div class="flex row clickable">
           <label class="flexi compact" for="fun1">Fun: </label>
-          <div class="flexi compact h-space-ll">
-            <div class="v-checkbox-s">
-              <input class="v-checkbox-s" name="eval1" type="checkbox" value="true" id="ch_rank1">
-              <label for="ch_rank1"></label>
-            </div>
-          </div>
+          <label class="tickable-container h-space-ll flexi compact">
+            <input class="tickable-container" name="eval1" type="checkbox" value="true" id="ch_eval1">
+            <span class="tick-mark"></span>
+          </label>
           <div class="slide-container h-space-l">
             <input class="slider" type="range" name="fun1" value="<%= @fun1 %>" min="-2" max="2"/>
           </div>
@@ -87,12 +85,10 @@
         </div>
         <div class="flex row clickable">
           <label class="flexi compact" for="fun2">Fun: </label>
-          <div class="flexi compact h-space-ll">
-            <div class="v-checkbox-s">
-              <input class="v-checkbox-s" name="eval2" type="checkbox" value="true" id="ch_rank2">
-              <label for="ch_rank2"></label>
-            </div>
-          </div>
+          <label class="tickable-container h-space-ll flexi compact">
+            <input class="tickable-container" name="eval2" type="checkbox" value="true" id="ch_eval2">
+            <span class="tick-mark"></span>
+          </label>
           <div class="slide-container h-space-l">
             <input class="slider" type="range" name="fun2" value="<%= @fun2 %>" min="-2" max="2"/>
           </div>

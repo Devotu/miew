@@ -109,16 +109,12 @@
     left: 0;
     height: $size-row-content;
     width: $size-row-content;
-    background-color: $color-input-backdrop;
+    background-color: $color-high-contrast-light;
+    border: $border-thin;
   }
 
 .cb-container:hover input ~ .checkmark {
-    background-color: $color-high-contrast-dark;
-    border: 1px solid $color-backdrop;
-}
-
-.cb-container.input:checked ~ .checkmark {
-    background-color: #2196F3;
+    border: 2px solid $color-high-contrast-mid;
 }
 
 .checkmark:after {
@@ -132,11 +128,11 @@
 }
 
 .cb-container .checkmark:after {
-    left: 10px;
-    top: 0;
+    left: 9px;
+    top: -1px;
     width: 0;
     height: $size-row-content;
-    border: solid white;
+    border: solid $color-high-contrast-dark;
     border-width: 0 3px 0 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -146,7 +142,7 @@
 //Slider
 .slide-container {
     width: 100%;
-    padding-top: 11px;
+    padding-top: $dist-main;
 }
 
 /* The slider itself */
@@ -170,21 +166,79 @@
     appearance: none;
     width: $size-row-content; /* Set a specific slider handle width */
     height: $size-row-content; /* Slider handle height */
-    background: $color-high-contrast-dark;
+    background: $color-high-contrast-light;
     cursor: pointer; /* Cursor on hover */
+    border: $border-thin;
 }
 
 .slider::-webkit-slider-thumb:hover {
-    border: 1px solid tan;
+    border: 2px solid $color-high-contrast-mid;
 }
 
 .slider::-moz-range-thumb {
     width: $size-row-content; /* Set a specific slider handle width */
     height: $size-row-content; /* Slider handle height */
-    background: $color-high-contrast-dark; /* Green background */
+    background: $color-high-contrast-light; /* Green background */
     cursor: pointer; /* Cursor on hover */
 }
 
 #balance-slider {
     background: linear-gradient(to right, $color-high-contrast-light, $color-high-contrast-dark, $color-high-contrast-light);
+}
+
+.tickable-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tickable-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.tick-mark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: $size-row-content;
+    width: $size-row-content;
+    background-color: $color-high-contrast-light;
+    border: $border-thin;
+  }
+
+.tickable-container:hover input ~ .tick-mark {
+    border: 2px solid $color-high-contrast-mid;
+}
+
+.tick-mark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.tickable-container input:checked ~ .tick-mark:after {
+    display: block;
+}
+
+.tickable-container .tick-mark:after {
+    left: 9px;
+    top: -1px;
+    width: 0;
+    height: $size-row-content;
+    border: solid $color-high-contrast-dark;
+    border-width: 0 3px 0 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
