@@ -52,7 +52,6 @@
 <section class="plaque v-space-t">
   <form phx-submit="add">
     <input class="slider v-space-tl" type="range" name="balance" id="balance-slider" value="<%= @balance %>" min="-2" max="2"/>
-    <button class="right box-fill" type="submit" phx-disable-with="Adding...">+</button>
     <div id="match-player-input">
       <div class="column vertical">
         <div class="v-list-item label header"><%= @match.deck_one %>/<%= @match.player_one %></div>
@@ -94,23 +93,24 @@
           </div>
         </div>
       </div>
+    </div>
+    <%= if @sure == false do %>
+    <div class="flex flex-spread row append-b">
+      <button class="flexi box-fill" type="button" phx-click="switch_sure">End</button>
+      <button class="flexi box-fill right" type="submit" phx-disable-with="Adding...">+</button>
+    </div>
+    <% end %>
+    <%= if @sure == true do %>
+    <div class="flex flex-spread row append-b">
+        <button class="flexi box-fill" type="button" color="red" phx-click="switch_sure">Do not end</button>
+        <button class="flexi box-fill right" type="button" phx-click="end">End</button>
+    </div>
+    <% end %>
   </form>
 </section>
 
 <section class="v-space-tl footer">
-  <%= if @sure == false do %>
-  <button class="clickable" phx-click="switch_sure">End</button>
-  <% end %>
-  <%= if @sure == true do %>
-  <ul class="h-list v-space-t">
-    <li>
-      <button class="clickable" color="red" phx-click="switch_sure">Do not end</button>
-    </li>
-    <li>
-      <button class="clickable" phx-click="end">Confirm End</button>
-    </li>
-  </ul>
-  <% end %>
+
   <p class="alert alert-warning"><%= live_flash(@flash, :end_feedback) %></p>
 </section>
 <% end %>

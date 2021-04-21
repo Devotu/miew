@@ -43,15 +43,15 @@ defmodule MiewWeb.MatchListLive do
     case status do
       :initialized ->
         ~L"""
-        <div class="positive-t">new</div>
+        <div class="positive-t cut">new</div>
         """
       :open ->
         ~L"""
-        <div class="positive-t">live</div>
+        <div class="positive-t cut">live</div>
         """
       :closed ->
         ~L"""
-        <div class="negative-t">closed</div>
+        <div class="negative-t cut">closed</div>
         """
     end
   end

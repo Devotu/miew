@@ -112,6 +112,10 @@ input[type=checkbox] {
     width: $box-fill;
 }
 
+.box-height {
+    height: $box-fill;
+}
+
 .header {
     margin-bottom: $dist-main;
 }
@@ -165,6 +169,12 @@ input[type=checkbox] {
 
 .cut {
     overflow-x: hidden;
+}
+
+div.append-b {
+    height: 0;
+    position: relative;
+    top: $dist-large;
 }
 
 //table
