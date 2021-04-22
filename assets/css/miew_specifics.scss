@@ -22,6 +22,10 @@
     grid-template-columns: 76% 8% 16%;
 }
 
+.modifyrankrow {
+    grid-template-columns:  50% 25% 25%;
+}
+
 .rankrow {
     grid-template-columns: $box-size auto;
 }
