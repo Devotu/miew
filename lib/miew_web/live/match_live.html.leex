@@ -103,13 +103,13 @@
     <%= if @sure == false do %>
     <div class="flex flex-spread row append-b">
       <button class="flexi box-fill" type="button" phx-click="switch_sure">End</button>
-      <button class="flexi box-fill right" type="submit" phx-disable-with="Adding...">+</button>
+      <button class="flexi box-fill" type="submit" phx-disable-with="Adding...">+</button>
     </div>
     <% end %>
     <%= if @sure == true do %>
     <div class="flex flex-spread row append-b">
-        <button class="flexi box-fill" type="button" color="red" phx-click="switch_sure">Do not end</button>
-        <button class="flexi box-fill right" type="button" phx-click="end">End</button>
+        <button class="flexi box-fill-w" type="button" phx-click="end">Confirm end</button>
+        <button class="flexi box-fill-w" type="button" phx-click="switch_sure">Do not end</button>
     </div>
     <% end %>
   </form>
