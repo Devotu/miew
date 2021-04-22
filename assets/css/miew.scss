@@ -1,5 +1,6 @@
 $box-size: 80px;
 $box-fill: 66px;
+$box-fill-w: 120px;
 $color-main: white;
 $color-backdrop: tan;
 $color-input: lightyellow;
@@ -110,6 +111,11 @@ input[type=checkbox] {
 .box-fill {
     height: $box-fill;
     width: $box-fill;
+}
+
+.box-fill-w {
+    height: $box-fill;
+    width: $box-fill-w;
 }
 
 .box-height {

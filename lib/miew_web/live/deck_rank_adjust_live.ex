@@ -22,11 +22,11 @@ defmodule MiewWeb.DeckRankAdjustLive do
           </li>
         </ul>
         <div class="flex flex-spread row append-b">
-          <%= if @changes > 0 do %>
-          <button class="flexi box-fill" type="button" color="red" phx-click="switch_sure">Do not end</button>
+          <button class="flexi box-fill" type="button" phx-click="down">-</button>
+          <%= if Enum.count(@changes) > 0 do %>
+          <button class="flexi box-fill-w" type="button" phx-click="confirm" phx-value-deck_id=<%= @deck.id %>>Confirm</button>
           <% end %>
-          <button class="flexi box-fill right" type="button" phx-click="down" phx-value-deck_id=<%= @deck.id %>>-</button>
-          <button class="flexi box-fill right" type="button" phx-click="up" phx-value-deck_id=<%= @deck.id %>>+</button>
+          <button class="flexi box-fill" type="button" phx-click="up">+</button>
         </div>
       </div>
     </section>
@@ -37,35 +37,30 @@ defmodule MiewWeb.DeckRankAdjustLive do
   def mount(params, _session, socket) do
     deck = params["id"]
       |> load_deck
-    {:ok, assign(socket, deck: deck, changes: 0)}
+    {:ok, assign(socket, deck: deck, changes: [])}
   end
 
 
   @impl true
-  def handle_event("up", data, socket) do
+  def handle_event("up", _data, socket) do
+    assigns = socket.assigns
+    {:noreply, assign(socket, deck: assigns.deck, changes: assigns.changes ++ [:up])}
+  end
+
+  @impl true
+  def handle_event("down", _data, socket) do
+    assigns = socket.assigns
+    {:noreply, assign(socket, deck: assigns.deck, changes: assigns.changes ++ [:down])}
+  end
+
+
+  @impl true
+  def handle_event("confirm", data, socket) do
     id = data["deck_id"]
-    Miew.bump_rank(id, :up)
+    socket.assigns.changes
+      |> Enum.each(fn dir -> Miew.bump_rank(id, dir) end)
     deck = load_deck(id)
-    {:noreply, assign(socket, deck: deck)}
-  end
-
-  @impl true
-  def handle_event("down", data, socket) do
-    id = data["deck_id"]
-    Miew.bump_rank(id, :down)
-    deck = load_deck(id)
-    {:noreply, assign(socket, deck: deck)}
-  end
-
-
-  @impl true
-  def handle_event("confirm", _data, socket) do
-    case socket.assigns.sure do
-      true ->
-        {:noreply, assign(socket, sure: !socket.assigns.sure)}
-      false ->
-        {:noreply, assign(socket, sure: !socket.assigns.sure)}
-    end
+    {:noreply, assign(socket, deck: deck, changes: [])}
   end
 
   def load_deck(id) do

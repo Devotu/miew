@@ -13,6 +13,9 @@ defmodule MiewWeb.StateLive do
       <button phx-click="rerun" phx-value-id="<%=@state.id%>" phx-value-type="<%=@type%>">Rerun</button>
       <p class="alert alert-warning"><%= live_flash(@flash, :rerun_error) %></p>
       <p class="alert alert-success"><%= live_flash(@flash, :rerun_ok) %></p>
+      <div class="flex flex-spread row append-b">
+        <button class="flexi box-fill" type="button" phx-click="switch_sure">Do not end</button>
+      </div>
     </section>
     """
   end
