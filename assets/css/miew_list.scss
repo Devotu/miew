@@ -37,6 +37,10 @@ ul {
     border-bottom: $border-normal;
 }
 
+li.label {
+    border-bottom: $border-thin;
+}
+
 .short {
     min-width: 60px;
     max-width: 12%;

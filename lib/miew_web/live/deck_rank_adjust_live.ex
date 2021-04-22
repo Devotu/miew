@@ -15,8 +15,6 @@ defmodule MiewWeb.DeckRankAdjustLive do
             <span class="v-list-item">Rank</span>
             <span class="v-list-item">Advantage</span>
           </li>
-        </ul>
-        <ul class="v-list header">
           <li class="modifyrankrow">
             <span class="v-list-item"><%= @deck.name %></span>
             <span class="v-list-item"><%= @deck.rank %></span>
