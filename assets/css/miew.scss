@@ -183,6 +183,14 @@ div.append-b {
     top: $dist-large;
 }
 
+.confirm {
+    color: $color-negative;
+}
+
+.v-fill {
+    height: 500px;
+}
+
 //table
 th {
     border: $border-normal;
