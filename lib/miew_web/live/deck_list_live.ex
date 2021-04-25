@@ -9,9 +9,9 @@ defmodule MiewWeb.DeckListLive do
     <section>
       <ul class="v-list header">
         <li class="decklist label">
-          <span class="v-list-item clickable" phx-click="sort_names" >Name</span>
-          <span class="v-list-item clickable" phx-click="sort_games">Games</span>
-          <span class="v-list-item clickable" phx-click="sort_rank">Rank</span>
+          <span class="v-list-item clickable" phx-click="sort_names" phx-value-order="<%= if @order == :asc do %>asc<% else %>desc<% end %>" >Name</span>
+          <span class="v-list-item clickable" phx-click="sort_games" phx-value-order="<%= if @order == :asc do %>asc<% else %>desc<% end %>" >Games</span>
+          <span class="v-list-item clickable" phx-click="sort_rank" phx-value-order="<%= if @order == :asc do %>asc<% else %>desc<% end %>" >Rank</span>
         </li>
       </ul>
       <ul class="v-list">
@@ -32,24 +32,31 @@ defmodule MiewWeb.DeckListLive do
   @impl true
   def mount(_params, _session, socket) do
     decks = Miew.list("deck", sort: "name")
-    {:ok, assign(socket, decks: decks)}
+    {:ok, assign(socket, decks: decks, order: :desc)}
   end
 
   @impl true
-  def handle_event("sort_names", _params, socket) do
+  def handle_event("sort_names", params, socket) do
     decks = Miew.list("deck", sort: "name")
-    {:noreply, assign(socket, decks: decks)}
+    reply_ordered(decks, params["order"], socket)
   end
 
   @impl true
-  def handle_event("sort_games", _params, socket) do
+  def handle_event("sort_games", params, socket) do
     decks = Miew.list("deck", sort: "games")
-    {:noreply, assign(socket, decks: decks)}
+    reply_ordered(decks, params["order"], socket)
   end
 
   @impl true
-  def handle_event("sort_rank", _params, socket) do
+  def handle_event("sort_rank", params, socket) do
     decks = Miew.list("deck", sort: "rank")
-    {:noreply, assign(socket, decks: decks)}
+    reply_ordered(decks, params["order"], socket)
+  end
+
+  defp reply_ordered(decks, "asc", socket) do
+    {:noreply, assign(socket, decks: decks, order: :desc)}
+  end
+  defp reply_ordered(decks, "desc", socket) do
+    {:noreply, assign(socket, decks: decks |> Enum.reverse, order: :asc)}
   end
 end
