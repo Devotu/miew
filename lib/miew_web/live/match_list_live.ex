@@ -19,7 +19,7 @@ defmodule MiewWeb.MatchListLive do
       </ul>
       <ul class="v-list">
       <%= for match <- @matches do %>
-        <li class="matchlist clickable">
+        <li class="matchlist clicksize">
           <%= link(match.id, method: :get, to: "/match/#{match.id}", class: "v-list-item cut")%>
           <span class="v-list-item"><%= display_status(match.status, assigns) %></span>
           <span class="v-list-item"><%= display_rank(match.ranking, assigns) %></span>
