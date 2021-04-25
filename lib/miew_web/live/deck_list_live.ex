@@ -9,9 +9,9 @@ defmodule MiewWeb.DeckListLive do
     <section>
       <ul class="v-list header">
         <li class="decklist label">
-          <span class="v-list-item">Name</span>
-          <span class="v-list-item">Games</span>
-          <span class="v-list-item">Rank</span>
+          <span class="v-list-item clickable" phx-click="sort_names" >Name</span>
+          <span class="v-list-item clickable" phx-click="sort_games">Games</span>
+          <span class="v-list-item clickable" phx-click="sort_rank">Rank</span>
         </li>
       </ul>
       <ul class="v-list">
@@ -33,5 +33,23 @@ defmodule MiewWeb.DeckListLive do
   def mount(_params, _session, socket) do
     decks = Miew.list("deck", sort: "name")
     {:ok, assign(socket, decks: decks)}
+  end
+
+  @impl true
+  def handle_event("sort_names", _params, socket) do
+    decks = Miew.list("deck", sort: "name")
+    {:noreply, assign(socket, decks: decks)}
+  end
+
+  @impl true
+  def handle_event("sort_games", _params, socket) do
+    decks = Miew.list("deck", sort: "games")
+    {:noreply, assign(socket, decks: decks)}
+  end
+
+  @impl true
+  def handle_event("sort_rank", _params, socket) do
+    decks = Miew.list("deck", sort: "rank")
+    {:noreply, assign(socket, decks: decks)}
   end
 end

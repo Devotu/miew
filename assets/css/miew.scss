@@ -183,6 +183,10 @@ div.append-b {
     top: $dist-large;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 //table
 th {
     border: $border-normal;
