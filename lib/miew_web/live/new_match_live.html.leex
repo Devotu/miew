@@ -4,12 +4,12 @@
     <ul class="h-list">
       <li class="plaque">
         <h2 class="header">Player 1</h2>
-        <select class="v-space clickable" name="player_1" id="player_1">
+        <select class="v-space clicksize" name="player_1" id="player_1">
           <%= for name <- @players do %>
             <option value="<%= name %>"><%= name %></option>
           <% end %>
         </select>
-        <select class="v-space clickable" name="deck_1" id="deck_1">
+        <select class="v-space clicksize" name="deck_1" id="deck_1">
           <%= for name <- @decks do %>
             <option value="<%= name %>"><%= name %></option>
           <% end %>
@@ -17,12 +17,12 @@
       </li>
       <li class="plaque">
         <h2 class="header">Player 2</h2>
-        <select class="v-space clickable" name="player_2" id="player_2">
+        <select class="v-space clicksize" name="player_2" id="player_2">
           <%= for name <- @players do %>
             <option value="<%= name %>"><%= name %></option>
           <% end %>
         </select>
-        <select class="v-space clickable" name="deck_2" id="deck_2">
+        <select class="v-space clicksize" name="deck_2" id="deck_2">
           <%= for name <- @decks do %>
             <option value="<%= name %>"><%= name %></option>
           <% end %>

@@ -48,6 +48,17 @@ defmodule Miew do
     |> Enum.sort(fn a, b -> a.name < b.name end)
   end
 
+  def list("deck", sort: "games") do
+    Metr.list_states("deck")
+    |> Enum.sort(fn a, b -> Enum.count(a.results) > Enum.count(b.results) end)
+  end
+
+  def list("deck", sort: "rank") do
+    Metr.list_states("deck")
+    |> Enum.map(fn d -> Map.put(d, :flatrank, flat_rank(d.rank)) end)
+    |> Enum.sort(fn a, b -> a.flatrank > b.flatrank end)
+  end
+
   def list(type) when is_bitstring(type) do
     Metr.list_states(type)
   end
@@ -81,5 +92,13 @@ defmodule Miew do
 
   def read_entity_history(id, type) do
     Metr.read_entity_history(id, type)
+  end
+
+
+  defp flat_rank({rank, advantage}) do
+    (3*rank) + advantage
+  end
+  defp flat_rank(nil) do
+    0
   end
 end
