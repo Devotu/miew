@@ -28,71 +28,77 @@ defmodule Miew.Helpers do
     end
   end
 
-  def to_pretty(s) do
-    pretty = "%Metr.Modules.Deck{x: \"stuff\", y: {inner: \"other\"}}"
-    |> format()
+  # def to_pretty(s) do
+  #   pretty = "%Metr.Modules.Deck{x: \"stuff\", y: {inner: \"other\"}}"
+  #   |> format()
 
-    IO.inspect s, label: "pretty"
-    IO.inspect pretty, label: "pretty"
+  #   IO.inspect s, label: "pretty"
+  #   IO.inspect pretty, label: "pretty"
 
-    pretty
-  end
+  #   pretty
+  # end
 
   def to_pretty(s) when is_struct(s) do
-    pretty = s
+    # pretty = s
+    # |> Kernel.inspect()
+    # |> String.replace("{", "{\n")
+    # |> String.replace("[", "[\n")
+    # |> String.replace(",", ",\n")
+
+    IO.inspect s, label: "to pretty"
+
+    s
     |> Kernel.inspect()
-    |> String.replace("{", "{\n")
-    |> String.replace("[", "[\n")
-    |> String.replace(",", ",\n")
-
-    IO.inspect pretty, label: "pretty"
-
-    pretty
+    |> format()
   end
 
 
-  defp format({formated, ""}) do
+  defp format({formated, "", _depth}) do
     formated
   end
 
-  defp format({formated, reminder}) do
+  defp format({formated, reminder, depth}) do
     IO.inspect formated, label: "formated"
     IO.inspect reminder, label: "reminder"
-    reminder
-    |> split()
-    |> break()
-    |> indent()
-    |> build()
-    |> format()
+    IO.inspect depth, label: "depth"
+    formated <> (
+      {reminder, depth}
+      |> split()
+      |> break()
+      |> indent()
+      |> build()
+      |> format()
+      )
   end
 
   defp format(s) do
-    format({"", s})
+    format({"", s, 0})
   end
 
 
-  defp split(s) do
-    String.split(s, ~r{{}, parts: 2, include_captures: true)
+  defp split({s, depth}) do
+    {String.split(s, ~r{{}, parts: 2, include_captures: true), depth + 1}
   end
 
-  defp break([pre, split, rem]) do
-    ["#{pre}#{split}", "\n", rem]
+  defp break({[pre, split, rem], depth}) do
+    {["#{pre}#{split}", "\n", rem], depth}
   end
-  defp break([rem]) do
-    [rem]
-  end
-
-  defp indent([pre, break, rem]) do
-    [pre, break, "\t", rem]
-  end
-  defp indent([rem]) do
-    [rem]
+  defp break({[rem], depth}) do
+    {[rem], depth}
   end
 
-  defp build([pre, break, ind, rem]) do
-    {"#{pre}#{break}#{ind}", rem}
+  defp indent({[pre, break, rem], depth}) do
+    tabs = String.duplicate("\t", depth)
+    {[pre, break, tabs, rem], depth}
   end
-  defp build([rem]) do
-    {rem, ""}
+  defp indent({[rem], depth}) do
+    {[rem], depth}
+  end
+
+  defp build({[pre, break, ind, rem], depth}) do
+    {"#{pre}#{break}#{ind}", rem, depth}
+  end
+  defp build({[rem], depth}) do
+    {rem, "", depth}
   end
 end
