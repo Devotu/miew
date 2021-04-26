@@ -46,59 +46,106 @@ defmodule Miew.Helpers do
     # |> String.replace(",", ",\n")
 
     IO.inspect s, label: "to pretty"
+    # s = "%Metr.Modules.Deck{x: \"stuff\", y: {inner: \"other\"}}"
 
     s
     |> Kernel.inspect()
-    |> format()
+    |> pretty()
   end
 
 
-  defp format({formated, "", _depth}) do
-    formated
+  defp pretty(s) when is_bitstring(s) do
+    IO.inspect s, label: "initializing"
+    pretty(0, s)
   end
 
-  defp format({formated, reminder, depth}) do
-    IO.inspect formated, label: "formated"
-    IO.inspect reminder, label: "reminder"
-    IO.inspect depth, label: "depth"
-    formated <> (
-      {reminder, depth}
-      |> split()
-      |> break()
-      |> indent()
-      |> build()
-      |> format()
-      )
+  defp pretty(_d, "") do
+    ""
   end
 
-  defp format(s) do
-    format({"", s, 0})
+  defp pretty(d, "{" <> rem) do
+    dn = d + 1
+    "{" <> "\n" <> tabs(dn) <> pretty(dn, String.trim(rem))
+  end
+
+  defp pretty(d, "}" <> rem) do
+    dn = d - 1
+    "\n" <> tabs(dn) <> "}" <> pretty(dn, String.trim(rem))
+  end
+
+  defp pretty(d, "[" <> rem) do
+    dn = d + 1
+    "[" <> "\n" <> tabs(dn) <> pretty(dn, String.trim(rem))
+  end
+
+  defp pretty(d, "]" <> rem) do
+    dn = d - 1
+    "\n" <> tabs(dn) <> "]" <> pretty(dn, String.trim(rem))
+  end
+
+  defp pretty(d, "," <> rem) do
+    "," <> "\n" <> tabs(d) <> pretty(d, String.trim(rem))
+  end
+
+  defp pretty(d, s) do
+    {c, rem} = String.split_at(s, 1)
+    c <> pretty(d, rem)
+  end
+
+  defp tabs(n) do
+    String.duplicate("\t", n)
   end
 
 
-  defp split({s, depth}) do
-    {String.split(s, ~r{{}, parts: 2, include_captures: true), depth + 1}
-  end
+  # defp format({formated, "", _depth}) do
+  #   formated
+  # end
 
-  defp break({[pre, split, rem], depth}) do
-    {["#{pre}#{split}", "\n", rem], depth}
-  end
-  defp break({[rem], depth}) do
-    {[rem], depth}
-  end
+  # defp format({formated, reminder, depth}) do
+  #   IO.inspect formated, label: "formated"
+  #   IO.inspect reminder, label: "reminder"
+  #   IO.inspect depth, label: "depth"
+  #   formated <> (
+  #     {reminder, depth}
+  #     |> split()
+  #     |> break()
+  #     |> indent()
+  #     |> build()
+  #     |> format()
+  #     )
+  # end
 
-  defp indent({[pre, break, rem], depth}) do
-    tabs = String.duplicate("\t", depth)
-    {[pre, break, tabs, rem], depth}
-  end
-  defp indent({[rem], depth}) do
-    {[rem], depth}
-  end
+  # defp format(s) do
+  #   format({"", s, 0})
+  # end
 
-  defp build({[pre, break, ind, rem], depth}) do
-    {"#{pre}#{break}#{ind}", rem, depth}
-  end
-  defp build({[rem], depth}) do
-    {rem, "", depth}
-  end
+
+  # defp split({s, depth}) do
+  #   {String.split(s, ~r{{}, parts: 2, include_captures: true), depth + 1}
+
+
+
+  # end
+
+  # defp break({[pre, split, rem], depth}) do
+  #   {["#{pre}#{split}", "\n", rem], depth}
+  # end
+  # defp break({[rem], depth}) do
+  #   {[rem], depth}
+  # end
+
+  # defp indent({[pre, break, rem], depth}) do
+  #   tabs = String.duplicate("\t", depth)
+  #   {[pre, break, tabs, rem], depth}
+  # end
+  # defp indent({[rem], depth}) do
+  #   {[rem], depth}
+  # end
+
+  # defp build({[pre, break, ind, rem], depth}) do
+  #   {"#{pre}#{break}#{ind}", rem, depth}
+  # end
+  # defp build({[rem], depth}) do
+  #   {rem, "", depth}
+  # end
 end
