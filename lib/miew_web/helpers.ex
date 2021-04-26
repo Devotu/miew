@@ -73,6 +73,10 @@ defmodule Miew.Helpers do
     "\n" <> tabs(dn) <> "}" <> pretty(dn, String.trim(rem))
   end
 
+  defp pretty(d, "[]" <> rem) do
+    "[]" <> pretty(d, String.trim(rem))
+  end
+
   defp pretty(d, "[" <> rem) do
     dn = d + 1
     "[" <> "\n" <> tabs(dn) <> pretty(dn, String.trim(rem))
