@@ -188,7 +188,9 @@ div.append-b {
 }
 
 .v-fill {
-    height: 500px;
+    height: auto;
+    max-height: 80vh;
+    overflow-y: scroll;
 }
 
 .clickable {
