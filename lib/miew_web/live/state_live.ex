@@ -12,6 +12,7 @@ defmodule MiewWeb.StateLive do
       <p class="alert alert-success"><%= live_flash(@flash, :rerun_ok) %></p>
       <pre><%= pretty(@state, assigns) %></pre>
     </section>
+    <%= if String.contains?(@state.id, "deck") do %>
     <section>
       <div class="flex flex-spread row append-b">
         <%= if @confirm do %>
@@ -33,6 +34,7 @@ defmodule MiewWeb.StateLive do
         <% end %>
       </div>
     </section>
+    <% end %>
     """
   end
 

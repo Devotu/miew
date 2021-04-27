@@ -15,7 +15,12 @@
     width: min-content;
 }
 
-.column {
+.flex.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column_2 {
     flex: 50%;
 }
 

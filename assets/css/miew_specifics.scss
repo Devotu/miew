@@ -19,8 +19,14 @@
     grid-template-columns: 36% 16% 16% 16% 16%;
 }
 
-.resultlist {
-    grid-template-columns: 76% 8% 16%;
+.flex.resultlist {
+    height: auto;
+}
+
+div .resultlist-row {
+    display: flex;
+    justify-content: space-between;
+    height: 24px;
 }
 
 .modifyrankrow {

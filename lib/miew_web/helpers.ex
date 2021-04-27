@@ -77,4 +77,14 @@ defmodule Miew.Helpers do
   defp tabs(n) do
     String.duplicate("\t", n)
   end
+
+  def as_percent(n) when is_number(n) and n > 0 and n < 1 do
+    n * 100
+  end
+  def as_percent(n) when is_number(n) and n > 0 and n < 100 do
+    n
+  end
+  def as_percent(n) do
+    "#{n} not %"
+  end
 end
