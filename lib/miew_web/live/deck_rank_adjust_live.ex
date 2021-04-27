@@ -24,7 +24,7 @@ defmodule MiewWeb.DeckRankAdjustLive do
         <div class="flex flex-spread row append-b">
           <button class="flexi box-fill" type="button" phx-click="down">-</button>
           <%= if Enum.count(@changes) > 0 do %>
-          <button class="flexi box-fill-w" type="button" phx-click="confirm" phx-value-deck_id=<%= @deck.id %>>Confirm</button>
+          <button class="flexi box-fill-w confirm" type="button" phx-click="confirm" phx-value-deck_id=<%= @deck.id %>>Confirm</button>
           <% end %>
           <button class="flexi box-fill" type="button" phx-click="up">+</button>
         </div>

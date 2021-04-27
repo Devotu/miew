@@ -183,6 +183,16 @@ div.append-b {
     top: $dist-large;
 }
 
+.confirm {
+    color: $color-negative;
+}
+
+.v-fill {
+    height: auto;
+    max-height: 80vh;
+    overflow-y: scroll;
+}
+
 .clickable {
     cursor: pointer;
 }
