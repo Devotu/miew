@@ -1,5 +1,4 @@
 defmodule Miew.Helpers do
-  alias Phoenix.LiveView
 
   def text_to_bool(nil), do: false
   def text_to_bool(""), do: false
@@ -79,10 +78,10 @@ defmodule Miew.Helpers do
   end
 
   def as_percent(n) when is_number(n) and n > 0 and n < 1 do
-    n * 100
+    Float.round(n * 100, 2)
   end
   def as_percent(n) when is_number(n) and n > 0 and n < 100 do
-    n
+    Float.round(n, 2)
   end
   def as_percent(n) do
     "#{n} not %"
