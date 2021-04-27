@@ -10,7 +10,7 @@ defmodule MiewWeb.StateLive do
     <section class="plaque v-fill">
       <p class="alert alert-warning"><%= live_flash(@flash, :rerun_error) %></p>
       <p class="alert alert-success"><%= live_flash(@flash, :rerun_ok) %></p>
-      <pre><%= pretty(@state, assigns) %></pre>
+      <pre><%= Helpers.to_pretty(@state) %></pre>
     </section>
     <%= if String.contains?(@state.id, "deck") do %>
     <section>
@@ -53,7 +53,6 @@ defmodule MiewWeb.StateLive do
 
   @impl true
   def handle_event("confirm", %{"id" => id, "type" => type}, socket) do
-    state = load_state(type, id)
     case Metr.rerun(type, id) do
       :ok -> {:noreply, put_flash(socket, :rerun_ok, "Ok")}
       {:error, e} -> {:noreply, put_flash(socket, :rerun_error, Kernel.inspect(e))}
@@ -63,9 +62,5 @@ defmodule MiewWeb.StateLive do
 
   defp load_state(type, id) do
     Metr.read_state(type, id)
-  end
-
-  defp pretty(state, assigns) do
-    Helpers.to_pretty(state)
   end
 end

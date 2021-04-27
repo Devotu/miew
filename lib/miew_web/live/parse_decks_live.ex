@@ -59,11 +59,4 @@ defmodule MiewWeb.ParseDecksLive do
     |> Enum.map(&(String.split(&1, ";")))
     |> Enum.map(fn x -> pick_apart(x, Miew.list_formats()) end)
   end
-
-  defp maybe(map, key) when is_map(map) do
-    case Map.has_key?(map, key) do
-      true -> Map[key]
-      false -> ""
-    end
-  end
 end

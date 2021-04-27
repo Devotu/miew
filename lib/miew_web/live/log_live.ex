@@ -9,7 +9,7 @@ defmodule MiewWeb.LogLive do
     ~L"""
     <%= for event <- @events do %>
     <section class="plaque v-fill">
-      <pre><%= pretty(event, assigns) %></pre>
+      <pre><%= Helpers.to_pretty(event) %></pre>
     </section>
     <% end %>
     """
@@ -25,9 +25,5 @@ defmodule MiewWeb.LogLive do
   def mount(%{"limit" => limit_input}, _session, socket) do
     {limit, ""} = Integer.parse(limit_input)
     {:ok, assign(socket, events: Metr.read_global_log(limit))}
-  end
-
-  defp pretty(state, assigns) do
-    Helpers.to_pretty(state)
   end
 end
