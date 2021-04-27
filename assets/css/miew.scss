@@ -2,7 +2,7 @@ $box-size: 80px;
 $box-fill: 66px;
 $box-fill-w: 120px;
 $color-main: white;
-$color-backdrop: tan;
+$color-backdrop: lightgray;
 $color-input: lightyellow;
 $color-high-contrast-dark: black;
 $color-high-contrast-mid: gray;
@@ -190,7 +190,7 @@ div.append-b {
 .v-fill {
     height: auto;
     max-height: 80vh;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .clickable {
