@@ -10,20 +10,17 @@
     <div class="resultlist-row">
       <span class="v-list-item clicksize">Place</span>
       <span class="v-list-item clicksize">Player</span>
-      <span class="v-list-item clicksize"></span>
       <span class="v-list-item clicksize">Id</span>
     </div>
     <div class="resultlist-row">
-      <span class="v-list-item clicksize">Opp. Deck</span>
+      <span class="v-list-item clicksize">Opp.Deck</span>
       <span class="v-list-item clicksize">Opponent</span>
-      <span class="v-list-item clicksize"></span>
       <span class="v-list-item clicksize"></span>
     </div>
     <div class="resultlist-row">
-      <span class="v-list-item clicksize">Power</span>
-      <span class="v-list-item clicksize">Z Power</span>
-      <span class="v-list-item clicksize">Fun</span>
-      <span class="v-list-item clicksize">Z Fun</span>
+      <span class="v-list-item clicksize">Power -> Z</span>
+      <span class="v-list-item clicksize">Fun -> Z</span>
+      <span class="v-list-item clicksize"></span>
     </div>
   </li>
 </ul>
@@ -31,22 +28,43 @@
   <%= for r <- @results do %>
     <li class="resultlist column flex">
       <div class="resultlist-row">
-        <span class="v-list-item"><%= r.result.place %></span>
+        <div class="inline">
+          <%= case r.result.place do %>
+            <% 1 -> %>
+              <span class="positive-b square-dot"></span>
+            <% 0 -> %>
+              <span class="neutral-b square-dot"></span>
+            <% 2 -> %>
+              <span class="negative-b square-dot"></span>
+          <% end %>
+          <span class="v-list-item"><%= r.result.place %></span>
+        </div>
         <%= link(r.result.player_id, method: :get, to: "/player/#{r.result.player_id}/state", class: "v-list-item")%>
-        <span class="v-list-item"></span>
         <%= link(r.result.id, method: :get, to: "/result/#{r.result.id}/state", class: "v-list-item")%>
       </div>
       <div class="resultlist-row">
         <%= link(r.result.opponent_deck, method: :get, to: "/deck/#{r.result.opponent_deck}/state", class: "v-list-item")%>
         <%= link(r.result.opponent, method: :get, to: "/player/#{r.result.opponent}/state", class: "v-list-item")%>
         <span class="v-list-item"></span>
-        <span class="v-list-item"></span>
       </div>
       <div class="resultlist-row">
-        <span class="v-list-item"><%= r.result.power %></span>
+        <%= cond do %>
+        <% r.result.power != nil -> %>
+        <span class="v-list-item"><%= r.result.power %> -> <%= r.z_power %></span>
+        <% Map.has_key? r, :z_power -> %>
         <span class="v-list-item"><%= r.z_power %></span>
-        <span class="v-list-item"><%= r.result.fun %></span>
+        <% true -> %>
+        <span class="v-list-item"></span>
+        <% end %>
+        <%= cond do %>
+        <% r.result.fun != nil -> %>
+        <span class="v-list-item"><%= r.result.fun %> -> <%= r.z_fun %></span>
+        <% Map.has_key? r, :z_fun -> %>
         <span class="v-list-item"><%= r.z_fun %></span>
+        <% true -> %>
+        <span class="v-list-item"></span>
+        <% end %>
+      <span class="v-list-item clicksize"></span>
       </div>
     </li>
   <% end %>

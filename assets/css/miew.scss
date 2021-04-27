@@ -147,11 +147,11 @@ input[type=checkbox] {
 }
 
 .neutral-b {
-    color: $color-neutral 1px solid;
+    border: $color-neutral 1px solid;
 }
 
 .negative-b {
-    color: $color-negative 1px solid;
+    border: $color-negative 1px solid;
 }
 
 .tick {
@@ -195,6 +195,13 @@ div.append-b {
 
 .clickable {
     cursor: pointer;
+}
+
+.square-dot {
+    width: 0;
+    height: 0;
+    border-width: $dist-main;
+    margin: $dist-main;
 }
 
 //table
