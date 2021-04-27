@@ -1,42 +1,54 @@
+<section class="plaque v-fill">
+  <p class="label v-space">Games:<span class="value"><%= @summary.z_games %></span></p>
+  <p class="label v-space">Wins/Losses:<span class="value"><%= @summary.z_wins %>/<%= @summary.z_games - @summary.z_wins %></span></p>
+  <p class="label v-space">Winrate:<span class="value"><%= @summary.z_winrate |> Helpers.as_percent %>%</span></p>
+</section>
+
 <section>
-  <table>
-    <tr>
-      <th>games</th>
-      <th>wins</th>
-      <th>losses</th>
-      <th>wirate</th>
-    </tr>
-    <tr>
-      <td><%= @summary.z_games %></td>
-      <td><%= @summary.z_wins %></td>
-      <td><%= @summary.z_games - @summary.z_wins %></td>
-      <td><%= @summary.z_winrate %></td>
-    </tr>
-  </table>
-  <table>
-    <tr>
-      <th>Id</th>
-      <th>Player</th>
-      <th>Place</th>
-      <th>Opp. Deck</th>
-      <th>Opponent</th>
-      <th>Power</th>
-      <th>Z Power</th>
-      <th>Fun</th>
-      <th>Z Fun</th>
-    </tr>
-    <%= for r <- @results do %>
-    <tr>
-      <td><%= r.result.id %></td>
-      <td><%= r.result.player_id %></td>
-      <td><%= r.result.place %></td>
-      <td><%= r.result.opponent_deck %></td>
-      <td><%= r.result.opponent %></td>
-      <td><%= r.result.power %></td>
-      <td><%= r.z_power %></td>
-      <td><%= r.result.fun %></td>
-      <td><%= r.z_fun %></td>
-    </tr>
-    <% end %>
-  </table>
+<ul class="v-list header v-space-tl">
+  <li class="resultlist flex column label">
+    <div class="resultlist-row">
+      <span class="v-list-item clicksize">Place</span>
+      <span class="v-list-item clicksize">Player</span>
+      <span class="v-list-item clicksize"></span>
+      <span class="v-list-item clicksize">Id</span>
+    </div>
+    <div class="resultlist-row">
+      <span class="v-list-item clicksize">Opp. Deck</span>
+      <span class="v-list-item clicksize">Opponent</span>
+      <span class="v-list-item clicksize"></span>
+      <span class="v-list-item clicksize"></span>
+    </div>
+    <div class="resultlist-row">
+      <span class="v-list-item clicksize">Power</span>
+      <span class="v-list-item clicksize">Z Power</span>
+      <span class="v-list-item clicksize">Fun</span>
+      <span class="v-list-item clicksize">Z Fun</span>
+    </div>
+  </li>
+</ul>
+<ul class="v-list">
+  <%= for r <- @results do %>
+    <li class="resultlist column flex">
+      <div class="resultlist-row">
+        <span class="v-list-item"><%= r.result.place %></span>
+        <%= link(r.result.player_id, method: :get, to: "/player/#{r.result.player_id}/state", class: "v-list-item")%>
+        <span class="v-list-item"></span>
+        <%= link(r.result.id, method: :get, to: "/result/#{r.result.id}/state", class: "v-list-item")%>
+      </div>
+      <div class="resultlist-row">
+        <%= link(r.result.opponent_deck, method: :get, to: "/deck/#{r.result.opponent_deck}/state", class: "v-list-item")%>
+        <%= link(r.result.opponent, method: :get, to: "/player/#{r.result.opponent}/state", class: "v-list-item")%>
+        <span class="v-list-item"></span>
+        <span class="v-list-item"></span>
+      </div>
+      <div class="resultlist-row">
+        <span class="v-list-item"><%= r.result.power %></span>
+        <span class="v-list-item"><%= r.z_power %></span>
+        <span class="v-list-item"><%= r.result.fun %></span>
+        <span class="v-list-item"><%= r.z_fun %></span>
+      </div>
+    </li>
+  <% end %>
+</ul>
 </section>

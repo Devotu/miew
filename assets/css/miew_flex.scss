@@ -1,0 +1,29 @@
+.flex {
+    display: flex;
+}
+
+.row {
+    flex-direction: row;
+    height: $height-row;
+}
+
+.row-content {
+    height: $size-row-content;
+}
+
+.flexi.compact {
+    width: min-content;
+}
+
+.flex.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.column_2 {
+    flex: 50%;
+}
+
+.flex-spread {
+    justify-content: space-between;
+}

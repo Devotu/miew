@@ -1,0 +1,209 @@
+$box-size: 80px;
+$box-fill: 66px;
+$box-fill-w: 120px;
+$color-main: white;
+$color-backdrop: lightgray;
+$color-input: lightyellow;
+$color-high-contrast-dark: black;
+$color-high-contrast-mid: gray;
+$color-high-contrast-light: white;
+$color-positive: olivedrab;
+$color-positive-discrete: rgba(106, 142, 35, 0.5);
+$color-neutral: lightyellow;
+$color-neutral-discrete: rgba(255, 255, 224, 0.5);
+$color-negative: tomato;
+$color-negative-discrete: rgba(255, 99, 71, 0.5);
+$color-input-backdrop: #555;
+$dist-large: 7px;
+$dist-main: 4px;
+$dist-small: 2px;
+$border-normal: 2px solid $color-high-contrast-dark;
+$border-thin: 1px solid $color-high-contrast-dark;
+$border-active: 2px solid $color-high-contrast-mid;
+$height-row: 30px;
+$size-row-content: 23px;
+$size-input-line: 10px;
+
+
+html {
+    font-family: 'Courier New', Courier, monospace;
+    min-width: 400px;
+    max-width: 1000px;
+    background-color: $color-backdrop;
+}
+
+* {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 0;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+    color: $color-high-contrast-dark;
+    background-color: $color-main;
+}
+
+button {
+    background-color: $color-main;
+    font-size: large;
+}
+
+select {
+    background-color:$color-input;
+    border: $border-normal;
+    padding-left: $dist-main;
+}
+
+input[type=checkbox] {
+    visibility: hidden;
+}
+
+.container {
+    padding: $dist-main;
+}
+
+.v-space {
+    margin-top: $dist-main;
+    margin-bottom: $dist-small;
+}
+
+.v-space-t {
+    margin-top: $dist-main;
+}
+
+.v-space-b {
+    margin-top: $dist-main;
+}
+
+.v-space-tl {
+    margin-top: $dist-large;
+}
+
+.h-space {
+    margin-left: $dist-main;
+    margin-right: $dist-small;
+}
+
+.h-space-l {
+    margin-left: $dist-large;
+    margin-right: $dist-large;
+}
+
+.h-space-ll {
+    margin-left: $dist-large;
+}
+
+.plaque {
+    background-color: $color-main;
+    border: $border-normal;
+    box-sizing: border-box;
+    padding: $dist-small;
+}
+
+.right {
+    float: right;
+}
+
+.box-fill {
+    height: $box-fill;
+    width: $box-fill;
+}
+
+.box-fill-w {
+    height: $box-fill;
+    width: $box-fill-w;
+}
+
+.box-height {
+    height: $box-fill;
+}
+
+.header {
+    margin-bottom: $dist-main;
+}
+
+.footer {
+    margin-top: $dist-main;
+}
+
+.positive-t {
+    color: $color-positive;
+}
+
+.neutral-t {
+    color: $color-neutral;
+}
+
+.negative-t {
+    color: $color-negative;
+}
+
+.positive-b {
+    border: $color-positive 1px solid;
+}
+
+.neutral-b {
+    color: $color-neutral 1px solid;
+}
+
+.negative-b {
+    color: $color-negative 1px solid;
+}
+
+.tick {
+    left: 9px;
+    top: -1px;
+    width: 0;
+    height: $size-row-content;
+    border: solid $color-high-contrast-dark;
+    border-width: 0 3px 0 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: relative;
+}
+
+.tickbox {
+    border: $border-thin;
+    height: $size-row-content;
+    width: $size-row-content;
+}
+
+.cut {
+    overflow-x: hidden;
+}
+
+div.append-b {
+    height: 0;
+    position: relative;
+    top: $dist-large;
+}
+
+.confirm {
+    color: $color-negative;
+}
+
+.v-fill {
+    height: auto;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+//table
+th {
+    border: $border-normal;
+    padding: $dist-small;
+}
+
+td {
+    border: $border-thin;
+    padding: $dist-small;
+}

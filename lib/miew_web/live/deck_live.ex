@@ -7,41 +7,29 @@ defmodule MiewWeb.DeckLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
-      <table>
-        <tr>
-          <th>Name</td>
-          <th>Format</td>
-          <th>Price</td>
-          <th>Black</td>
-          <th>White</td>
-          <th>Red</td>
-          <th>Green</td>
-          <th>Blue</td>
-          <th>Colorless</td>
-          <th>Rank</td>
-          <th>Advantage</td>
-        </tr>
-        <tr>
-          <td><%= @deck.name %></td>
-          <td><%= @deck.format %></td>
-          <td><%= @deck.price %></td>
-          <td><%= @deck.black %></td>
-          <td><%= @deck.white %></td>
-          <td><%= @deck.red %></td>
-          <td><%= @deck.green %></td>
-          <td><%= @deck.blue %></td>
-          <td><%= @deck.colorless %></td>
-          <td><%= @deck.rank %></td>
-          <td><%= @deck.advantage %></td>
-        </tr>
-        <tr>
-          <td><%= button("Results", method: :get, to: "/deck/#{@deck.id}/results")%></td>
-          <td><%= button("Modify rank", method: :get, to: "/deck/#{@deck.id}/rank/adjust")%></td>
-          <td><%= button("State", method: :get, to: "/deck/#{@deck.id}/state")%></td>
-          <td><%= button("Log", method: :get, to: "/deck/#{@deck.id}/log")%></td>
-        </tr>
-      </table>
+    <section class="plaque">
+      <h1 class="header"><%= @deck.name %> (<%= @deck.rank %>)</h1>
+
+      <p class="label v-space">Colors:
+      <%= if @deck.black do %><span class="dot black">B</span><% end %>
+      <%= if @deck.white do %><span class="dot white">W</span><% end %>
+      <%= if @deck.red do %><span class="dot red">R</span><% end %>
+      <%= if @deck.green do %><span class="dot green">G</span><% end %>
+      <%= if @deck.blue do %><span class="dot blue">B</span><% end %>
+      <%= if @deck.colorless do %><span class="dot colorless">X</span><% end %></p>
+
+      <p class="label v-space">Rank:<span class="value"><%= @deck.rank %> / <%= @deck.advantage %></span></p>
+      <p class="label v-space">Format:<span class="value"><%= @deck.format %></span></p>
+      <p class="label v-space">Price:<span class="value"><%= @deck.price %></span></p>
+
+    </section>
+    <section class="footer">
+      <ul class="h-list">
+        <li><%= link("Results", method: :get, to: "/deck/#{@deck.id}/results")%></li>
+        <li><%= link("Modify rank", method: :get, to: "/deck/#{@deck.id}/rank/adjust")%></li>
+        <li><%= link("State", method: :get, to: "/deck/#{@deck.id}/state")%></li>
+        <li><%= link("Log", method: :get, to: "/deck/#{@deck.id}/log")%></li>
+      </ul>
     </section>
     """
   end

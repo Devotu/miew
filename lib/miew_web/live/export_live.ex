@@ -6,7 +6,7 @@ defmodule MiewWeb.ExportLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
+    <section>
       <table>
         <tr>
           <td>
@@ -18,7 +18,7 @@ defmodule MiewWeb.ExportLive do
         </tr>
       </table>
     </section>
-    <section class="phx-hero">
+    <section>
       <table>
         <tr>
           <th>Output</td>

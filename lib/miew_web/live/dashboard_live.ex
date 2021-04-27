@@ -6,7 +6,7 @@ defmodule MiewWeb.DashboardLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
+    <section>
       <table>
         <tr>
           <th>Players</td>

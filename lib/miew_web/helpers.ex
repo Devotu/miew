@@ -1,4 +1,5 @@
 defmodule Miew.Helpers do
+  alias Phoenix.LiveView
 
   def text_to_bool(nil), do: false
   def text_to_bool(""), do: false
@@ -25,5 +26,65 @@ defmodule Miew.Helpers do
       {x, ""} -> x
       :error -> {:error, "#{term} is not a number"}
     end
+  end
+
+  def to_pretty(s) when is_struct(s) do
+    Kernel.inspect(s) |> pretty()
+  end
+
+
+  defp pretty(s) when is_bitstring(s) do
+    pretty(0, s)
+  end
+
+  defp pretty(_d, "") do
+    ""
+  end
+
+  defp pretty(d, "{" <> rem) do
+    dn = d + 1
+    "{" <> "\n" <> tabs(dn) <> pretty(dn, String.trim(rem))
+  end
+
+  defp pretty(d, "}" <> rem) do
+    dn = d - 1
+    "\n" <> tabs(dn) <> "}" <> pretty(dn, String.trim(rem))
+  end
+
+  defp pretty(d, "[]" <> rem) do
+    "[]" <> pretty(d, String.trim(rem))
+  end
+
+  defp pretty(d, "[" <> rem) do
+    dn = d + 1
+    "[" <> "\n" <> tabs(dn) <> pretty(dn, String.trim(rem))
+  end
+
+  defp pretty(d, "]" <> rem) do
+    dn = d - 1
+    "\n" <> tabs(dn) <> "]" <> pretty(dn, String.trim(rem))
+  end
+
+  defp pretty(d, "," <> rem) do
+    "," <> "\n" <> tabs(d) <> pretty(d, String.trim(rem))
+  end
+
+  defp pretty(d, s) do
+    {c, rem} = String.split_at(s, 1)
+    c <> pretty(d, rem)
+  end
+
+  defp tabs(n) do
+    String.duplicate("\t", n)
+  end
+
+  def as_percent(n) when is_number(n) and n > 0 and n < 1 do
+    n * 100
+  end
+  def as_percent(n) when is_number(n) and n > 0 and n < 100 do
+    n
+  end
+  def as_percent(n) do
+    "#{n} not %"
   end
 end

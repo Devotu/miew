@@ -1,0 +1,80 @@
+.decklist {
+    grid-template-columns: 70% 10% 20%;
+}
+
+.playergamelist {
+    grid-template-columns: 36% 32% 32%;
+}
+
+.matchlist {
+    grid-template-columns: 22% 8% 8% 27% 27% 8%;
+}
+
+#playergamelist {
+    height: 20px;
+    border: none;
+}
+
+.gamelist {
+    grid-template-columns: 36% 16% 16% 16% 16%;
+}
+
+.flex.resultlist {
+    height: auto;
+}
+
+div .resultlist-row {
+    display: flex;
+    justify-content: space-between;
+    height: 24px;
+}
+
+.modifyrankrow {
+    grid-template-columns:  50% 25% 25%;
+}
+
+.rankrow {
+    grid-template-columns: $box-size auto;
+}
+
+.main-links {
+    background-color: lightslategray;
+}
+
+.dot {
+    &.black {
+        color: black;
+    }
+    &.white {
+        color: white;
+        background-color: black;
+    }
+    &.red {
+        color: tomato;
+    }
+    &.green {
+        color: olivedrab;
+    }
+    &.blue {
+        color: skyblue;
+    }
+    &.colorless {
+        color: dimgray;
+    }
+}
+
+#match-balance {
+    grid-template-columns: 80% 20%;
+}
+
+#evaluate-row{
+    grid-template-columns: 10% 40% 10% 40%;
+}
+
+#match-player-input {
+    display: flex;
+}
+
+#balance-slider {
+    background: linear-gradient(to right, $color-high-contrast-light, $color-high-contrast-dark, $color-high-contrast-light);
+}

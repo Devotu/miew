@@ -1,43 +1,46 @@
 <section>
   <form phx-submit="create">
-    <table>
-      <tr>
-        <th>Player 1</th>
-        <th>Player 2</th>
-      </tr>
-      <tr>
-        <td>
-          <select name="player_1" id="player_1">
-            <%= for name <- @players do %>
-              <option value="<%= name %>"><%= name %></option>
-            <% end %>
-          </select>
-        </td>
-        <td>
-          <select name="player_2" id="player_2">
-            <%= for name <- @players do %>
-              <option value="<%= name %>"><%= name %></option>
-            <% end %>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <select name="deck_1" id="deck_1">
-            <%= for name <- @decks do %>
-              <option value="<%= name %>"><%= name %></option>
-            <% end %>
-          </select>
-        </td>
-        <td>
-          <select name="deck_2" id="deck_2">
-            <%= for name <- @decks do %>
-              <option value="<%= name %>"><%= name %></option>
-            <% end %>
-          </select>
-        </td>
-      </tr>
-    </table>
+    <p class="alert alert-warning"><%= live_flash(@flash, :create_feedback) %></p>
+    <ul class="h-list">
+      <li class="plaque">
+        <h2 class="header">Player 1</h2>
+        <select class="v-space clicksize" name="player_1" id="player_1">
+          <%= for name <- @players do %>
+            <option value="<%= name %>"><%= name %></option>
+          <% end %>
+        </select>
+        <select class="v-space clicksize" name="deck_1" id="deck_1">
+          <%= for name <- @decks do %>
+            <option value="<%= name %>"><%= name %></option>
+          <% end %>
+        </select>
+      </li>
+      <li class="plaque">
+        <h2 class="header">Player 2</h2>
+        <select class="v-space clicksize" name="player_2" id="player_2">
+          <%= for name <- @players do %>
+            <option value="<%= name %>"><%= name %></option>
+          <% end %>
+        </select>
+        <select class="v-space clicksize" name="deck_2" id="deck_2">
+          <%= for name <- @decks do %>
+            <option value="<%= name %>"><%= name %></option>
+          <% end %>
+        </select>
+      </li>
+    </ul>
+    <ul class="h-list rankrow footer">
+      <li class="plaque box">
+        <h2>Rank </h2>
+        <div class="h-checkbox">
+          <input class="h-checkbox" name="ranking" type="checkbox" value="true" id="ch_rank" checked>
+          <label for="ch_rank"></label>
+        </div>
+      </li>
+      <li class="plaque">
+        <button class="right box-fill" type="submit" phx-disable-with="Creating...">Start</button>
+      </li>
+    </ul>
     <datalist id="players">
       <%= for name <- @players do %>
         <option value="<%= name %>"><%= name %></option>
@@ -48,10 +51,5 @@
         <option value="<%= name %>"><%= name %></option>
       <% end %>
     </datalist>
-    <td>
-      <input name="ranking" type="checkbox" value="true">
-    </td>
-    <button type="submit" phx-disable-with="Creating...">Start</button>
-    <p class="alert alert-warning"><%= live_flash(@flash, :create_feedback) %></p>
   </form>
 </section>

@@ -1,11 +1,9 @@
 <main role="main" class="container">
-  <table>
-    <tr>
-      <td><%= button("Decks", method: :get, to: "/deck/list")%></td>
-      <td><%= button("New Match", method: :get, to: "/match/new")%></td>
-      <td><%= button("Matches", method: :get, to: "/match/list")%></td>
-    </tr>
-  </table>
+  <ul class="h-list header">
+    <li class="main-links"><%= link("Decks", method: :get, to: "/deck/list")%></li>
+    <li class="main-links"><%= link("New Match", method: :get, to: "/match/new")%></li>
+    <li class="main-links"><%= link("Matches", method: :get, to: "/match/list")%></li>
+  </ul>
   <p class="alert alert-info" role="alert"
     phx-click="lv:clear-flash"
     phx-value-key="info"><%= live_flash(@flash, :info) %></p>

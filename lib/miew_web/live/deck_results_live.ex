@@ -4,6 +4,7 @@ defmodule MiewWeb.DeckResultsLive do
   defstruct result: nil, z_games: 0, z_winrate: 50, z_power: 0, z_fun: 0, z_wins: 0, opponent: nil
 
   alias MiewWeb.DeckResultsLive
+  alias Miew.Helpers
 
   @impl true
   def mount(params, _session, socket) do
@@ -67,7 +68,6 @@ defmodule MiewWeb.DeckResultsLive do
       |> Miew.get("game")
       |> identify_opponent(tally.result.id)
       |> Miew.get("result")
-      |> IO.inspect(label: "opponent result")
 
     updated_result = tally.result
       |> Map.put(:opponent, opponent_result.player_id)
@@ -78,7 +78,6 @@ defmodule MiewWeb.DeckResultsLive do
 
   defp identify_opponent(game, selected_result_id) do
     game.results
-    |> IO.inspect(label: "results")
     |> Enum.find(&(&1 != selected_result_id))
   end
 end

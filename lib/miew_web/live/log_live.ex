@@ -2,19 +2,16 @@ defmodule MiewWeb.LogLive do
   use MiewWeb, :live_view
 
   alias Metr
+  alias Miew.Helpers
 
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
-      <table>
-        <%= for event <- @events do %>
-        <tr>
-          <td><%= Kernel.inspect(event) %></td>
-        </tr>
-        <% end %>
-      </table>
+    <%= for event <- @events do %>
+    <section class="plaque v-fill">
+      <pre><%= pretty(event, assigns) %></pre>
     </section>
+    <% end %>
     """
   end
 
@@ -28,5 +25,9 @@ defmodule MiewWeb.LogLive do
   def mount(%{"limit" => limit_input}, _session, socket) do
     {limit, ""} = Integer.parse(limit_input)
     {:ok, assign(socket, events: Metr.read_global_log(limit))}
+  end
+
+  defp pretty(state, assigns) do
+    Helpers.to_pretty(state)
   end
 end

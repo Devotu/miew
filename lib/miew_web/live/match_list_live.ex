@@ -6,29 +6,29 @@ defmodule MiewWeb.MatchListLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section class="phx-hero">
-      <table>
-        <tr>
-          <th>Id</td>
-          <th>Status</td>
-          <th>Rank</td>
-          <th>Player 1</td>
-          <th>Player 2</td>
-          <th>Games</td>
-          <th></td>
-        </tr>
-        <%= for match <- @matches do %>
-          <tr>
-            <td><%= match.id %></td>
-            <td><%= Kernel.inspect(match.status) %></td>
-            <td><%= Kernel.inspect(match.ranking) %></td>
-            <td><%= match.player_one %>/<%= match.deck_one %></td>
-            <td><%= match.player_two %>/<%= match.deck_two %></td>
-            <td><%= Kernel.inspect(Enum.count(match.games)) %></td>
-            <td><%= button("->", method: :get, to: "/match/#{match.id}")%></td>
-          </tr>
-        <% end %>
-      </table>
+    <section>
+      <ul class="v-list header">
+        <li class="matchlist label">
+          <span class="v-list-item">Id</span>
+          <span class="v-list-item cut">Status</span>
+          <span class="v-list-item">Rank</span>
+          <span class="v-list-item">Deck 1</span>
+          <span class="v-list-item">Deck 2</span>
+          <span class="v-list-item cut">Games</span>
+        </li>
+      </ul>
+      <ul class="v-list">
+      <%= for match <- @matches do %>
+        <li class="matchlist clicksize">
+          <%= link(match.id, method: :get, to: "/match/#{match.id}", class: "v-list-item cut")%>
+          <span class="v-list-item"><%= display_status(match.status, assigns) %></span>
+          <span class="v-list-item"><%= display_rank(match.ranking, assigns) %></span>
+          <span class="v-list-item cut"><%= match.deck_one %></span>
+          <span class="v-list-item cut"><%= match.deck_two %></span>
+          <span class="v-list-item"><%= Kernel.inspect(Enum.count(match.games)) %></span>
+        </li>
+      <% end %>
+      </ul>
     </section>
     """
   end
@@ -38,4 +38,30 @@ defmodule MiewWeb.MatchListLive do
     matches = Miew.list_matches()
     {:ok, assign(socket, matches: matches)}
   end
+
+  defp display_status(status, assigns) when is_atom status do
+    case status do
+      :initialized ->
+        ~L"""
+        <div class="positive-t cut">new</div>
+        """
+      :open ->
+        ~L"""
+        <div class="positive-t cut">live</div>
+        """
+      :closed ->
+        ~L"""
+        <div class="negative-t cut">closed</div>
+        """
+    end
+  end
+
+  defp display_rank(true, assigns) do
+    ~L"""
+    <div class="tickbox">
+      <div class="tick"></div>
+    </div>
+    """
+  end
+  defp display_rank(false, _assigns), do: ""
 end

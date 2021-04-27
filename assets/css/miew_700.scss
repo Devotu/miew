@@ -1,0 +1,29 @@
+$height-clicksize: 50px;
+
+@media screen and (max-width: 700px){
+    .clicksize {
+        height: $height-clicksize;
+    }
+
+    select {
+        font-weight: bold;
+    }
+
+    option {
+        font-weight: bold;
+        height: $height-clicksize;
+    }
+
+    button {
+        font-weight: bold;
+    }
+
+    .v-list li{
+        height: $height-clicksize;
+        padding: 15px;
+    }
+
+    #balance-slider {
+        margin-top: 12px;
+    }
+}
