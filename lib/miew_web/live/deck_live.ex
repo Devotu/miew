@@ -21,6 +21,7 @@ defmodule MiewWeb.DeckLive do
       <p class="label v-space">Rank:<span class="value"><%= @deck.rank %> / <%= @deck.advantage %></span></p>
       <p class="label v-space">Format:<span class="value"><%= @deck.format %></span></p>
       <p class="label v-space">Price:<span class="value"><%= @deck.price %></span></p>
+      <p class="label v-space">Last vs:<span class="value"><%= @last_play.name %></span></p>
 
     </section>
     <section class="footer">
@@ -39,6 +40,21 @@ defmodule MiewWeb.DeckLive do
     id = params["id"]
     deck = Metr.read_deck(id)
     deck_with_rank = DeckHelper.apply_split_rank(deck)
-    {:ok, assign(socket, deck: deck_with_rank)}
+
+    last_result_id = deck.results
+      |> List.last()
+
+    last_play = last_result_id
+    |> Metr.read_state(:result)
+    |> (fn r -> r.game_id end).()
+    |> Metr.read_state(:game)
+    |> (fn g -> g.results end).()
+    |> Enum.filter(fn r_id -> r_id != last_result_id end)
+    |> List.first()
+    |> Metr.read_state(:result)
+    |> (fn r -> r.deck_id end).()
+    |> Metr.read_state(:deck)
+
+    {:ok, assign(socket, deck: deck_with_rank, last_play: last_play)}
   end
 end
