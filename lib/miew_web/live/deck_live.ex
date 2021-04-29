@@ -27,7 +27,7 @@ defmodule MiewWeb.DeckLive do
     <section class="footer">
       <ul class="h-list">
         <li><%= link("Results", method: :get, to: "/deck/#{@deck.id}/results")%></li>
-        <li><%= link("Modify rank", method: :get, to: "/deck/#{@deck.id}/rank/adjust")%></li>
+        <li><%= link("Rank", method: :get, to: "/deck/#{@deck.id}/rank")%></li>
         <li><%= link("State", method: :get, to: "/deck/#{@deck.id}/state")%></li>
         <li><%= link("Log", method: :get, to: "/deck/#{@deck.id}/log")%></li>
       </ul>
