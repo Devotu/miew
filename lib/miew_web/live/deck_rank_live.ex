@@ -17,9 +17,13 @@ defmodule MiewWeb.DeckRankLive do
             <span class="v-list-item"><%= @deck.rank %>/<%= @deck.advantage %></span>
           </li>
         </ul>
-        <p><%= List.first(@changes) %>
+        <p><%= List.first(@changes) |> Kernel.inspect() %>
         <%= for c <- Enum.slice(@changes, 1, Enum.count(@changes)-1) do %>
-          ,<%= c %>
+          ,<%= Kernel.inspect(c) %>
+        <% end %>
+        <p><%= List.first(@data) |> Kernel.inspect() %>
+        <%= for c <- Enum.slice(@data, 1, Enum.count(@data)-1) do %>
+          ,<%= Kernel.inspect(c) %>
         <% end %>
       </div>
     </section>
@@ -42,30 +46,41 @@ defmodule MiewWeb.DeckRankLive do
     changes = deck.id
     |> Miew.read_log(:deck)
     |> Enum.filter(&match?([:alter, :rank], &1.keys))
-    |> IO.inspect(label: "deck rank log")
     |> Enum.map(fn e -> e.data.change end)
-    # |> Enum.reduce({[], 0}, fn c, acc -> acc ++ [{c, }] end)
+
+    plot_data = changes
+      |> Enum.reduce([], fn c, acc -> apply_last_change(acc, c) end)
 
     scale = Contex.ContinuousLinearScale.new()
-      |> Contex.ContinuousLinearScale.domain(-2, 2)
+      |> Contex.ContinuousLinearScale.domain(-2, 10)
       |> Contex.ContinuousLinearScale.interval_count(5)
 
-    options = [custom_y_scale: scale]
+    options = [
+      custom_y_scale: scale,
+      colour_palette: ["ff9000"]
+    ]
 
-    line_data = [{1, -1}, {2, 2}, {3, 2}, {4, 1}]
+
+    plot = plot_data
       |> Dataset.new()
-
-
-    plot = Plot.new(line_data, LinePlot, 700, 400, options)
+      |> Plot.new(LinePlot, 700, 400, options)
       |> Plot.titles("Rank over time", "")
       |> Plot.axis_labels("Game", "Rank")
       |> Plot.to_svg()
 
-    {:ok, assign(socket, deck: deck, changes: changes, plot: plot)}
+    {:ok, assign(socket, deck: deck, changes: changes, plot: plot, data: plot_data)}
   end
 
   def load_deck(id) do
     Miew.get(id, "deck")
     |> DeckHelper.apply_split_rank()
+  end
+
+  defp apply_last_change([], change) do
+    [{1, 0}, {2, 0 + change}]
+  end
+  defp apply_last_change(changes, change) do
+    {at, last_rank} = List.last(changes)
+    changes ++ [{at + 1, last_rank + change}]
   end
 end
