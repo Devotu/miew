@@ -14,6 +14,7 @@ $color-neutral-discrete: rgba(255, 255, 224, 0.5);
 $color-negative: tomato;
 $color-negative-discrete: rgba(255, 99, 71, 0.5);
 $color-input-backdrop: #555;
+$color-value: rgb(240, 229, 205);
 $dist-large: 7px;
 $dist-main: 4px;
 $dist-small: 2px;
@@ -202,6 +203,36 @@ div.append-b {
     height: 0;
     border-width: $dist-main;
     margin: $dist-main;
+}
+
+.walled {
+    border: $border-thin;
+    margin: 1px;
+}
+
+.smallbox {
+    height: $size-row-content;
+    width: fit-content;
+    padding: $dist-small;
+    margin: $dist-small;
+}
+
+.flexible-h {
+    height: auto;
+}
+
+.divider {
+    width: 100%;
+    height: $size-input-line;
+}
+
+.divider-l {
+    width: 100%;
+    height: $height-row
+}
+
+.backdroped {
+    background-color: $color-value;
 }
 
 //table

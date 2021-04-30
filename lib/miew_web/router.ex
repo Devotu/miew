@@ -26,6 +26,7 @@ defmodule MiewWeb.Router do
     live "/deck/list", DeckListLive
     live "/deck/:id", DeckLive
     live "/deck/:id/results", DeckResultsLive
+    live "/deck/:id/rank", DeckRankLive
     live "/deck/:id/rank/adjust", DeckRankAdjustLive
 
     live "/player/new", NewPlayerLive

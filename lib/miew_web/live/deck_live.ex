@@ -21,12 +21,13 @@ defmodule MiewWeb.DeckLive do
       <p class="label v-space">Rank:<span class="value"><%= @deck.rank %> / <%= @deck.advantage %></span></p>
       <p class="label v-space">Format:<span class="value"><%= @deck.format %></span></p>
       <p class="label v-space">Price:<span class="value"><%= @deck.price %></span></p>
+      <p class="label v-space">Last vs:<span class="value"><%= @last_play.name %></span></p>
 
     </section>
     <section class="footer">
       <ul class="h-list">
         <li><%= link("Results", method: :get, to: "/deck/#{@deck.id}/results")%></li>
-        <li><%= link("Modify rank", method: :get, to: "/deck/#{@deck.id}/rank/adjust")%></li>
+        <li><%= link("Rank", method: :get, to: "/deck/#{@deck.id}/rank")%></li>
         <li><%= link("State", method: :get, to: "/deck/#{@deck.id}/state")%></li>
         <li><%= link("Log", method: :get, to: "/deck/#{@deck.id}/log")%></li>
       </ul>
@@ -39,6 +40,27 @@ defmodule MiewWeb.DeckLive do
     id = params["id"]
     deck = Metr.read_deck(id)
     deck_with_rank = DeckHelper.apply_split_rank(deck)
-    {:ok, assign(socket, deck: deck_with_rank)}
+
+    last_play = find_last_play(deck.results)
+
+    {:ok, assign(socket, deck: deck_with_rank, last_play: last_play)}
+  end
+
+
+  defp find_last_play([]), do: %{name: "No games registered"}
+  defp find_last_play(results) do
+    last_result_id = results
+      |> List.last()
+
+    last_result_id
+    |> Metr.read_state(:result)
+    |> (fn r -> r.game_id end).()
+    |> Metr.read_state(:game)
+    |> (fn g -> g.results end).()
+    |> Enum.filter(fn r_id -> r_id != last_result_id end)
+    |> List.first()
+    |> Metr.read_state(:result)
+    |> (fn r -> r.deck_id end).()
+    |> Metr.read_state(:deck)
   end
 end
