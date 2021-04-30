@@ -41,10 +41,18 @@ defmodule MiewWeb.DeckLive do
     deck = Metr.read_deck(id)
     deck_with_rank = DeckHelper.apply_split_rank(deck)
 
-    last_result_id = deck.results
+    last_play = find_last_play(deck.results)
+
+    {:ok, assign(socket, deck: deck_with_rank, last_play: last_play)}
+  end
+
+
+  defp find_last_play([]), do: %{name: "No games registered"}
+  defp find_last_play(results) do
+    last_result_id = results
       |> List.last()
 
-    last_play = last_result_id
+    last_result_id
     |> Metr.read_state(:result)
     |> (fn r -> r.game_id end).()
     |> Metr.read_state(:game)
@@ -54,7 +62,5 @@ defmodule MiewWeb.DeckLive do
     |> Metr.read_state(:result)
     |> (fn r -> r.deck_id end).()
     |> Metr.read_state(:deck)
-
-    {:ok, assign(socket, deck: deck_with_rank, last_play: last_play)}
   end
 end

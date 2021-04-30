@@ -6,6 +6,7 @@ defmodule MiewWeb.DeckRankLive do
   alias Contex.Plot
   alias Contex.LinePlot
   alias Contex.Dataset
+  alias Metr.Rank
 
   @impl true
   def render(assigns) do
@@ -47,19 +48,25 @@ defmodule MiewWeb.DeckRankLive do
     |> Miew.read_log(:deck)
     |> Enum.filter(&match?([:alter, :rank], &1.keys))
     |> Enum.map(fn e -> e.data.change end)
+    |> (&guard_no_changes/1).()
 
-    plot_data = changes
+    rank_history = changes
       |> Enum.reduce([], fn c, acc -> apply_last_change(acc, c) end)
 
+    plot_data = rank_history
+      |> Enum.map(&extract_rank/1)
+      |> Enum.reduce({[], 0}, fn r, {history, at} -> {history ++ [enumerate_rank(r, at)], at+1} end)
+      |> (fn {history, _count} -> history end).()
+
     scale = Contex.ContinuousLinearScale.new()
-      |> Contex.ContinuousLinearScale.domain(-2, 10)
+      |> Contex.ContinuousLinearScale.domain(-2, 2)
       |> Contex.ContinuousLinearScale.interval_count(5)
 
     options = [
       custom_y_scale: scale,
-      colour_palette: ["ff9000"]
+      colour_palette: ["ff9000"],
+      smoothed: false,
     ]
-
 
     plot = plot_data
       |> Dataset.new()
@@ -77,10 +84,19 @@ defmodule MiewWeb.DeckRankLive do
   end
 
   defp apply_last_change([], change) do
-    [{1, 0}, {2, 0 + change}]
+    [{0, 0}, Rank.apply_change(nil, change)]
   end
-  defp apply_last_change(changes, change) do
-    {at, last_rank} = List.last(changes)
-    changes ++ [{at + 1, last_rank + change}]
+  defp apply_last_change(history, change) do
+    history ++ [List.last(history) |> Rank.apply_change(change)]
+  end
+
+  defp guard_no_changes([]), do: [0]
+  defp guard_no_changes(changes), do: changes
+
+  defp extract_rank(nil), do: 0
+  defp extract_rank({rank, _advantage}), do: rank
+
+  defp enumerate_rank(rank, at) do
+    {at, rank}
   end
 end
