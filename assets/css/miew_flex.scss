@@ -5,6 +5,10 @@
 .row {
     flex-direction: row;
     height: $height-row;
+    
+    &.flexible-h {
+        height: auto;
+    }
 }
 
 .row-content {
@@ -30,4 +34,8 @@
 
 .inline {
     display: inline-flex;
+}
+
+.wraping {
+    flex-wrap: wrap;
 }

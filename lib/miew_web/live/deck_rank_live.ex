@@ -12,24 +12,19 @@ defmodule MiewWeb.DeckRankLive do
   def render(assigns) do
     ~L"""
     <section class="plaque v-space">
-      <div>
-        <ul class="v-list header">
-          <li class="label">
-            <span class="v-list-item"><%= @deck.rank %>/<%= @deck.advantage %></span>
-          </li>
-        </ul>
-        <p><%= List.first(@changes) |> Kernel.inspect() %>
-        <%= for c <- Enum.slice(@changes, 1, Enum.count(@changes)-1) do %>
-          ,<%= Kernel.inspect(c) %>
-        <% end %>
-        <p><%= List.first(@data) |> Kernel.inspect() %>
-        <%= for c <- Enum.slice(@data, 1, Enum.count(@data)-1) do %>
-          ,<%= Kernel.inspect(c) %>
+      <p class="label v-space">Current:<span class="value"><%= @deck.rank %> / <%= @deck.advantage %></span></p>
+      <div class="divider"></div>
+      <div class="flex row flexible-h wraping">
+      <%= for r <- @rank_history do %>
+        <div class="smallbox walled backdroped">
+          <%= Kernel.inspect(r) %>
+        </div>
         <% end %>
       </div>
-    </section>
-    <section class="plaque">
-      <%= @plot %>
+      <div class="divider-l"></div>
+      <div class="chart">
+        <%= @plot %>
+      </div>
     </section>
     <section class="footer">
       <ul class="h-list">
@@ -71,11 +66,10 @@ defmodule MiewWeb.DeckRankLive do
     plot = plot_data
       |> Dataset.new()
       |> Plot.new(LinePlot, 700, 400, options)
-      |> Plot.titles("Rank over time", "")
       |> Plot.axis_labels("Game", "Rank")
       |> Plot.to_svg()
 
-    {:ok, assign(socket, deck: deck, changes: changes, plot: plot, data: plot_data)}
+    {:ok, assign(socket, deck: deck, plot: plot, rank_history: rank_history)}
   end
 
   def load_deck(id) do
