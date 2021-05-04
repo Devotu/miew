@@ -88,7 +88,9 @@ defmodule MiewWeb.DeckRankLive do
   defp guard_no_changes(changes), do: changes
 
   defp extract_rank(nil), do: 0
-  defp extract_rank({rank, _advantage}), do: rank
+  defp extract_rank({2, _advantage}), do: 2
+  defp extract_rank({-2, _advantage}), do: -2
+  defp extract_rank({rank, advantage}), do: rank + (advantage * 0.2)
 
   defp enumerate_rank(rank, at) do
     {at, rank}
