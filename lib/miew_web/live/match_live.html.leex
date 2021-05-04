@@ -19,6 +19,7 @@
   <ul class="v-list header">
     <li class="gamelist label">
       <span class="v-list-item">Game</span>
+      <span class="v-list-item">turns</span>
       <span class="v-list-item">power</span>
       <span class="v-list-item">fun</span>
       <span class="v-list-item">power</span>
@@ -29,6 +30,7 @@
     <%= for game <- @games do %>
     <li class="gamelist">
       <span class="v-list-item"><%= game.id %></span>
+      <span class="v-list-item"><%= game.turns %></span>
       <%= for r <- game.results do %>
         <%= case r.place do %>
           <% 1 -> %>
@@ -56,7 +58,7 @@
     </div>
     <div id="match-player-input">
       <div class="column_2 vertical">
-        <div class="v-list-item label header">
+        <div class="v-list-item label header clicksize">
           <%= @match.player_one %> / <%= @match.deck_one %>
         </div>
         <div class="flex row clicksize">
@@ -77,8 +79,25 @@
           </div>
         </div>
       </div>
+      <div class="tinycol vertical">
+        <div class="v-list-item label header clicksize">
+        </div>
+        <div class="flex row clicksize">
+          <label class="flexi compact" for="draw">Draw:</label>
+          <label class="cb-container h-space-ll flexi compact">
+            <input type=radio id="draw" name="winner" value=0>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="flex row clicksize">
+          <label class="flexi compact" for="turns">Turn: </label>
+          <div class="h-space-l">
+            <input class="square number" type="number" name="turns" value="<%= @turns %>" min="0" max="99"/>
+          </div>
+        </div>
+      </div>
       <div class="column_2 vertical">
-        <div class="v-list-item label header">
+        <div class="v-list-item label header clicksize">
           <%= @match.player_two %> / <%= @match.deck_two %>
         </div>
         <div class="flex row clicksize">
@@ -115,8 +134,10 @@
   </form>
 </section>
 
-<section class="v-space-tl footer">
+<section class="flexi box-fill-w">
+</section>
 
+<section class="v-space-tl footer">
   <p class="alert alert-warning"><%= live_flash(@flash, :end_feedback) %></p>
 </section>
 <% end %>

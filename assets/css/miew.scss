@@ -9,7 +9,7 @@ $color-high-contrast-mid: gray;
 $color-high-contrast-light: white;
 $color-positive: olivedrab;
 $color-positive-discrete: rgba(106, 142, 35, 0.5);
-$color-neutral: lightyellow;
+$color-neutral: rgb(66, 66, 66);
 $color-neutral-discrete: rgba(255, 255, 224, 0.5);
 $color-negative: tomato;
 $color-negative-discrete: rgba(255, 99, 71, 0.5);
@@ -23,6 +23,7 @@ $border-thin: 1px solid $color-high-contrast-dark;
 $border-active: 2px solid $color-high-contrast-mid;
 $height-row: 30px;
 $size-row-content: 23px;
+$size-row-content-double: 46px;
 $size-input-line: 10px;
 
 
@@ -125,6 +126,7 @@ input[type=checkbox] {
 
 .header {
     margin-bottom: $dist-main;
+    min-height: $size-row-content;
 }
 
 .footer {
