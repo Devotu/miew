@@ -238,3 +238,12 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+input[type=number] {
+    text-align: center;
+}
+
+input[type=number].square {
+    width: 36px;
+    height: $size-row-content;
+}

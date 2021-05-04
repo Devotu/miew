@@ -16,7 +16,7 @@
 }
 
 .gamelist {
-    grid-template-columns: 36% 16% 16% 16% 16%;
+    grid-template-columns: 34% 10% 14% 14% 14% 14%;
 }
 
 .flex.resultlist {
@@ -77,4 +77,12 @@ div .resultlist-row {
 
 #balance-slider {
     background: linear-gradient(to right, $color-high-contrast-light, $color-high-contrast-dark, $color-high-contrast-light);
+}
+
+.tinycol {
+    width: 120px;
+}
+
+.empty-header {
+    height: $size-row-content;
 }

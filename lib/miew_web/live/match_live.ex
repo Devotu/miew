@@ -10,23 +10,23 @@ defmodule MiewWeb.MatchLive do
     match = Miew.read_match(id)
     results = match.games
       |> Miew.list(:game)
-      |> Enum.map(fn g -> %{id: g.id, results: Miew.list(:result, g.results)} end)
+      |> Enum.map(fn g -> %{id: g.id, turns: g.turns, results: Miew.list(:result, g.results)} end)
 
-    {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0)}
+    {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0, turns: 0)}
   end
 
 
   @impl true
   def handle_event("add", %{"winner" => _winner} = data, socket) do
     game = create_game(socket.assigns.match, data)
+    IO.inspect game, label: "game"
+    IO.inspect socket.assigns.games, label: "socket games"
     {:noreply, assign(socket, games: socket.assigns.games ++ [game])}
   end
 
   @impl true
-  def handle_event("add", %{} = data, socket) do
-    data_with_winner = Map.put(data, "winner", "0")
-    game =  create_game(socket.assigns.match, data_with_winner)
-    {:noreply, assign(socket, games: socket.assigns.games ++ [game])}
+  def handle_event("add", _data, socket) do
+    {:noreply, put_flash(socket, :end_feedback, "Winner must be selected")}
   end
 
 
@@ -63,13 +63,14 @@ defmodule MiewWeb.MatchLive do
       |> add_eval_1(input_data)
       |> add_eval_2(input_data)
       |> add_balance(input_data)
+      |> add_turns(input_data)
 
     case Miew.create_game(game_data) do
       {:error, msg} ->
         {:error, msg}
         %{error: "Error", msg: msg}
       game_id ->
-        %{id: game_id, results: [
+        %{id: game_id, turns: game_data.turns, results: [
           %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, game_data.winner), fun: game_data.fun_1, power: power(game_data.balance, 1)},
           %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, game_data.winner), fun: game_data.fun_2, power: power(game_data.balance, 2)}
         ]}
@@ -130,6 +131,16 @@ defmodule MiewWeb.MatchLive do
         Map.put(match, :balance, parse_balance(balance))
       _ ->
         {:error, "invalid balance value"}
+    end
+  end
+
+
+  defp add_turns(match, input_data) do
+    case Integer.parse input_data["turns"] do
+      {turns, _} ->
+        Map.put(match, :turns, turns)
+      _ ->
+        Map.put(match, :turns, nil)
     end
   end
 
