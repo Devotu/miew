@@ -36,6 +36,7 @@ defmodule MiewWeb.MatchListLive do
   @impl true
   def mount(_params, _session, socket) do
     matches = Miew.list_matches()
+      |> Enum.sort(fn m1, m2 -> m1.time > m2.time end)
     {:ok, assign(socket, matches: matches)}
   end
 
@@ -63,5 +64,9 @@ defmodule MiewWeb.MatchListLive do
     </div>
     """
   end
-  defp display_rank(false, _assigns), do: ""
+  defp display_rank(false, assigns) do
+    ~L"""
+    <div class="tickbox"></div>
+    """
+  end
 end
