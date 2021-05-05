@@ -10,7 +10,8 @@ defmodule MiewWeb.MatchLive do
     match = Miew.read_match(id)
     results = match.games
       |> Miew.list(:game)
-      |> Enum.map(fn g -> %{id: g.id, turns: g.turns, results: Miew.list(:result, g.results)} end)
+      |> Enum.map(fn g -> %{id: g.id, turns: g.turns, results: Miew.list(:result, g.results), time: g.time} end)
+      |> Enum.sort(fn r1, r2 -> r1.time < r2.time end)
 
     {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0, turns: 0)}
   end
@@ -19,9 +20,9 @@ defmodule MiewWeb.MatchLive do
   @impl true
   def handle_event("add", %{"winner" => _winner} = data, socket) do
     game = create_game(socket.assigns.match, data)
-    IO.inspect game, label: "game"
-    IO.inspect socket.assigns.games, label: "socket games"
-    {:noreply, assign(socket, games: socket.assigns.games ++ [game])}
+    sorted_games = socket.assigns.games ++ [game]
+      |> Enum.sort(fn r1, r2 -> r1.time < r2.time end)
+    {:noreply, assign(socket, games: sorted_games)}
   end
 
   @impl true
@@ -70,7 +71,7 @@ defmodule MiewWeb.MatchLive do
         {:error, msg}
         %{error: "Error", msg: msg}
       game_id ->
-        %{id: game_id, turns: game_data.turns, results: [
+        %{id: game_id, turns: game_data.turns, time: Metr.Time.timestamp(), results: [
           %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, game_data.winner), fun: game_data.fun_1, power: power(game_data.balance, 1)},
           %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, game_data.winner), fun: game_data.fun_2, power: power(game_data.balance, 2)}
         ]}
