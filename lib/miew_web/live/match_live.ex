@@ -1,7 +1,6 @@
 defmodule MiewWeb.MatchLive do
   use MiewWeb, :live_view
 
-  alias Miew
   alias Miew.Helpers
 
   @impl true
