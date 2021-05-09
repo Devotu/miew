@@ -1,5 +1,7 @@
 defmodule Miew do
 
+  alias Miew.Helpers.GameHelpers
+
   def create_player(%{name: _} = data) do
     Metr.create_player(data)
   end
@@ -8,8 +10,10 @@ defmodule Miew do
     Metr.create_deck(data)
   end
 
-  def create_game(%{deck_1: _d1, deck_2: _d2, player_1: _p1, player_2: _p2, winner: _w, turns: _t} = data) do
-    Metr.create_game(data)
+  def create_game(%{deck_1: _d1, deck_2: _d2, player_1: _p1, player_2: _p2, winner: _w} = data) do
+    data
+    |> GameHelpers.to_game_input()
+    |> Metr.create_game()
   end
 
 

@@ -1,7 +1,7 @@
 defmodule MiewWeb.SheetLive do
   use MiewWeb, :live_view
 
-  alias Metr
+  alias Miew
   alias Miew.Helpers
 
   @impl true
