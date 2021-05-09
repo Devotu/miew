@@ -12,7 +12,7 @@ defmodule MiewWeb.DeckResultsLive do
 
     deck = Miew.get(deck_id, "deck")
 
-    {tally, tallied_results} = Miew.list(:result, deck.results)
+    {tally, tallied_results} = Miew.list_results(deck.results)
       |> Enum.sort(&(&1.time < &2.time))
       |> Enum.reduce({%DeckResultsLive{}, []}, fn r, acc -> append_sums(r, acc) end)
 

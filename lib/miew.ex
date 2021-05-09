@@ -2,6 +2,7 @@ defmodule Miew do
 
   alias Miew.Helpers.GameHelpers
 
+  ## Create
   def create_player(%{name: _} = data) do
     Metr.create_player(data)
   end
@@ -21,13 +22,74 @@ defmodule Miew do
     Metr.create_match(data)
   end
 
+  ## List
+  def list_formats() do
+    Metr.list_formats()
+  end
+
+  def list_players() do
+    Metr.list_players()
+  end
+
+  def list_players(ids) when is_list(ids) do
+    Metr.list_players(ids)
+  end
+
+  def list_decks() do
+    Metr.list_decks()
+  end
+
+  def list_decks(sort: "name") do
+    Metr.list_decks()
+    |> Enum.sort(fn a, b -> a.name < b.name end)
+  end
+
+  def list_decks(sort: "games") do
+    Metr.list_decks()
+    |> Enum.sort(fn a, b -> Enum.count(a.results) > Enum.count(b.results) end)
+  end
+
+  def list_decks(sort: "rank") do
+    Metr.list_decks()
+    |> Enum.map(fn d -> Map.put(d, :flatrank, flat_rank(d.rank)) end)
+    |> Enum.sort(fn a, b -> a.flatrank > b.flatrank end)
+  end
+
+  def list_decks(ids) when is_list(ids) do
+    Metr.list_decks(ids)
+  end
+
+  def list_games() do
+    Metr.list_games()
+  end
+
+  def list_games(ids) when is_list(ids) do
+    Metr.list_games(ids)
+  end
+
   def list_matches() do
     Metr.list_matches()
   end
 
+  def list_matches(ids) when is_list(ids) do
+    Metr.list_matches(ids)
+  end
+
+  def list_results() do
+    Metr.list_results()
+  end
+
+  def list_results(ids) when is_list(ids) do
+    Metr.list_results(ids)
+  end
+
+  ## Read
+
   def read_match(id) do
     Metr.read_match(id)
   end
+
+  ## Functions
 
   def end_match(id) do
     Metr.end_match(id)
@@ -45,30 +107,6 @@ defmodule Miew do
 
   def list(ids, type) when is_atom(type) and is_list(ids) do
     Metr.list_states(ids, type)
-  end
-
-  def list("deck", sort: "name") do
-    Metr.list_states("deck")
-    |> Enum.sort(fn a, b -> a.name < b.name end)
-  end
-
-  def list("deck", sort: "games") do
-    Metr.list_states("deck")
-    |> Enum.sort(fn a, b -> Enum.count(a.results) > Enum.count(b.results) end)
-  end
-
-  def list("deck", sort: "rank") do
-    Metr.list_states("deck")
-    |> Enum.map(fn d -> Map.put(d, :flatrank, flat_rank(d.rank)) end)
-    |> Enum.sort(fn a, b -> a.flatrank > b.flatrank end)
-  end
-
-  def list(type) when is_bitstring(type) do
-    Metr.list_states(type)
-  end
-
-  def list_formats() do
-    Metr.list_formats()
   end
 
   def get(id, type) when is_bitstring(id) and is_bitstring(type) do

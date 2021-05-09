@@ -13,7 +13,7 @@ defmodule MiewWeb.NewMatchLive do
   @impl true
   def mount(_params, _session, socket) do
     players = Enum.map(Metr.list_players(), fn p -> p.id end)
-    decks = Enum.map(Miew.list("deck", sort: "name"), fn d -> d.id end)
+    decks = Enum.map(Miew.list_decks(sort: "name"), fn d -> d.id end)
 
     {:ok, assign(socket,
       player_1: "", player_2: "",

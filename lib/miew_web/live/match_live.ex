@@ -8,8 +8,8 @@ defmodule MiewWeb.MatchLive do
     id = params["id"]
     match = Miew.read_match(id)
     results = match.games
-      |> Miew.list(:game)
-      |> Enum.map(fn g -> %{id: g.id, turns: g.turns, results: Miew.list(:result, g.results), time: g.time} end)
+      |> Miew.list_games()
+      |> Enum.map(fn g -> %{id: g.id, turns: g.turns, results: Miew.list_results(g.results), time: g.time} end)
       |> Enum.sort(fn r1, r2 -> r1.time < r2.time end)
 
     {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0, turns: 0)}

@@ -105,7 +105,7 @@ defmodule MiewWeb.ParseGamesLive do
   end
 
   defp get_player(%{id: deck_id}) do
-    Miew.list("Player")
+    Miew.list_players()
     |> Enum.find({:error, "No owner found"}, fn p -> Enum.any?(p.decks, fn did -> did == deck_id end) end)
   end
 
