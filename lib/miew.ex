@@ -95,14 +95,6 @@ defmodule Miew do
     Metr.end_match(id)
   end
 
-  def list(type, ids) when is_atom(type) and is_list(ids) do
-    Metr.list_states(ids, type)
-  end
-
-  def list(ids, type) when is_atom(type) and is_list(ids) do
-    Metr.list_states(ids, type)
-  end
-
   def get(id, type) when is_bitstring(id) and is_bitstring(type) do
     Metr.read_state(type, id)
   end
