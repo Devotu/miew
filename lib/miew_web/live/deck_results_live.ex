@@ -10,7 +10,7 @@ defmodule MiewWeb.DeckResultsLive do
   def mount(params, _session, socket) do
     deck_id = params["id"]
 
-    deck = Miew.get(deck_id, "deck")
+    deck = Miew.get(deck_id, :deck)
 
     {tally, tallied_results} = Miew.list_results(deck.results)
       |> Enum.sort(&(&1.time < &2.time))
@@ -65,9 +65,9 @@ defmodule MiewWeb.DeckResultsLive do
 
   defp add_opponent(tally) do
     opponent_result = tally.result.game_id
-      |> Miew.get("game")
+      |> Miew.get(:game)
       |> identify_opponent(tally.result.id)
-      |> Miew.get("result")
+      |> Miew.get(:result)
 
     updated_result = tally.result
       |> Map.put(:opponent, opponent_result.player_id)

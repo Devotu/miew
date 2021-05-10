@@ -38,7 +38,7 @@ defmodule MiewWeb.DeckLive do
   @impl true
   def mount(params, _session, socket) do
     id = params["id"]
-    deck = Metr.read_deck(id)
+    deck = Miew.get(id, :deck)
     deck_with_rank = DeckHelper.apply_split_rank(deck)
 
     last_play = find_last_play(deck.results)
@@ -53,14 +53,14 @@ defmodule MiewWeb.DeckLive do
       |> List.last()
 
     last_result_id
-    |> Metr.read_state(:result)
+    |> Miew.get(:result)
     |> (fn r -> r.game_id end).()
-    |> Metr.read_state(:game)
+    |> Miew.get(:game)
     |> (fn g -> g.results end).()
     |> Enum.filter(fn r_id -> r_id != last_result_id end)
     |> List.first()
-    |> Metr.read_state(:result)
+    |> Miew.get(:result)
     |> (fn r -> r.deck_id end).()
-    |> Metr.read_state(:deck)
+    |> Miew.get(:deck)
   end
 end

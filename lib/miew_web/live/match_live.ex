@@ -6,7 +6,7 @@ defmodule MiewWeb.MatchLive do
   @impl true
   def mount(params, _session, socket) do
     id = params["id"]
-    match = Miew.read_match(id)
+    match = Miew.get(id, :match)
     results = match.games
       |> Miew.list_games()
       |> Enum.map(fn g -> %{id: g.id, turns: g.turns, results: Miew.list_results(g.results), time: g.time} end)

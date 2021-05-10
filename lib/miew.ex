@@ -95,8 +95,8 @@ defmodule Miew do
     Metr.end_match(id)
   end
 
-  def get(id, type) when is_bitstring(id) and is_bitstring(type) do
-    Metr.read_state(type, id)
+  def get(id, type) when is_bitstring(id) and is_atom(type) do
+    Metr.read(id, type)
   end
 
   @spec bump_rank(bitstring, :down | :up) :: any
