@@ -24,63 +24,63 @@ defmodule Miew do
 
   ## List
   def list_formats() do
-    Metr.list_formats()
+    Metr.list(:format)
   end
 
   def list_players() do
-    Metr.list_players()
+    Metr.list(:player)
   end
 
   def list_players(ids) when is_list(ids) do
-    Metr.list_players(ids)
+    Metr.list(:player, ids)
   end
 
   def list_decks() do
-    Metr.list_decks()
+    Metr.list(:deck)
   end
 
   def list_decks(sort: "name") do
-    Metr.list_decks()
+    Metr.list(:deck)
     |> Enum.sort(fn a, b -> a.name < b.name end)
   end
 
   def list_decks(sort: "games") do
-    Metr.list_decks()
+    Metr.list(:deck)
     |> Enum.sort(fn a, b -> Enum.count(a.results) > Enum.count(b.results) end)
   end
 
   def list_decks(sort: "rank") do
-    Metr.list_decks()
+    Metr.list(:deck)
     |> Enum.map(fn d -> Map.put(d, :flatrank, flat_rank(d.rank)) end)
     |> Enum.sort(fn a, b -> a.flatrank > b.flatrank end)
   end
 
   def list_decks(ids) when is_list(ids) do
-    Metr.list_decks(ids)
+    Metr.list(:deck, ids)
   end
 
   def list_games() do
-    Metr.list_games()
+    Metr.list(:game)
   end
 
   def list_games(ids) when is_list(ids) do
-    Metr.list_games(ids)
+    Metr.list(:game, ids)
   end
 
   def list_matches() do
-    Metr.list_matches()
+    Metr.list(:match)
   end
 
   def list_matches(ids) when is_list(ids) do
-    Metr.list_matches(ids)
+    Metr.list(:matche, ids)
   end
 
   def list_results() do
-    Metr.list_results()
+    Metr.list(:result)
   end
 
   def list_results(ids) when is_list(ids) do
-    Metr.list_results(ids)
+    Metr.list(:result, ids)
   end
 
   ## Read
@@ -94,12 +94,6 @@ defmodule Miew do
   def end_match(id) do
     Metr.end_match(id)
   end
-
-
-  def list_games(game_ids) when is_list(game_ids) do
-    Metr.list_games(game_ids)
-  end
-
 
   def list(type, ids) when is_atom(type) and is_list(ids) do
     Metr.list_states(ids, type)
