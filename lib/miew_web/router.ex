@@ -36,7 +36,6 @@ defmodule MiewWeb.Router do
     live "/match/:id", MatchLive
 
     live "/:type/:id/state", StateLive
-    live "/:type/:id/history", HistoryLive
     live "/:type/:id/log", LogLive
 
     live "/log/:limit", LogLive

@@ -118,10 +118,6 @@ defmodule Miew do
     end
   end
 
-  def read_entity_history(id, type) do
-    Metr.read_entity_history(id, type)
-  end
-
 
   defp flat_rank({rank, advantage}) do
     (3*rank) + advantage
