@@ -131,6 +131,6 @@ defmodule Miew do
   end
 
   def read_log(id, type) when is_atom(type) and is_bitstring(id) do
-    Metr.read_entity_log(type, id)
+    Metr.read_log(id, type)
   end
 end
