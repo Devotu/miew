@@ -11,6 +11,7 @@ defmodule Miew do
   end
 
   def create_deck(%DeckInput{} = data) do
+    IO.inspect data, label: "miew - create deck input"
     Metr.create(data, :deck)
   end
 
@@ -92,14 +93,15 @@ defmodule Miew do
     Metr.read(id, :match)
   end
 
+  def get(id, type) when is_bitstring(id) and is_atom(type) do
+    Metr.read(id, type)
+  end
+
+
   ## Functions
 
   def end_match(id) do
     Metr.end_match(id)
-  end
-
-  def get(id, type) when is_bitstring(id) and is_atom(type) do
-    Metr.read(id, type)
   end
 
   @spec bump_rank(bitstring, :down | :up) :: any

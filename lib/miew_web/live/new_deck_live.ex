@@ -4,47 +4,36 @@ defmodule MiewWeb.NewDeckLive do
   alias Metr.Modules.Input.DeckInput
   alias Miew.Helpers
 
-  @default_deck %{
-    "format" => "", "theme" => "",
-    "black" => "false", "white" => "false", "red" => "false",
-    "green" => "false", "blue" => "false", "colorless" => "false",
-    "rank" => 0, "advantage" => 0
-  }
-
-
   @impl true
   def mount(_params, _session, socket) do
     players = Enum.map(Miew.list_players(), fn p -> p.id end)
     formats = Miew.list_formats()
 
-    {:ok, assign(socket,
-    owner: "",
-    name: "", format: "", theme: "",
-    price: 0,
-    black: false, white: false, red: false,
-    green: false, blue: false, colorless: false,
-    players: players,
-    formats: formats,
-    rank: 0,
-    advantage: 0,
-    name_added: ""
-    )}
+    {:ok, assign(socket, players: players, formats: formats)}
   end
 
 
   @impl true
   def handle_event("add", %{} = data, socket) do
-    Map.merge(@default_deck, data)
+    response = data
+    |> IO.inspect(label: "new deck - input")
     |> to_deck_input()
     |> Miew.create_deck()
+    |> IO.inspect(label: "new deck - Miew response")
 
-    {:noreply, assign(socket, name_added: "Added: " <> data["name"])}
+    case response do
+      {:error, msg} ->
+        {:noreply, put_flash(socket, :create_feedback, msg)}
+      id ->
+        deck = Miew.get(id, :deck)
+        {:noreply, put_flash(socket, :create_feedback, "#{deck.name} added")}
+    end
   end
 
 
   defp to_deck_input(m) do
     %DeckInput{
-      player_id: m["owner"],
+      player_id: m["player_id"],
       name: m["name"], format: m["format"], theme: m["theme"],
       black: bool(m["black"]), white: bool(m["white"]), red: bool(m["red"]),
       green: bool(m["green"]), blue: bool(m["blue"]), colorless: bool(m["colorless"]),

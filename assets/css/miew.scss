@@ -60,8 +60,16 @@ select {
     padding-left: $dist-main;
 }
 
+input[type=text] {
+    max-width: 200px;
+}
+
 input[type=checkbox] {
     visibility: hidden;
+}
+
+input[type=number] {
+    max-width: 100px;
 }
 
 .container {

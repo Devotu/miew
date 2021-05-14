@@ -1,79 +1,83 @@
-<section>
-  <p><%= assigns.name_added %>
-</section>
-<section>
+<section class="plaque v-space-t">
   <form phx-submit="add">
-    <table>
-      <tr>
-        <th>Owner</th>
-        <th>Name</th>
-        <th>Format</th>
-        <th>Theme</th>
-        <th>Price</th>
-        <th>Black</th>
-        <th>White</th>
-        <th>Red</th>
-        <th>Green</th>
-        <th>Blue</th>
-        <th>Colorless</th>
-        <th>Rank</th>
-        <th>Advantage</th>
-      </tr>
-      <tr>
-        <td>
-          <select name="owner" id="owner">
-            <%= for name <- @players do %>
-              <option value="<%= name %>"><%= name %></option>
-            <% end %>
-          </select>
-        </td>
-        <td>
-          <input type="text" name="name" value="<%= @name %>" placeholder="Name"/>
-        </td>
-        <td>
-          <select name="format" id="format">
-            <%= for format <- @formats do %>
-              <option value="<%= format %>"><%= format %></option>
-            <% end %>
-          </select>
-        </td>
-        <td>
-          <input type="text" name="theme" value="<%= @theme %>" placeholder="Theme"/>
-        </td>
-        <td>
-          <input type="number" name="price" step="0.01" value="<%= @price %>"/>
-        </td>
-        <td>
-          <input id="black" name="black" type="checkbox" value="true">
-        </td>
-        <td>
-          <input id="white" name="white" type="checkbox" value="true">
-        </td>
-        <td>
-          <input id="red" name="red" type="checkbox" value="true">
-        </td>
-        <td>
-          <input id="green" name="green" type="checkbox" value="true">
-        </td>
-        <td>
-          <input id="blue" name="blue" type="checkbox" value="true">
-        </td>
-        <td>
-          <input id="colorless" name="colorless" type="checkbox" value="true">
-        </td>
-        <td>
-          <input type="number" name="rank" value="0"/>
-        </td>
-        <td>
-          <input type="number" name="advantage" value="<%= @advantage %>"/>
-        </td>
-      </tr>
-    </table>
-    <datalist id="players">
-      <%= for name <- @players do %>
-        <option value="<%= name %>"><%= name %></option>
-      <% end %>
-    </datalist>
-    <button type="submit" phx-disable-with="Adding...">Add</button>
+    <div class="clicksize">
+      <p class="label v-space">Name:
+        <div class="">
+          <input class="" type="text" name="name" value="" placeholder="name"/>
+        </div>
+      </p>
+    </div>
+    <div class="clicksize">
+      <p class="label v-space">Owner:
+        <select name="player_id" id="player_id" placeholder="owner">
+          <option value="" disabled selected>*</option>
+          <%= for name <- @players do %>
+            <option value="<%= name %>"><%= name %></option>
+          <% end %>
+        </select>
+      </p>
+    </div>
+    <div class="clicksize">
+      <p class="label v-space">Format:
+        <select name="format" id="format">
+          <option value="" disabled selected>*</option>
+          <%= for format <- @formats do %>
+            <option value="<%= format %>"><%= format %></option>
+          <% end %>
+        </select>
+      </p>
+    </div>
+    <div class="clicksize">
+      <p class="label v-space">Colors:
+        <div class="flex">
+          <label class="flexi compact" for="black">Black:</label>
+          <label class="cb-container h-space-ll flexi compact">
+            <input type=checkbox id="black" name="black" value=true>
+            <span class="checkmark"></span>
+          </label>
+          <label class="flexi compact" for="white">White:</label>
+          <label class="cb-container h-space-ll flexi compact">
+            <input type=checkbox id="white" name="white" value=true>
+            <span class="checkmark"></span>
+          </label>
+          <label class="flexi compact" for="red">Red:</label>
+          <label class="cb-container h-space-ll flexi compact">
+            <input type=checkbox id="red" name="red" value=true>
+            <span class="checkmark"></span>
+          </label>
+          <label class="flexi compact" for="green">Green:</label>
+          <label class="cb-container h-space-ll flexi compact">
+            <input type=checkbox id="green" name="green" value=true>
+            <span class="checkmark"></span>
+          </label>
+          <label class="flexi compact" for="blue">Blue:</label>
+          <label class="cb-container h-space-ll flexi compact">
+            <input type=checkbox id="blue" name="blue" value=true>
+            <span class="checkmark"></span>
+          </label>
+        </div>
+      </p>
+    </div>
+    <div class="clicksize">
+      <p class="label v-space">Theme:
+        <div class="">
+          <input class="" type="text" name="theme" value="" placeholder="theme"/>
+        </div>
+      </p>
+    </div>
+    <div class="clicksize">
+      <p class="label v-space">Price:
+        <div class="">
+          <input class="" type="number" name="price"  step="0.01" value="" placeholder="price"/>
+        </div>
+      </p>
+    </div>
+    <div class="flex flex-spread row append-b flex-right-row">
+      <button class="flexi box-fill" type="submit" phx-disable-with="Adding...">Create</button>
+    </div>
   </form>
+</section>
+
+<section class="v-space-tl footer">
+  <p class="alert alert-warning"><%= live_flash(@flash, :create_feedback) %></p>
 </section>
