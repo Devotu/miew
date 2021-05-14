@@ -2,7 +2,6 @@ defmodule Miew do
 
   alias Miew.Helpers.GameHelpers
   alias Metr.Modules.Input.DeckInput
-  alias Metr.Modules.Input.GameInput
   alias Metr.Modules.Input.MatchInput
   alias Metr.Modules.Input.PlayerInput
 
@@ -11,8 +10,8 @@ defmodule Miew do
     Metr.create(data, :player)
   end
 
-  def create_deck(%{name: _, player_id: _} = data) do
-    Metr.create_deck(data)
+  def create_deck(%DeckInput{} = data) do
+    Metr.create(data, :deck)
   end
 
   def create_game(%{deck_1: _d1, deck_2: _d2, player_1: _p1, player_2: _p2, winner: _w} = data) do
@@ -76,7 +75,7 @@ defmodule Miew do
   end
 
   def list_matches(ids) when is_list(ids) do
-    Metr.list(:matche, ids)
+    Metr.list(:match, ids)
   end
 
   def list_results() do
@@ -90,7 +89,7 @@ defmodule Miew do
   ## Read
 
   def read_match(id) do
-    Metr.read_match(id)
+    Metr.read(id, :match)
   end
 
   ## Functions
