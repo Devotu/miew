@@ -1,6 +1,8 @@
 defmodule MiewWeb.NewMatchLive do
   use MiewWeb, :live_view
 
+  alias Metr.Modules.Input.MatchInput
+
   @default_match %{
     "player_1" => "", "deck_1" => "",
     "player_2" => "", "deck_2" => "",
@@ -27,7 +29,7 @@ defmodule MiewWeb.NewMatchLive do
   @impl true
   def handle_event("create", %{} = data, socket) do
     response = Map.merge(@default_match, data)
-    |> to_atom_match_data()
+    |> to_match_input()
     |> Miew.create_match()
 
     case response do
@@ -39,10 +41,10 @@ defmodule MiewWeb.NewMatchLive do
   end
 
 
-  defp to_atom_match_data(m) do
-    %{
-      player_1_id: m["player_1"], player_2_id: m["player_2"],
-      deck_1_id: m["deck_1"], deck_2_id: m["deck_2"],
+  defp to_match_input(m) do
+    %MatchInput{
+      player_one: m["player_1"], player_two: m["player_2"],
+      deck_one: m["deck_1"], deck_two: m["deck_2"],
       ranking: bool(m["ranking"])
     }
   end

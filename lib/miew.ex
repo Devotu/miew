@@ -25,8 +25,8 @@ defmodule Miew do
   end
 
 
-  def create_match(%{deck_1_id: _, player_1_id: _, deck_2_id: _, player_2_id: _, ranking: _ranking} = data) do
-    Metr.create_match(data)
+  def create_match(%MatchInput{} = data) do
+    Metr.create(data, :match)
   end
 
   ## List
