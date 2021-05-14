@@ -18,7 +18,7 @@ defmodule Miew do
   def create_game(%{deck_1: _d1, deck_2: _d2, player_1: _p1, player_2: _p2, winner: _w} = data) do
     data
     |> GameHelpers.to_game_input()
-    |> Metr.create_game()
+    |> Metr.create(:game)
   end
 
 
