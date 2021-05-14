@@ -1,10 +1,17 @@
 defmodule Miew do
 
   alias Miew.Helpers.GameHelpers
+  alias Metr.Modules.Input.DeckInput
+  alias Metr.Modules.Input.GameInput
+  alias Metr.Modules.Input.MatchInput
+  alias Metr.Modules.Input.PlayerInput
 
   ## Create
-  def create_player(%{name: _} = data) do
-    Metr.create_player(data)
+  def create_player(%{name: name}) do
+    %PlayerInput{
+      name: name
+    }
+    |> Metr.create(:player)
   end
 
   def create_deck(%{name: _, player_id: _} = data) do
