@@ -1,7 +1,7 @@
 defmodule MiewWeb.NewPlayerLive do
   use MiewWeb, :live_view
 
-  alias Metr
+  alias Metr.Modules.Input.PlayerInput
 
   @impl true
   def render(assigns) do
@@ -27,7 +27,7 @@ defmodule MiewWeb.NewPlayerLive do
   @impl true
   @spec handle_event(<<_::24>>, map, any) :: {:noreply, any}
   def handle_event("add", %{"name" => name}, socket) do
-    case Miew.create_player(%{name: name}) do
+    case Miew.create_player(%PlayerInput{name: name}) do
       {:error, msg} ->
         {:noreply, assign(socket, name_added: "Error: " <> msg)}
       _ ->

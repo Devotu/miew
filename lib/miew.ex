@@ -7,11 +7,8 @@ defmodule Miew do
   alias Metr.Modules.Input.PlayerInput
 
   ## Create
-  def create_player(%{name: name}) do
-    %PlayerInput{
-      name: name
-    }
-    |> Metr.create(:player)
+  def create_player(%PlayerInput{} = data) do
+    Metr.create(data, :player)
   end
 
   def create_deck(%{name: _, player_id: _} = data) do
