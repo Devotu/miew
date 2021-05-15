@@ -77,6 +77,7 @@ defmodule Miew.Helpers do
     String.duplicate("\t", n)
   end
 
+  def as_percent(0), do: 0
   def as_percent(n) when is_number(n) and n > 0 and n < 1 do
     Float.round(n * 100, 2)
   end

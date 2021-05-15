@@ -1,7 +1,7 @@
 defmodule MiewWeb.DeckResultsLive do
   use MiewWeb, :live_view
 
-  defstruct result: nil, z_games: 0, z_winrate: 50, z_power: 0, z_fun: 0, z_wins: 0, opponent: nil
+  defstruct result: nil, z_games: 0, z_winrate: 0.5, z_power: 0, z_fun: 0, z_wins: 0, opponent: nil
 
   alias MiewWeb.DeckResultsLive
   alias Miew.Helpers
