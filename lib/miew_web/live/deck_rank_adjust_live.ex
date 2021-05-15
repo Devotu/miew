@@ -64,7 +64,7 @@ defmodule MiewWeb.DeckRankAdjustLive do
   end
 
   def load_deck(id) do
-    Miew.get(id, "deck")
+    Miew.get(id, :deck)
     |> DeckHelper.apply_split_rank()
   end
 end
