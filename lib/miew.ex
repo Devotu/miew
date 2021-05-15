@@ -11,7 +11,6 @@ defmodule Miew do
   end
 
   def create_deck(%DeckInput{} = data) do
-    IO.inspect data, label: "miew - create deck input"
     Metr.create(data, :deck)
   end
 
@@ -36,7 +35,7 @@ defmodule Miew do
   end
 
   def list_players(ids) when is_list(ids) do
-    Metr.list(:player, ids)
+    Metr.list(ids, :player)
   end
 
   def list_decks() do
@@ -60,7 +59,7 @@ defmodule Miew do
   end
 
   def list_decks(ids) when is_list(ids) do
-    Metr.list(:deck, ids)
+    Metr.list(ids, :deck)
   end
 
   def list_games() do
@@ -68,7 +67,7 @@ defmodule Miew do
   end
 
   def list_games(ids) when is_list(ids) do
-    Metr.list(:game, ids)
+    Metr.list(ids, :game)
   end
 
   def list_matches() do
@@ -76,7 +75,7 @@ defmodule Miew do
   end
 
   def list_matches(ids) when is_list(ids) do
-    Metr.list(:match, ids)
+    Metr.list(ids, :match)
   end
 
   def list_results() do
@@ -84,7 +83,7 @@ defmodule Miew do
   end
 
   def list_results(ids) when is_list(ids) do
-    Metr.list(:result, ids)
+    Metr.list(ids, :result)
   end
 
   ## Read

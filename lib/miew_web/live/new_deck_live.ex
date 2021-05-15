@@ -16,10 +16,8 @@ defmodule MiewWeb.NewDeckLive do
   @impl true
   def handle_event("add", %{} = data, socket) do
     response = data
-    |> IO.inspect(label: "new deck - input")
     |> to_deck_input()
     |> Miew.create_deck()
-    |> IO.inspect(label: "new deck - Miew response")
 
     case response do
       {:error, msg} ->
