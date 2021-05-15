@@ -40,18 +40,18 @@ defmodule MiewWeb.ExportLive do
 
   @impl true
   def handle_event("decks", _data, socket) do
-    output = Miew.list("deck")
+    output = Miew.list_decks()
       |> convert_decks()
     {:noreply, assign(socket, output: output)}
   end
   def handle_event("games", _data, socket) do
-    output = Miew.list("result")
+    output = Miew.list_results()
       |> convert_games()
     {:noreply, assign(socket, output: output)}
   end
 
   defp convert_decks(decks) when is_list(decks) do
-    players = Miew.list("player")
+    players = Miew.list_players()
     decks
     |> Enum.map(fn d -> merge_owner(d, players) end)
     |> Enum.map(&convert_deck/1)

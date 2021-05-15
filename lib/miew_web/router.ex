@@ -20,8 +20,6 @@ defmodule MiewWeb.Router do
     live "/", DashboardLive
     live "/dash", DashboardLive
 
-    live "/sheet", SheetLive
-
     live "/deck/new", NewDeckLive
     live "/deck/list", DeckListLive
     live "/deck/:id", DeckLive
@@ -36,7 +34,6 @@ defmodule MiewWeb.Router do
     live "/match/:id", MatchLive
 
     live "/:type/:id/state", StateLive
-    live "/:type/:id/history", HistoryLive
     live "/:type/:id/log", LogLive
 
     live "/log/:limit", LogLive

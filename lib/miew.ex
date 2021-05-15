@@ -1,74 +1,106 @@
 defmodule Miew do
 
-  def create_player(%{name: _} = data) do
-    Metr.create_player(data)
+  alias Miew.Helpers.GameHelpers
+  alias Metr.Modules.Input.DeckInput
+  alias Metr.Modules.Input.MatchInput
+  alias Metr.Modules.Input.PlayerInput
+
+  ## Create
+  def create_player(%PlayerInput{} = data) do
+    Metr.create(data, :player)
   end
 
-  def create_deck(%{name: _, player_id: _} = data) do
-    Metr.create_deck(data)
+  def create_deck(%DeckInput{} = data) do
+    Metr.create(data, :deck)
   end
 
-  def create_game(%{deck_1: _d1, deck_2: _d2, player_1: _p1, player_2: _p2, winner: _w, turns: _t} = data) do
-    Metr.create_game(data)
-  end
-
-
-  def create_match(%{deck_1_id: _, player_1_id: _, deck_2_id: _, player_2_id: _, ranking: _ranking} = data) do
-    Metr.create_match(data)
-  end
-
-  def list_matches() do
-    Metr.list_matches()
-  end
-
-  def read_match(id) do
-    Metr.read_match(id)
-  end
-
-  def end_match(id) do
-    Metr.end_match(id)
+  def create_game(%{deck_1: _d1, deck_2: _d2, player_1: _p1, player_2: _p2, winner: _w} = data) do
+    data
+    |> GameHelpers.to_game_input()
+    |> Metr.create(:game)
   end
 
 
-  def list_games(game_ids) when is_list(game_ids) do
-    Metr.list_games(game_ids)
+  def create_match(%MatchInput{} = data) do
+    Metr.create(data, :match)
   end
 
-
-  def list(type, ids) when is_atom(type) and is_list(ids) do
-    Metr.list_states(ids, type)
+  ## List
+  def list_formats() do
+    Metr.list(:format)
   end
 
-  def list(ids, type) when is_atom(type) and is_list(ids) do
-    Metr.list_states(ids, type)
+  def list_players() do
+    Metr.list(:player)
   end
 
-  def list("deck", sort: "name") do
-    Metr.list_states("deck")
+  def list_players(ids) when is_list(ids) do
+    Metr.list(ids, :player)
+  end
+
+  def list_decks() do
+    Metr.list(:deck)
+  end
+
+  def list_decks(sort: "name") do
+    Metr.list(:deck)
     |> Enum.sort(fn a, b -> a.name < b.name end)
   end
 
-  def list("deck", sort: "games") do
-    Metr.list_states("deck")
+  def list_decks(sort: "games") do
+    Metr.list(:deck)
     |> Enum.sort(fn a, b -> Enum.count(a.results) > Enum.count(b.results) end)
   end
 
-  def list("deck", sort: "rank") do
-    Metr.list_states("deck")
+  def list_decks(sort: "rank") do
+    Metr.list(:deck)
     |> Enum.map(fn d -> Map.put(d, :flatrank, flat_rank(d.rank)) end)
     |> Enum.sort(fn a, b -> a.flatrank > b.flatrank end)
   end
 
-  def list(type) when is_bitstring(type) do
-    Metr.list_states(type)
+  def list_decks(ids) when is_list(ids) do
+    Metr.list(ids, :deck)
   end
 
-  def list_formats() do
-    Metr.list_formats()
+  def list_games() do
+    Metr.list(:game)
   end
 
-  def get(id, type) when is_bitstring(id) and is_bitstring(type) do
-    Metr.read_state(type, id)
+  def list_games(ids) when is_list(ids) do
+    Metr.list(ids, :game)
+  end
+
+  def list_matches() do
+    Metr.list(:match)
+  end
+
+  def list_matches(ids) when is_list(ids) do
+    Metr.list(ids, :match)
+  end
+
+  def list_results() do
+    Metr.list(:result)
+  end
+
+  def list_results(ids) when is_list(ids) do
+    Metr.list(ids, :result)
+  end
+
+  ## Read
+
+  def read_match(id) do
+    Metr.read(id, :match)
+  end
+
+  def get(id, type) when is_bitstring(id) and is_atom(type) do
+    Metr.read(id, type)
+  end
+
+
+  ## Functions
+
+  def end_match(id) do
+    Metr.end_match(id)
   end
 
   @spec bump_rank(bitstring, :down | :up) :: any
@@ -90,10 +122,6 @@ defmodule Miew do
     end
   end
 
-  def read_entity_history(id, type) do
-    Metr.read_entity_history(id, type)
-  end
-
 
   defp flat_rank({rank, advantage}) do
     (3*rank) + advantage
@@ -103,6 +131,6 @@ defmodule Miew do
   end
 
   def read_log(id, type) when is_atom(type) and is_bitstring(id) do
-    Metr.read_entity_log(type, id)
+    Metr.read_log(id, type)
   end
 end

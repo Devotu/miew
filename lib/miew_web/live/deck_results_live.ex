@@ -1,7 +1,7 @@
 defmodule MiewWeb.DeckResultsLive do
   use MiewWeb, :live_view
 
-  defstruct result: nil, z_games: 0, z_winrate: 50, z_power: 0, z_fun: 0, z_wins: 0, opponent: nil
+  defstruct result: nil, z_games: 0, z_winrate: 0.5, z_power: 0, z_fun: 0, z_wins: 0, opponent: nil
 
   alias MiewWeb.DeckResultsLive
   alias Miew.Helpers
@@ -10,9 +10,9 @@ defmodule MiewWeb.DeckResultsLive do
   def mount(params, _session, socket) do
     deck_id = params["id"]
 
-    deck = Miew.get(deck_id, "deck")
+    deck = Miew.get(deck_id, :deck)
 
-    {tally, tallied_results} = Miew.list(:result, deck.results)
+    {tally, tallied_results} = Miew.list_results(deck.results)
       |> Enum.sort(&(&1.time < &2.time))
       |> Enum.reduce({%DeckResultsLive{}, []}, fn r, acc -> append_sums(r, acc) end)
 
@@ -65,9 +65,9 @@ defmodule MiewWeb.DeckResultsLive do
 
   defp add_opponent(tally) do
     opponent_result = tally.result.game_id
-      |> Miew.get("game")
+      |> Miew.get(:game)
       |> identify_opponent(tally.result.id)
-      |> Miew.get("result")
+      |> Miew.get(:result)
 
     updated_result = tally.result
       |> Map.put(:opponent, opponent_result.player_id)

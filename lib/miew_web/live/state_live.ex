@@ -61,6 +61,6 @@ defmodule MiewWeb.StateLive do
   end
 
   defp load_state(type, id) do
-    Metr.read_state(type, id)
+    Miew.get(id, type)
   end
 end

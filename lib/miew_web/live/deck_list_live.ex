@@ -31,25 +31,25 @@ defmodule MiewWeb.DeckListLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    decks = Miew.list("deck", sort: "name")
+    decks = Miew.list_decks(sort: "name")
     {:ok, assign(socket, decks: decks, order: :desc)}
   end
 
   @impl true
   def handle_event("sort_names", params, socket) do
-    decks = Miew.list("deck", sort: "name")
+    decks = Miew.list_decks(sort: "name")
     reply_ordered(decks, params["order"], socket)
   end
 
   @impl true
   def handle_event("sort_games", params, socket) do
-    decks = Miew.list("deck", sort: "games")
+    decks = Miew.list_decks(sort: "games")
     reply_ordered(decks, params["order"], socket)
   end
 
   @impl true
   def handle_event("sort_rank", params, socket) do
-    decks = Miew.list("deck", sort: "rank")
+    decks = Miew.list_decks(sort: "rank")
     reply_ordered(decks, params["order"], socket)
   end
 

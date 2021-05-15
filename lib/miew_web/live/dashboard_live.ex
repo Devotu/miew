@@ -28,10 +28,10 @@ defmodule MiewWeb.DashboardLive do
   @impl true
   def mount(_params, _session, socket) do
     params = %{
-      player_count: (Miew.list("player") |> Enum.count()),
-      deck_count: (Miew.list("deck") |> Enum.count()),
-      match_count: (Miew.list("match") |> Enum.count()),
-      game_count: (Miew.list("game") |> Enum.count())
+      player_count: (Miew.list_players() |> Enum.count()),
+      deck_count: (Miew.list_decks() |> Enum.count()),
+      match_count: (Miew.list_matches() |> Enum.count()),
+      game_count: (Miew.list_games() |> Enum.count())
     }
     {:ok, assign(socket, params: params)}
   end
