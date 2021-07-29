@@ -13,8 +13,8 @@ defmodule MiewWeb.NewMatchLive do
   @impl true
   @spec mount(any, any, Phoenix.LiveView.Socket.t()) :: {:ok, any}
   def mount(_params, _session, socket) do
-    players = Enum.map(Miew.list_players(), fn p -> p.id end)
-    decks = Enum.map(Miew.list_decks(sort: "name"), fn d -> d.id end)
+    players = Enum.map(Miew.list_players(), fn p -> p end)
+    decks = Enum.map(Miew.list_decks(sort: "name"), fn d -> d end)
 
     {:ok, assign(socket,
       player_1: "", player_2: "",

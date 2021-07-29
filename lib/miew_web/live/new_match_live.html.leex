@@ -5,26 +5,26 @@
       <li class="plaque">
         <h2 class="header">Player 1</h2>
         <select class="v-space clicksize" name="player_1" id="player_1">
-          <%= for name <- @players do %>
-            <option value="<%= name %>"><%= name %></option>
+          <%= for player <- @players do %>
+            <option value="<%= player.id %>"><%= player.name %></option>
           <% end %>
         </select>
         <select class="v-space clicksize" name="deck_1" id="deck_1">
-          <%= for name <- @decks do %>
-            <option value="<%= name %>"><%= name %></option>
+          <%= for deck <- @decks do %>
+            <option value="<%= deck.id %>"><%= deck.name %></option>
           <% end %>
         </select>
       </li>
       <li class="plaque">
         <h2 class="header">Player 2</h2>
         <select class="v-space clicksize" name="player_2" id="player_2">
-          <%= for name <- @players do %>
-            <option value="<%= name %>"><%= name %></option>
+          <%= for player <- @players do %>
+            <option value="<%= player.id %>"><%= player.name %></option>
           <% end %>
         </select>
         <select class="v-space clicksize" name="deck_2" id="deck_2">
-          <%= for name <- @decks do %>
-            <option value="<%= name %>"><%= name %></option>
+          <%= for deck <- @decks do %>
+            <option value="<%= deck.id %>"><%= deck.name %></option>
           <% end %>
         </select>
       </li>
@@ -41,15 +41,5 @@
         <button class="right box-fill" type="submit" phx-disable-with="Creating...">Start</button>
       </li>
     </ul>
-    <datalist id="players">
-      <%= for name <- @players do %>
-        <option value="<%= name %>"><%= name %></option>
-      <% end %>
-    </datalist>
-    <datalist id="decks">
-      <%= for name <- @decks do %>
-        <option value="<%= name %>"><%= name %></option>
-      <% end %>
-    </datalist>
   </form>
 </section>
