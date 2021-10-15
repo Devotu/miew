@@ -43,8 +43,8 @@
         <%= link(r.result.id, method: :get, to: "/result/#{r.result.id}/state", class: "v-list-item")%>
       </div>
       <div class="resultlist-row">
-        <%= link(r.result.opponent_deck, method: :get, to: "/deck/#{r.result.opponent_deck}/state", class: "v-list-item")%>
-        <%= link(r.result.opponent, method: :get, to: "/player/#{r.result.opponent}/state", class: "v-list-item")%>
+        <%= link(r.result.opponent_deck.name, method: :get, to: "/deck/#{r.result.opponent_deck.id}/state", class: "v-list-item")%>
+        <%= link(r.result.opponent.name, method: :get, to: "/player/#{r.result.opponent.id}/state", class: "v-list-item")%>
         <span class="v-list-item"></span>
       </div>
       <div class="resultlist-row">

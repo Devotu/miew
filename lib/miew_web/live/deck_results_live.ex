@@ -70,8 +70,8 @@ defmodule MiewWeb.DeckResultsLive do
       |> Miew.get(:result)
 
     updated_result = tally.result
-      |> Map.put(:opponent, opponent_result.player_id)
-      |> Map.put(:opponent_deck, opponent_result.deck_id)
+      |> Map.put(:opponent, Miew.get(opponent_result.player_id, :player))
+      |> Map.put(:opponent_deck, Miew.get(opponent_result.deck_id, :deck))
 
     Map.put tally, :result, updated_result
   end
