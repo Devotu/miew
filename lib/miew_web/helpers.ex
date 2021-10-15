@@ -31,6 +31,9 @@ defmodule Miew.Helpers do
     Kernel.inspect(s) |> pretty()
   end
 
+  def to_pretty(s) do
+    IO.inspect Kernel.inspect(s), label: "Helpers - pretty"
+  end
 
   defp pretty(s) when is_bitstring(s) do
     pretty(0, s)

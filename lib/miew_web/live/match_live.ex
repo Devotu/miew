@@ -49,8 +49,8 @@ defmodule MiewWeb.MatchLive do
         {:noreply, assign(socket, match: match)}
       {:error, msg} ->
         {:noreply, put_flash(socket, :end_feedback, msg)}
-      _ ->
-        {:noreply, put_flash(socket, :end_feedback, "Unknown error")}
+      x ->
+        {:noreply, put_flash(socket, :end_feedback, "Unknown error #{Kernel.inspect(x)}")}
     end
   end
 
