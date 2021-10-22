@@ -44,13 +44,11 @@ defmodule MiewWeb.MatchLive do
   @impl true
   def handle_event("end", _data, socket) do
     case Miew.end_match(socket.assigns.match.id) do
-      :ok ->
-        match = Miew.read_match(socket.assigns.match.id)
-        {:noreply, assign(socket, match: match)}
       {:error, msg} ->
         {:noreply, put_flash(socket, :end_feedback, msg)}
-      x ->
-        {:noreply, put_flash(socket, :end_feedback, "Unknown error #{Kernel.inspect(x)}")}
+      _msg ->
+          match = Miew.read_match(socket.assigns.match.id)
+          {:noreply, assign(socket, match: match)}
     end
   end
 
