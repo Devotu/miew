@@ -1,4 +1,5 @@
 #!/bin/bash
+cp miew_*.tar.gz versions
 
 echo "cleanup"
 rm -r miew/

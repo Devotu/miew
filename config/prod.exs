@@ -17,8 +17,9 @@ host_ip =
     """
 
 config :miew, MiewWeb.Endpoint,
-  url: [host: host_ip, port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  url: [host: host_ip, port: 4000],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  check_origin: ["//*.#{host_ip}"]
 
 # Do not print debug messages in production
 config :logger, level: :info
