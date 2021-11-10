@@ -17,7 +17,7 @@ host_ip =
     """
 
 config :miew, MiewWeb.Endpoint,
-  url: [host: host_ip, port: 4000],
+  url: [host: host_ip, port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json",
   check_origin: ["//*.#{host_ip}"]
 

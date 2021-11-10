@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "stashing package"
 cp miew_*.tar.gz versions
 
 echo "cleanup"
