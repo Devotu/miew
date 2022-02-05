@@ -120,6 +120,8 @@ defmodule Miew do
         :game
       "result" ->
         :result
+      "tag" ->
+        :tag
     end
   end
 
@@ -137,5 +139,9 @@ defmodule Miew do
 
   def list_game_conclusion_tags() do
     ["Mana", "Speed", "Endurance", "Control", "Flexibility"]
+  end
+
+  def add_tag(tag, target_type, target_id) when is_bitstring(tag) and is_atom(target_type) and is_bitstring(target_id) do
+    Metr.add_tag(tag, target_type, target_id)
   end
 end

@@ -22,8 +22,10 @@
       <span class="v-list-item">turns</span>
       <span class="v-list-item">power</span>
       <span class="v-list-item">fun</span>
+      <span class="v-list-item">tag</span>
       <span class="v-list-item">power</span>
       <span class="v-list-item">fun</span>
+      <span class="v-list-item">tag</span>
     </li>
   </ul>
   <ul class="v-list">
@@ -36,12 +38,15 @@
           <% 1 -> %>
             <span class="v-list-item positive-t short"><%= r.power %></span>
             <span class="v-list-item positive-t short"><%= r.fun %></span>
+            <span class="v-list-item positive-t short"><%= first_tag(r) %></span>
           <% 0 -> %>
             <span class="v-list-item neutral-t short"><%= r.power %></span>
             <span class="v-list-item neutral-t short"><%= r.fun %></span>
+            <span class="v-list-item neutral-t short"><%= first_tag(r) %></span>
           <% 2 -> %>
             <span class="v-list-item negative-t short"><%= r.power %></span>
             <span class="v-list-item negative-t short"><%= r.fun %></span>
+            <span class="v-list-item negative-t short"><%= first_tag(r) %></span>
         <% end %>
       <% end %>
     </li>

@@ -64,18 +64,38 @@ defmodule MiewWeb.MatchLive do
       |> add_eval_2(input_data)
       |> add_balance(input_data)
       |> add_turns(input_data)
-      |> add_tags_1(input_data)
-      |> add_tags_2(input_data)
 
     case Miew.create_game(game_data) do
       {:error, msg} ->
         {:error, msg}
         %{error: "Error", msg: msg}
       game_id ->
-        %{id: game_id, turns: game_data.turns, time: Metr.Time.timestamp(), results: [
-          %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, game_data.winner), fun: game_data.fun_1, power: power(game_data.balance, 1)},
-          %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, game_data.winner), fun: game_data.fun_2, power: power(game_data.balance, 2)}
-        ]}
+        result_ids = Miew.get(game_id, :game).results
+        results = Miew.list_results(result_ids)
+
+        %{
+          id: game_id,
+          turns: game_data.turns,
+          time: Metr.Time.timestamp(),
+          results: [
+            %{
+              player_id: match.player_one,
+              deck_id: match.deck_one,
+              place: place(1, game_data.winner),
+              fun: game_data.fun_1,
+              power: power(game_data.balance, 1),
+              tags: [add_tag(results, input_data, 1)]
+            },
+            %{
+              player_id: match.player_two,
+              deck_id: match.deck_two,
+              place: place(2, game_data.winner),
+              fun: game_data.fun_2,
+              power: power(game_data.balance, 2),
+              tags: [add_tag(results, input_data, 2)]
+            }
+          ]
+        }
     end
   end
 
@@ -89,7 +109,6 @@ defmodule MiewWeb.MatchLive do
       power_1: nil, power_2: nil,
       fun_1: nil, fun_2: nil,
       eval_1: nil, eval_2: nil,
-      tag_1: nil, tag_2: nil
     }
   end
 
@@ -169,12 +188,25 @@ defmodule MiewWeb.MatchLive do
   defp power({_x,1}, _y), do: -1
   defp power({_x,2}, _y), do: -2
 
-
-  defp add_tags_1(match, input_data) do
-    Map.put(match, :tag_1, input_data["tag1"])
+  defp add_tag(results, input_data, player) do
+    tag = input_data["tag#{player}"]
+    result_id = Enum.at(results, player-1, nil).id
+    add_tag(result_id, tag)
+    |> String.capitalize()
   end
 
-  defp add_tags_2(match, input_data) do
-    Map.put(match, :tag_2, input_data["tag2"])
+  defp add_tag(_result_id, nil) do
+    ""
+  end
+  defp add_tag(result_id, tag) do
+    Miew.add_tag(tag, :result, result_id) |> IO.inspect(label: "tag added")
+  end
+
+  defp first_tag(result) do
+    case Map.get(result, :tags, nil) do
+      nil -> ""
+      [] -> ""
+      [h | _t] -> h
+    end
   end
 end
