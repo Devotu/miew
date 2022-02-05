@@ -16,6 +16,8 @@ defmodule MiewWeb.DeckResultsLive do
       |> Enum.sort(&(&1.time < &2.time))
       |> Enum.reduce({%DeckResultsLive{}, []}, fn r, acc -> append_sums(r, acc) end)
 
+    IO.inspect List.first(tallied_results)
+
     {:ok, assign(socket, results: tallied_results, summary: tally)}
   end
 
@@ -79,5 +81,13 @@ defmodule MiewWeb.DeckResultsLive do
   defp identify_opponent(game, selected_result_id) do
     game.results
     |> Enum.find(&(&1 != selected_result_id))
+  end
+
+  defp first_tag(result) do
+    case Map.get(result.result, :tags, nil) do
+      nil -> ""
+      [] -> ""
+      [h | _t] -> h
+    end
   end
 end
