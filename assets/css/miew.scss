@@ -2,7 +2,7 @@ $box-size: 80px;
 $box-fill: 66px;
 $box-fill-w: 120px;
 $color-main: white;
-$color-backdrop: rgb(148, 130, 118);
+$color-backdrop: rgb(73, 72, 71);
 $color-input: lightyellow;
 $color-high-contrast-dark: black;
 $color-high-contrast-mid: gray;
@@ -163,6 +163,21 @@ input[type=number] {
 
 .negative-b {
     border: $color-negative 1px solid;
+}
+
+.positive-bracket {
+    border-left: $color-positive-discrete 10px solid;
+    border-right: $color-positive-discrete 10px solid;
+}
+
+.neutral-bracket {
+    border-left: $color-neutral-discrete 10px solid;
+    border-right: $color-neutral-discrete 10px solid;
+}
+
+.negative-bracket {
+    border-left: $color-negative-discrete 10px solid;
+    border-right: $color-negative-discrete 10px solid;
 }
 
 .tick {
