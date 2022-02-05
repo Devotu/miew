@@ -86,3 +86,14 @@ div .resultlist-row {
 .empty-header {
     height: $size-row-content;
 }
+
+.game-tag {
+    display: flex;
+    height: 28px;
+    padding-right: 4px;
+}
+
+.game-tag-tickable {
+    margin-left: 5px;
+    margin-bottom: 22px;
+}

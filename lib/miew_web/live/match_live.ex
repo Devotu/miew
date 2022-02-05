@@ -11,8 +11,9 @@ defmodule MiewWeb.MatchLive do
       |> Miew.list_games()
       |> Enum.map(fn g -> %{id: g.id, turns: g.turns, results: Miew.list_results(g.results), time: g.time} end)
       |> Enum.sort(fn r1, r2 -> r1.time < r2.time end)
+    tags = Miew.list_game_conclusion_tags()
 
-    {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0, turns: 0)}
+    {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0, turns: 0, tags: tags)}
   end
 
 

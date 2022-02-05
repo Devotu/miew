@@ -53,6 +53,7 @@
 
 <section class="plaque v-space-t">
   <form phx-submit="add">
+    <div>
     <div class="clicksize">
       <input class="slider v-space-tl" type="range" name="balance" id="balance-slider" value="<%= @balance %>" min="-2" max="2"/>
     </div>
@@ -62,14 +63,14 @@
           <%= @match.player_one %> / <%= @match.deck_one %>
         </div>
         <div class="flex row clicksize">
-          <label class="flexi compact" for="win1">Win:</label>
+          <label class="flexi compact" for="win1">Win:&nbsp;</label>
           <label class="cb-container h-space-ll flexi compact">
             <input type=radio id="win1" name="winner" value=1>
             <span class="checkmark"></span>
           </label>
         </div>
         <div class="flex row clicksize">
-          <label class="flexi compact" for="fun1">Fun: </label>
+          <label class="flexi compact" for="fun1">Fun:&nbsp;</label>
           <label class="tickable-container h-space-ll flexi compact">
             <input class="tickable-container" name="eval1" type="checkbox" value="true" id="ch_eval1">
             <span class="tick-mark"></span>
@@ -77,6 +78,13 @@
           <div class="slide-container h-space-l">
             <input class="slider" type="range" name="fun1" value="<%= @fun1 %>" min="-2" max="2"/>
           </div>
+        </div>
+        <div class="flex row clicksize">
+          <label class="flexi compact" for="fun1">Plan: </label>
+          <label class="tickable-container h-space-ll flexi compact">
+            <input class="tickable-container" name="plan1" type="checkbox" value="true" id="ch_plan1">
+            <span class="tick-mark"></span>
+          </label>
         </div>
       </div>
       <div class="tinycol vertical">
@@ -101,14 +109,14 @@
           <%= @match.player_two %> / <%= @match.deck_two %>
         </div>
         <div class="flex row clicksize">
-          <label class="flexi compact" for="win2">Win:</label>
+          <label class="flexi compact" for="win2">Win:&nbsp;</label>
           <label class="cb-container h-space-ll flexi compact">
             <input type=radio id="win2" name="winner" value=2>
             <span class="checkmark"></span>
           </label>
         </div>
         <div class="flex row clicksize">
-          <label class="flexi compact" for="fun2">Fun: </label>
+          <label class="flexi compact" for="fun2">Fun:&nbsp;</label>
           <label class="tickable-container h-space-ll flexi compact">
             <input class="tickable-container" name="eval2" type="checkbox" value="true" id="ch_eval2">
             <span class="tick-mark"></span>
@@ -117,8 +125,41 @@
             <input class="slider" type="range" name="fun2" value="<%= @fun2 %>" min="-2" max="2"/>
           </div>
         </div>
+        <div class="flex row clicksize">
+          <label class="flexi compact" for="fun1">Plan: </label>
+          <label class="tickable-container h-space-ll flexi compact">
+            <input class="tickable-container" name="plan1" type="checkbox" value="true" id="ch_plan1">
+            <span class="tick-mark"></span>
+          </label>
+        </div>
+      </div>
+      </div>
+      <div class="flex">
+        <div class="flex flexible-v wraping">
+          <%= for t <- @tags do %>
+            <div class="smallbox walled backdropped game-tag">
+              <label class="game-tag-tickable tickable-container h-space-ll flexi compact">
+                <input class="tickable-container" name="<%=t%>_1" type="checkbox" value="true" id="ch_<%=t%>_1">
+                <span class="tick-mark"></span>
+              </label>
+              <label class="flexi compact"><%=t%></label>
+            </div>
+          <% end %>
+        </div>
+        <div class="flex flexible-v wraping">
+          <%= for t <- @tags do %>
+            <div class="smallbox walled backdropped game-tag">
+              <label class="game-tag-tickable tickable-container h-space-ll flexi compact">
+                <input class="tickable-container" name="<%=t%>_2" type="checkbox" value="true" id="ch_<%=t%>_2">
+                <span class="tick-mark"></span>
+              </label>
+              <label class="flexi compact"><%=t%></label>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
+
     <%= if @sure == false do %>
     <div class="flex flex-spread row append-b">
       <button class="flexi box-fill" type="button" phx-click="switch_sure">End</button>

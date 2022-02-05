@@ -133,4 +133,8 @@ defmodule Miew do
   def read_log(id, type) when is_atom(type) and is_bitstring(id) do
     Metr.read_log(id, type)
   end
+
+  def list_game_conclusion_tags() do
+    ["Mana", "Speed", "Endurance", "Control", "Flexibility"]
+  end
 end
