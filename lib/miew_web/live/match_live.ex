@@ -20,6 +20,7 @@ defmodule MiewWeb.MatchLive do
   @impl true
   def handle_event("add", %{"winner" => _winner} = data, socket) do
     game = create_game(socket.assigns.match, data)
+    IO.inspect data, label: "data"
     sorted_games = socket.assigns.games ++ [game]
       |> Enum.sort(fn r1, r2 -> r1.time < r2.time end)
     {:noreply, assign(socket, games: sorted_games)}
@@ -63,6 +64,8 @@ defmodule MiewWeb.MatchLive do
       |> add_eval_2(input_data)
       |> add_balance(input_data)
       |> add_turns(input_data)
+      |> add_tags_1(input_data)
+      |> add_tags_2(input_data)
 
     case Miew.create_game(game_data) do
       {:error, msg} ->
@@ -85,7 +88,8 @@ defmodule MiewWeb.MatchLive do
       winner: 0, balance: nil,
       power_1: nil, power_2: nil,
       fun_1: nil, fun_2: nil,
-      eval_1: nil, eval_2: nil
+      eval_1: nil, eval_2: nil,
+      tag_1: nil, tag_2: nil
     }
   end
 
@@ -164,4 +168,13 @@ defmodule MiewWeb.MatchLive do
   defp power({x,2}, x), do: 2
   defp power({_x,1}, _y), do: -1
   defp power({_x,2}, _y), do: -2
+
+
+  defp add_tags_1(match, input_data) do
+    Map.put(match, :tag_1, input_data["tag1"])
+  end
+
+  defp add_tags_2(match, input_data) do
+    Map.put(match, :tag_2, input_data["tag2"])
+  end
 end

@@ -139,7 +139,7 @@
           <%= for t <- @tags do %>
             <div class="smallbox walled backdropped game-tag">
               <label class="game-tag-tickable tickable-container h-space-ll flexi compact">
-                <input class="tickable-container" name="<%=t%>_1" type="checkbox" value="true" id="ch_<%=t%>_1">
+                <input class="tickable-container" name="tag1" type="radio" value="<%=t%>" id="ch_<%=t%>1">
                 <span class="tick-mark"></span>
               </label>
               <label class="flexi compact"><%=t%></label>
@@ -150,7 +150,7 @@
           <%= for t <- @tags do %>
             <div class="smallbox walled backdropped game-tag">
               <label class="game-tag-tickable tickable-container h-space-ll flexi compact">
-                <input class="tickable-container" name="<%=t%>_2" type="checkbox" value="true" id="ch_<%=t%>_2">
+                <input class="tickable-container" name="tag2" type="radio" value="<%=t%>" id="ch_<%=t%>2">
                 <span class="tick-mark"></span>
               </label>
               <label class="flexi compact"><%=t%></label>
