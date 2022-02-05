@@ -26,17 +26,17 @@
 </ul>
 <ul class="v-list">
   <%= for r <- @results do %>
-    <li class="resultlist column flex">
+    <%= case r.result.place do %>
+      <% 1 -> %>
+        <li class="resultlist column flex positive-bracket">
+      <% 0 -> %>
+        <li class="resultlist column flex neutral-bracket">
+      <% 2 -> %>
+        <li class="resultlist column flex negative-bracket">
+    <% end %>
+
       <div class="resultlist-row">
         <div class="inline">
-          <%= case r.result.place do %>
-            <% 1 -> %>
-              <span class="positive-b square-dot"></span>
-            <% 0 -> %>
-              <span class="neutral-b square-dot"></span>
-            <% 2 -> %>
-              <span class="negative-b square-dot"></span>
-          <% end %>
           <span class="v-list-item"><%= r.result.place %></span>
         </div>
         <%= link(r.result.player_id, method: :get, to: "/player/#{r.result.player_id}/state", class: "v-list-item")%>

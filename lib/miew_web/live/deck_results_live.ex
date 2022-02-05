@@ -13,10 +13,8 @@ defmodule MiewWeb.DeckResultsLive do
     deck = Miew.get(deck_id, :deck)
 
     {tally, tallied_results} = Miew.list_results(deck.results)
-      |> Enum.sort(&(&1.time < &2.time))
+      |> Enum.sort(&(&1.time > &2.time))
       |> Enum.reduce({%DeckResultsLive{}, []}, fn r, acc -> append_sums(r, acc) end)
-
-    IO.inspect List.first(tallied_results)
 
     {:ok, assign(socket, results: tallied_results, summary: tally)}
   end
