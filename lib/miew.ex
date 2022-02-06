@@ -26,6 +26,10 @@ defmodule Miew do
   end
 
   ## List
+  def list(type) when is_atom(type) do
+    Metr.list(type)
+  end
+
   def list_formats() do
     Metr.list(:format)
   end
@@ -119,7 +123,13 @@ defmodule Miew do
         :game
       "result" ->
         :result
+      "tag" ->
+        :tag
     end
+  end
+
+  def list_types() do
+    ~w(player deck match game result tag)
   end
 
 
@@ -132,5 +142,13 @@ defmodule Miew do
 
   def read_log(id, type) when is_atom(type) and is_bitstring(id) do
     Metr.read_log(id, type)
+  end
+
+  def list_game_conclusion_tags() do
+    ["Mana", "Speed", "Endurance", "Control", "Flexibility"]
+  end
+
+  def add_tag(tag, target_type, target_id) when is_bitstring(tag) and is_atom(target_type) and is_bitstring(target_id) do
+    Metr.add_tag(tag, target_type, target_id)
   end
 end

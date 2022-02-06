@@ -11,14 +11,16 @@ defmodule MiewWeb.MatchLive do
       |> Miew.list_games()
       |> Enum.map(fn g -> %{id: g.id, turns: g.turns, results: Miew.list_results(g.results), time: g.time} end)
       |> Enum.sort(fn r1, r2 -> r1.time < r2.time end)
+    tags = Miew.list_game_conclusion_tags()
 
-    {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0, turns: 0)}
+    {:ok, assign(socket, match: match, games: results, fun1: 0, fun2: 0, winner: 0, sure: false, balance: 0, turns: 0, tags: tags)}
   end
 
 
   @impl true
   def handle_event("add", %{"winner" => _winner} = data, socket) do
     game = create_game(socket.assigns.match, data)
+    IO.inspect data, label: "data"
     sorted_games = socket.assigns.games ++ [game]
       |> Enum.sort(fn r1, r2 -> r1.time < r2.time end)
     {:noreply, assign(socket, games: sorted_games)}
@@ -68,10 +70,32 @@ defmodule MiewWeb.MatchLive do
         {:error, msg}
         %{error: "Error", msg: msg}
       game_id ->
-        %{id: game_id, turns: game_data.turns, time: Metr.Time.timestamp(), results: [
-          %{player_id: match.player_one, deck_id: match.deck_one, place: place(1, game_data.winner), fun: game_data.fun_1, power: power(game_data.balance, 1)},
-          %{player_id: match.player_two, deck_id: match.deck_two, place: place(2, game_data.winner), fun: game_data.fun_2, power: power(game_data.balance, 2)}
-        ]}
+        result_ids = Miew.get(game_id, :game).results
+        results = Miew.list_results(result_ids)
+
+        %{
+          id: game_id,
+          turns: game_data.turns,
+          time: Metr.Time.timestamp(),
+          results: [
+            %{
+              player_id: match.player_one,
+              deck_id: match.deck_one,
+              place: place(1, game_data.winner),
+              fun: game_data.fun_1,
+              power: power(game_data.balance, 1),
+              tags: [add_tag(results, input_data, 1)]
+            },
+            %{
+              player_id: match.player_two,
+              deck_id: match.deck_two,
+              place: place(2, game_data.winner),
+              fun: game_data.fun_2,
+              power: power(game_data.balance, 2),
+              tags: [add_tag(results, input_data, 2)]
+            }
+          ]
+        }
     end
   end
 
@@ -84,7 +108,7 @@ defmodule MiewWeb.MatchLive do
       winner: 0, balance: nil,
       power_1: nil, power_2: nil,
       fun_1: nil, fun_2: nil,
-      eval_1: nil, eval_2: nil
+      eval_1: nil, eval_2: nil,
     }
   end
 
@@ -163,4 +187,26 @@ defmodule MiewWeb.MatchLive do
   defp power({x,2}, x), do: 2
   defp power({_x,1}, _y), do: -1
   defp power({_x,2}, _y), do: -2
+
+  defp add_tag(results, input_data, player) do
+    tag = input_data["tag#{player}"]
+    result_id = Enum.at(results, player-1, nil).id
+    add_tag(result_id, tag)
+    |> String.capitalize()
+  end
+
+  defp add_tag(_result_id, nil) do
+    ""
+  end
+  defp add_tag(result_id, tag) do
+    Miew.add_tag(tag, :result, result_id) |> IO.inspect(label: "tag added")
+  end
+
+  defp first_tag(result) do
+    case Map.get(result, :tags, nil) do
+      nil -> ""
+      [] -> ""
+      [h | _t] -> h
+    end
+  end
 end

@@ -16,7 +16,7 @@ defmodule MiewWeb.DeckRankLive do
       <div class="divider"></div>
       <div class="flex row flexible-h wraping">
       <%= for r <- @rank_history do %>
-        <div class="smallbox walled backdroped">
+        <div class="smallbox walled backdropped">
           <%= Kernel.inspect(r) %>
         </div>
         <% end %>
