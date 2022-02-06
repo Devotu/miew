@@ -22,6 +22,7 @@ defmodule MiewWeb.DeckLive do
       <p class="label v-space">Format:<span class="value"><%= @deck.format %></span></p>
       <p class="label v-space">Price:<span class="value"><%= @deck.price %></span></p>
       <p class="label v-space">Last vs:<span class="value"><%= @last_play.name %></span></p>
+      <p class="label v-space">Tags:<span class="value"><%= present_tags(@deck.tags) %></span></p>
 
     </section>
     <section class="footer">
@@ -62,5 +63,10 @@ defmodule MiewWeb.DeckLive do
     |> Miew.get(:result)
     |> (fn r -> r.deck_id end).()
     |> Miew.get(:deck)
+  end
+
+  defp present_tags(tags) do
+    tags
+    |> Enum.join(", ")
   end
 end
