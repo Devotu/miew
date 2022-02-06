@@ -16,7 +16,6 @@ defmodule Miew do
 
   def create_game(%{deck_1: _d1, deck_2: _d2, player_1: _p1, player_2: _p2, winner: _w} = data) do
     data
-    |> IO.inspect(label: "miew - create game input data")
     |> GameHelpers.to_game_input()
     |> Metr.create(:game)
   end
@@ -27,6 +26,10 @@ defmodule Miew do
   end
 
   ## List
+  def list(type) when is_atom(type) do
+    Metr.list(type)
+  end
+
   def list_formats() do
     Metr.list(:format)
   end
@@ -123,6 +126,10 @@ defmodule Miew do
       "tag" ->
         :tag
     end
+  end
+
+  def list_types() do
+    ~w(player deck match game result tag)
   end
 
 

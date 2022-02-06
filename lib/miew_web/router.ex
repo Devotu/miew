@@ -38,6 +38,8 @@ defmodule MiewWeb.Router do
 
     live "/log/:limit", LogLive
 
+    live "/tag/add", AddTagLive
+
     live "/load/decks", ParseDecksLive
     live "/load/games", ParseGamesLive
     live "/export", ExportLive
