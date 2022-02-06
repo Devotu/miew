@@ -100,12 +100,11 @@ defmodule MiewWeb.AddTagLive do
   end
 
   defp sort(targets, type) do
-    case type do
-      "tag" ->
-        Enum.sort(targets, fn a, b -> a.name < b.name end)
-
-      _ ->
+    case List.first(targets).id == List.first(targets).name do
+      true ->
         Enum.sort(targets, fn a, b -> a.time > b.time end)
+      _ ->
+          Enum.sort(targets, fn a, b -> a.name < b.name end)
     end
   end
 
