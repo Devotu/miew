@@ -101,7 +101,7 @@ defmodule MiewWeb.MatchLive do
               place: place(1, game_data.winner),
               fun: game_data.fun_1,
               power: power(game_data.balance, 1),
-              tags: add_tag(results, input_data, 1)
+              tags: add_tag(results, input_data, 1) ++ add_plan(results, input_data, 1)
             },
             %{
               player_id: match.player_two,
@@ -109,7 +109,7 @@ defmodule MiewWeb.MatchLive do
               place: place(2, game_data.winner),
               fun: game_data.fun_2,
               power: power(game_data.balance, 2),
-              tags: add_tag(results, input_data, 2)
+              tags: add_tag(results, input_data, 2) ++ add_plan(results, input_data, 2)
             }
           ]
         }
@@ -231,5 +231,17 @@ defmodule MiewWeb.MatchLive do
       [] -> ""
       [h | _t] -> h
     end
+  end
+
+  defp add_plan(results, %{"plan1" => "true"}, 1) do
+    result_id = Enum.at(results, 0, nil).id
+    add_tag(result_id, "Plan")
+  end
+  defp add_plan(results, %{"plan2" => "true"}, 2) do
+    result_id = Enum.at(results, 1, nil).id
+    add_tag(result_id, "Plan")
+  end
+  defp add_plan(_results, _input_data, _player) do
+    []
   end
 end
