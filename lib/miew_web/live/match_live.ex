@@ -20,7 +20,6 @@ defmodule MiewWeb.MatchLive do
   @impl true
   def handle_event("add", %{"winner" => _winner} = data, socket) do
     game = create_game(socket.assigns.match, data)
-    IO.inspect data, label: "data"
     sorted_games = socket.assigns.games ++ [game]
       |> Enum.sort(fn r1, r2 -> r1.time < r2.time end)
     {:noreply, assign(socket, games: sorted_games)}
@@ -84,7 +83,7 @@ defmodule MiewWeb.MatchLive do
               place: place(1, game_data.winner),
               fun: game_data.fun_1,
               power: power(game_data.balance, 1),
-              tags: [add_tag(results, input_data, 1)]
+              tags: add_tag(results, input_data, 1)
             },
             %{
               player_id: match.player_two,
@@ -92,7 +91,7 @@ defmodule MiewWeb.MatchLive do
               place: place(2, game_data.winner),
               fun: game_data.fun_2,
               power: power(game_data.balance, 2),
-              tags: [add_tag(results, input_data, 2)]
+              tags: add_tag(results, input_data, 2)
             }
           ]
         }
@@ -192,14 +191,15 @@ defmodule MiewWeb.MatchLive do
     tag = input_data["tag#{player}"]
     result_id = Enum.at(results, player-1, nil).id
     add_tag(result_id, tag)
-    |> String.capitalize()
   end
 
   defp add_tag(_result_id, nil) do
-    ""
+    []
   end
   defp add_tag(result_id, tag) do
-    Miew.add_tag(tag, :result, result_id) |> IO.inspect(label: "tag added")
+    Miew.add_tag(tag, :result, result_id)
+    |> String.capitalize()
+    |> List.wrap()
   end
 
   defp first_tag(result) do
