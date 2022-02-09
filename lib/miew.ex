@@ -145,7 +145,7 @@ defmodule Miew do
   end
 
   def list_game_conclusion_tags() do
-    ["Mana", "Speed", "Endurance", "Control", "Flexibility"]
+    ~w(Mana Speed Endurance Control Versatility Power Growth Draw Synergy)
   end
 
   def add_tag(tag, target_type, target_id) when is_bitstring(tag) and is_atom(target_type) and is_bitstring(target_id) do
