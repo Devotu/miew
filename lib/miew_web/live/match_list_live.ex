@@ -6,7 +6,7 @@ defmodule MiewWeb.MatchListLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section>
+    <section class="center-section">
       <ul class="v-list header">
         <li class="matchlist label">
           <span class="v-list-item">Id</span>

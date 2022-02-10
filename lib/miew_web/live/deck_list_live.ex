@@ -6,7 +6,7 @@ defmodule MiewWeb.DeckListLive do
   @impl true
   def render(assigns) do
     ~L"""
-    <section>
+    <section class="center-section">
       <ul class="v-list header">
         <li class="decklist label">
           <span class="v-list-item clickable" phx-click="sort_names" phx-value-order="<%= if @order == :asc do %>asc<% else %>desc<% end %>" >Name</span>
