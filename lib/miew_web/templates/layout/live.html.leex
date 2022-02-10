@@ -1,6 +1,6 @@
 <main role="main" class="container">
   <ul class="h-list">
-    <li class="main-header"><%= link("Magirator " <> Mix.Project.config[:version], method: :get, to: "/") %></li>
+    <li class="main-header"><%= link("Magirator " <> (Application.spec(:miew, :vsn) |> to_string()), method: :get, to: "/") %></li>
   </ul>
   <ul class="h-list header">
     <li class="main-links"><%= link("Decks", method: :get, to: "/deck/list")%></li>
