@@ -1,4 +1,7 @@
 <section class="plaque v-fill">
+  <h1 class="header">
+    <%= link(@deck.name, method: :get, to: "/deck/#{@deck.id}", class: "v-list-item")%>
+  </h1>
   <p class="label v-space">Games:<span class="value"><%= @summary.z_games %></span></p>
   <p class="label v-space">Wins/Losses:<span class="value"><%= @summary.z_wins %>/<%= @summary.z_games - @summary.z_wins %></span></p>
   <p class="label v-space">Winrate:<span class="value"><%= @summary.z_winrate |> Helpers.as_percent %>%</span></p>
@@ -45,7 +48,7 @@
       <div class="resultlist-row">
         <%= link(r.result.opponent_deck.name, method: :get, to: "/deck/#{r.result.opponent_deck.id}/state", class: "v-list-item")%>
         <%= link(r.result.opponent.name, method: :get, to: "/player/#{r.result.opponent.id}/state", class: "v-list-item")%>
-        <span class="v-list-item"></span>
+        <span class="v-list-item"><%= r.result.time |> Helpers.as_date %></span>
       </div>
       <div class="resultlist-row">
         <%= cond do %>

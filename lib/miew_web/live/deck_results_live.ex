@@ -16,7 +16,7 @@ defmodule MiewWeb.DeckResultsLive do
       |> Enum.sort(&(&1.time > &2.time))
       |> Enum.reduce({%DeckResultsLive{}, []}, fn r, acc -> append_sums(r, acc) end)
 
-    {:ok, assign(socket, results: tallied_results, summary: tally)}
+    {:ok, assign(socket, results: tallied_results, summary: tally, deck: deck)}
   end
 
   defp append_sums(result, {%DeckResultsLive{} = tally, list}) do

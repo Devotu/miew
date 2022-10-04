@@ -90,4 +90,15 @@ defmodule Miew.Helpers do
   def as_percent(n) do
     "#{n} not %"
   end
+
+  def as_date(ts) do
+    case DateTime.from_unix(ts) do
+      {:ok, t} ->
+        t
+        |> DateTime.to_string()
+        |> String.replace("Z", "")
+        |> String.replace("T", " ")
+      {:error, e} -> IO.inspect e, label: "Miscast time"
+    end
+  end
 end
