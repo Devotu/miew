@@ -12,6 +12,9 @@ defmodule MiewWeb.DeckRankLive do
   def render(assigns) do
     ~L"""
     <section class="plaque v-space">
+      <h1 class="header">
+        <%= link(@deck.name, method: :get, to: "/deck/#{@deck.id}", class: "v-list-item")%>
+      </h1>
       <p class="label v-space">Current:<span class="value"><%= @deck.rank %> / <%= @deck.advantage %></span></p>
       <div class="divider"></div>
       <div class="flex row flexible-h wraping">

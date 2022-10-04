@@ -4,7 +4,7 @@ defmodule Miew.MixProject do
   def project do
     [
       app: :miew,
-      version: "0.11.6",
+      version: "0.11.7",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
